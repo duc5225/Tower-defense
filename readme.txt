@@ -1,5 +1,5 @@
 TOWER DEFENSE
 
-Contributers:
+Authors:
 -Lê Mạnh Cường
 -Phan Việt Đức

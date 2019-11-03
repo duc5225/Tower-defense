@@ -1,10 +1,16 @@
 package game;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
 public class GameStage {
-    private int stage = 0;
-    private int startMoney = 0;
+    private int stage;
+    private int startMoney;
 
     public GameStage() {
+        this.stage=0;
+        this.startMoney=0;
+
     }
 
     public GameStage(int stage) {
@@ -37,5 +43,9 @@ public class GameStage {
 
     public void setStartMoney(int startMoney) {
         this.startMoney = startMoney;
+    }
+
+    public void renderMap(GraphicsContext gc) {
+        gc.drawImage(new Image("file:src/game/resources/map/map"+this.stage+".png"),0,0);
     }
 }

@@ -1,4 +1,4 @@
-package game.tower;
+package game.entity.tower;
 
 public abstract class Tower {
     public int Price = 0;

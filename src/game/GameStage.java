@@ -4,48 +4,56 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class GameStage {
-    private int stage;
-    private int startMoney;
+    private static int stage;
+    private int money;
+    private static int roadLength;
+
+    public static int getRoadLength() {
+        return roadLength;
+    }
+
+    private GameField gameField;
 
     public GameStage() {
-        this.stage=0;
-        this.startMoney=0;
-
+        this.stage = 0;
+        this.money = 0;
     }
 
     public GameStage(int stage) {
         this.stage = stage;
-        if (stage == 1){
-            startMoney = 100;
+        if (stage == 1) {
+            money = 100;
+            roadLength = 37 * Config.TILE_SIZE;
         }
-        if (stage == 2){
-            startMoney = 200;
+        if (stage == 2) {
+            money = 200;
         }
+        gameField = new GameField();
     }
 
-    public int getGameStage() {
+    public static int getStage() {
         return stage;
     }
 
-    public void setGameStage(int stage) {
+    public void setStage(int stage) {
         this.stage = stage;
-        if (stage == 1){
-            startMoney = 100;
+        if (stage == 1) {
+            money = 100;
         }
-        if (stage == 2){
-            startMoney = 200;
+        if (stage == 2) {
+            money = 200;
         }
     }
 
     public int getStartMoney() {
-        return startMoney;
+        return money;
     }
 
     public void setStartMoney(int startMoney) {
-        this.startMoney = startMoney;
+        this.money = startMoney;
     }
 
-    public void renderMap(GraphicsContext gc) {
-        gc.drawImage(new Image("file:src/game/resources/map/map"+this.stage+".png"),0,0);
+    public void renderGameField(GraphicsContext gc) throws Exception {
+        gameField.renderMap(gc, this.stage);
     }
 }

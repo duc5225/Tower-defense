@@ -10,4 +10,6 @@ public abstract class GameEntity {
     public Image getImage() {
         return image;
     }
+
+
 }

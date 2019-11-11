@@ -18,4 +18,10 @@ public final class NormalEnemy extends Enemy {
             System.out.println("Error Loading Normal Enemy Image:" + e.getMessage());
         }
     }
+    public void RotateLeft(){
+        imageView.setRotate(imageView.getRotate()-90);
+    }
+    public void RotateRight(){
+        imageView.setRotate(imageView.getRotate()+90);
+    }
 }

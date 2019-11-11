@@ -9,13 +9,6 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 
 public final class GameField {
-//    int scenery[] = {};
-//    int road[] = {};
-//
-//    public GameField(int[] scenery, int[] road) {
-//        this.scenery = scenery;
-//        this.road = road;
-//    }
 
     public GameField() {
     }
@@ -31,14 +24,13 @@ public final class GameField {
     public static Path createPath(int stage) {
         Path path = new Path();
         if (stage == 1) {
-            int s = Config.TILE_SIZE;
-            MoveTo spawn = new MoveTo(2.5 * s, 15 * s);
-            LineTo line1 = new LineTo(2.5 * s, 8.5 * s);
-            LineTo line2 = new LineTo(6.5 * s, 8.5 * s);
-            LineTo line3 = new LineTo(6.5 * s, 3.5 * s);
-            LineTo line4 = new LineTo(11.5 * s, 3.5 * s);
-            LineTo line5 = new LineTo(11.5 * s, 11.5 * s);
-            LineTo line6 = new LineTo(20.0 * s, 11.5 * s);
+            MoveTo spawn = new MoveTo(2.5 * Config.TILE_SIZE, 15 * Config.TILE_SIZE);
+            LineTo line1 = new LineTo(2.5 * Config.TILE_SIZE, 8.5 * Config.TILE_SIZE);
+            LineTo line2 = new LineTo(6.5 * Config.TILE_SIZE, 8.5 * Config.TILE_SIZE);
+            LineTo line3 = new LineTo(6.5 * Config.TILE_SIZE, 3.5 * Config.TILE_SIZE);
+            LineTo line4 = new LineTo(11.5 * Config.TILE_SIZE, 3.5 * Config.TILE_SIZE);
+            LineTo line5 = new LineTo(11.5 * Config.TILE_SIZE, 11.5 * Config.TILE_SIZE);
+            LineTo line6 = new LineTo(20.0 * Config.TILE_SIZE, 11.5 * Config.TILE_SIZE);
             path.getElements().addAll(spawn, line1, line2, line3, line4, line5, line6);
         }
         return path;

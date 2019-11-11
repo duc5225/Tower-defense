@@ -1,6 +1,7 @@
 package game;
 
 import game.entity.enemy.NormalEnemy;
+import game.entity.tower.NormalTower;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
@@ -45,12 +46,13 @@ public class Main extends Application {
         currentGameStage.renderGameField(gc);
 
         NormalEnemy normalEnemy = new NormalEnemy();
+        NormalTower normalTower = new NormalTower();
 //        ImageView enemy = new ImageView(normalEnemy.image);
 //        PathTransition pathTransition = new PathTransition(Duration.seconds(currentGameStage.getRoadLength()/normalEnemy.getSpeed()), GameField.createPath(currentGameStage.getStage()), enemy);
 
 
         //add to root
-        root.getChildren().add(normalEnemy.getImageView());
+        root.getChildren().addAll(normalEnemy.getImageView(),normalTower.getImageView());
 
 
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 20);
@@ -63,6 +65,7 @@ public class Main extends Application {
 //                pathTransition.play();
                 try {
                     normalEnemy.renderAnimation();
+                    normalTower.setPosition(9,5);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }

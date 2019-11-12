@@ -2,6 +2,7 @@ package game.entity.enemy;
 
 import game.GameField;
 import game.GameStage;
+import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,16 +15,17 @@ public final class NormalEnemy extends Enemy {
             this.image = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile245.png");
             this.imageView = new ImageView(image);
             this.transition = new PathTransition(Duration.seconds((double) GameStage.getRoadLength() / this.getSpeed()), GameField.createPath(GameStage.getStage()), this.imageView);
+            this.transition.setInterpolator(Interpolator.LINEAR);
         } catch (Exception e) {
             System.out.println("Error Loading Normal Enemy Image:" + e.getMessage());
         }
     }
 
-    public void RotateLeft() {
+    public void rotateLeft() {
         imageView.setRotate(imageView.getRotate() - 90);
     }
 
-    public void RotateRight() {
+    public void rotateRight() {
         imageView.setRotate(imageView.getRotate() + 90);
     }
 }

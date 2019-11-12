@@ -35,6 +35,4 @@ public final class GameField {
         }
         return path;
     }
-
-
 }

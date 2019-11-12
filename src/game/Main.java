@@ -1,5 +1,6 @@
 package game;
 
+import game.entity.enemy.Enemy;
 import game.entity.enemy.NormalEnemy;
 import game.entity.tower.NormalTower;
 import javafx.animation.AnimationTimer;
@@ -12,12 +13,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends Application {
 
@@ -47,12 +51,15 @@ public class Main extends Application {
 
         NormalEnemy normalEnemy = new NormalEnemy();
         NormalTower normalTower = new NormalTower();
-//        ImageView enemy = new ImageView(normalEnemy.image);
-//        PathTransition pathTransition = new PathTransition(Duration.seconds(currentGameStage.getRoadLength()/normalEnemy.getSpeed()), GameField.createPath(currentGameStage.getStage()), enemy);
+        normalTower.setPosition(10, 6);
 
+        // THIS IS A TEST, SHOULD BE REMOVED LATER IF NECESSARY
+        Circle circle = new Circle(normalTower.getX(), normalTower.getY(), normalTower.getRange());
+        circle.setStroke(Color.BLACK);
+        circle.setFill(Color.TRANSPARENT);
 
-        //add to root
-        root.getChildren().addAll(normalEnemy.getImageView(),normalTower.getImageView());
+        //add to root (including circle for testing)
+        root.getChildren().addAll(normalEnemy.getImageView(), normalTower.getImageView(), circle);
 
 
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 20);
@@ -60,21 +67,22 @@ public class Main extends Application {
         gc.setStroke(Color.AQUA);
         gc.setLineWidth(1);
 
+
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-//                pathTransition.play();
                 try {
                     normalEnemy.renderAnimation();
-                    normalTower.setPosition(9,5);
+                    if (normalTower.canReach(normalEnemy)) {
+                        System.out.println("attacking");
+                        normalTower.rotateTo(normalEnemy);
+                    }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
         }.start();
         primaryStage.show();
-
     }
-
 
     public static void main(String[] args) {
         launch(args);

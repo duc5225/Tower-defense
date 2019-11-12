@@ -1,8 +1,10 @@
 package game.entity.enemy;
 
+import game.Config;
 import game.GameField;
 import game.GameStage;
 import game.entity.GameEntity;
+import game.entity.tower.Tower;
 import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -63,6 +65,14 @@ public abstract class Enemy extends GameEntity {
         this.imageView = imageView;
     }
 
+    public double getX() {
+        return imageView.getTranslateX() + (double) Config.TILE_SIZE / 2;
+    }
+
+    public double getY() {
+        return imageView.getTranslateY() + (double) Config.TILE_SIZE / 2;
+    }
+
     public void renderAnimation() throws Exception {
         try {
 //            PathTransition pathTransition = new PathTransition(Duration.seconds(currentGameStage.getRoadLength()/this.getSpeed()), GameField.createPath(currentGameStage.getStage()), this.imageView);
@@ -72,5 +82,9 @@ public abstract class Enemy extends GameEntity {
             System.out.println(e.getMessage());
         }
     }
+
+//    public boolean isInRange(Tower tower) {
+//
+//    }
 
 }

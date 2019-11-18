@@ -4,22 +4,19 @@ import game.entity.enemy.Enemy;
 import game.entity.enemy.NormalEnemy;
 import game.entity.tower.NormalTower;
 import javafx.animation.AnimationTimer;
-import javafx.animation.PathTransition;
 import javafx.application.Application;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +56,7 @@ public class Main extends Application {
         circle.setFill(Color.TRANSPARENT);
 
         //add to root (including circle for testing)
-        root.getChildren().addAll(normalEnemy.getImageView(), normalTower.getImageView(), circle);
+        root.getChildren().addAll(/*normalEnemy.getImageView(),*/ normalTower.getImageView(), circle);
 
 
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 20);
@@ -67,14 +64,45 @@ public class Main extends Application {
         gc.setStroke(Color.AQUA);
         gc.setLineWidth(1);
 
+        List<Enemy> enemies = new ArrayList<Enemy>();
+        int num = 10;
 
         new AnimationTimer() {
+            int i = 0;
+            // update every one second
+            long startTime = System.nanoTime();
+            //            update every time a tower shoot a bullet
+            long startDelayTime = System.nanoTime();
+
             public void handle(long currentNanoTime) {
                 try {
-                    normalEnemy.renderAnimation();
-                    if (normalTower.canReach(normalEnemy)) {
-                        System.out.println("attacking");
-                        normalTower.rotateTo(normalEnemy);
+                    if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
+                        if (i < num) {
+                            Enemy enemy = new NormalEnemy();
+                            enemies.add(enemy);
+                            root.getChildren().add(enemy.getImageView());
+                            enemies.forEach(e -> {
+                                try {
+                                    e.renderAnimation();
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                            });
+                            ++i;
+                        }
+                        startTime = currentNanoTime;
+                    }
+                    boolean found = false;
+                    for (Enemy enemy : enemies) {
+                        if (found) break;
+                        if (!found && normalTower.canReach(enemy)) {
+                            normalTower.rotateTo(enemy);
+                            if (currentNanoTime - startDelayTime >= Config.SHOOTING_DELAY_TIME) {
+                                normalTower.attack(enemy, root);
+                                startDelayTime = currentNanoTime;
+                                found = true;
+                            }
+                        }
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());

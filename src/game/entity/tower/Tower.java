@@ -1,12 +1,26 @@
 package game.entity.tower;
 
 import game.Config;
+import game.entity.GameEntity;
 import game.entity.GameTile;
+import game.entity.bullet.Bullet;
 import game.entity.enemy.Enemy;
+import javafx.animation.Interpolator;
+import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
+import javafx.animation.Transition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 
-public abstract class Tower extends GameTile {
+
+public abstract class Tower extends GameEntity {
     private int price = 0;
     private int damage = 0;
     private int armorPenetration = 0;
@@ -16,7 +30,6 @@ public abstract class Tower extends GameTile {
     private int x;
     private int y;
 
-    protected ImageView imageView;
     protected RotateTransition transition;
 
     public Tower() {
@@ -78,10 +91,6 @@ public abstract class Tower extends GameTile {
         return y;
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
     public RotateTransition getTransition() {
         return transition;
     }
@@ -91,7 +100,9 @@ public abstract class Tower extends GameTile {
     }
 
     private void setCenter(int x, int y) {
-        this.x = (int) ((x - 0.5) * Config.TILE_SIZE);
+        this.x = (int) ((x
+
+                - 0.5) * Config.TILE_SIZE);
         this.y = (int) ((y - 0.5) * Config.TILE_SIZE);
     }
 
@@ -126,5 +137,20 @@ public abstract class Tower extends GameTile {
             }
         }
         transition.play();
+    }
+
+    public void attack(Enemy enemy, Group root) {
+//        rotateTo(enemy);
+        Bullet bullet = new Bullet();
+        Path path = new Path(new MoveTo(x, y), new LineTo(enemy.getX(), enemy.getY()));
+        PathTransition shootTransition = new PathTransition(Duration.millis(150), path, bullet.getImageView());
+        shootTransition.setCycleCount(1);
+        shootTransition.setInterpolator(Interpolator.LINEAR);
+        shootTransition.setOnFinished(event -> {
+            bullet.getImageView().setVisible(false);
+            root.getChildren().remove(bullet.getImageView());
+        });
+        root.getChildren().add(bullet.getImageView());
+        shootTransition.play();
     }
 }

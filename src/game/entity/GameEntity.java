@@ -11,5 +11,15 @@ public abstract class GameEntity {
         return image;
     }
 
+    public void setImage(Image image) {
+        this.image = image;
+    }
 
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
 }

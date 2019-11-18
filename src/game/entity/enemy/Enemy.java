@@ -15,7 +15,6 @@ public abstract class Enemy extends GameEntity {
     private int health;
     private int armor;
     private int reward;
-    protected ImageView imageView;
     protected PathTransition transition;
 
     public Enemy(int speed, int health, int armor, int reward) {
@@ -55,14 +54,6 @@ public abstract class Enemy extends GameEntity {
 
     public void setReward(int reward) {
         this.reward = reward;
-    }
-
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
     }
 
     public double getX() {

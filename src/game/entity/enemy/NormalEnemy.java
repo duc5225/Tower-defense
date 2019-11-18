@@ -1,5 +1,6 @@
 package game.entity.enemy;
 
+import game.Config;
 import game.GameField;
 import game.GameStage;
 import javafx.animation.Interpolator;
@@ -12,7 +13,7 @@ public final class NormalEnemy extends Enemy {
     public NormalEnemy() {
         super(80, 100, 2, 5);
         try {
-            this.image = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile245.png");
+            this.image = Config.NORMAL_ENEMY_IMG;
             this.imageView = new ImageView(image);
             this.transition = new PathTransition(Duration.seconds((double) GameStage.getRoadLength() / this.getSpeed()), GameField.createPath(GameStage.getStage()), this.imageView);
             this.transition.setInterpolator(Interpolator.LINEAR);

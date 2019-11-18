@@ -1,5 +1,6 @@
 package game.entity.tower;
 
+import game.Config;
 import game.GameField;
 import game.GameStage;
 import javafx.animation.Interpolator;
@@ -11,11 +12,11 @@ import javafx.util.Duration;
 
 public class NormalTower extends Tower {
     public NormalTower(){
-        super(10, 2, 2, 5, 280);
+        super(10, 2, 2, 5, 200);
         try {
-            this.image = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile249.png");
+            this.image = Config.NORMAL_TOWER_IMG;
             this.imageView = new ImageView(image);
-            this.transition = new RotateTransition(Duration.millis(10), imageView);
+            this.transition = new RotateTransition(Duration.millis(100), imageView);
             this.transition.setInterpolator(Interpolator.LINEAR);
         } catch (Exception e) {
             System.out.println("Error Loading Normal Tower Image:" + e.getMessage());

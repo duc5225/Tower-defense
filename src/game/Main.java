@@ -5,12 +5,13 @@ import game.entity.enemy.NormalEnemy;
 import game.entity.tower.NormalTower;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -25,8 +26,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
         Group root = new Group();
+        Button button = new Button("Play");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                GameStage.stage = 1;
+            }
+        });
         Scene theScene = new Scene(root, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
         primaryStage.setTitle("Tower defense");
         primaryStage.setScene(theScene);
@@ -40,11 +47,8 @@ public class Main extends Application {
         //create graphic context from canvas
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        //set game stage
-        GameStage currentGameStage = new GameStage(Config.ORIGINAL_STAGE);
-
         //print map
-        currentGameStage.renderGameField(gc);
+        GameStage.renderGameField(gc);
 
         NormalEnemy normalEnemy = new NormalEnemy();
         NormalTower normalTower = new NormalTower();
@@ -56,7 +60,7 @@ public class Main extends Application {
         circle.setFill(Color.TRANSPARENT);
 
         //add to root (including circle for testing)
-        root.getChildren().addAll(/*normalEnemy.getImageView(),*/ normalTower.getImageView(), circle);
+        root.getChildren().addAll(/*normalEnemy.getImageView(),*/ normalTower.getImageView(), circle, button);
 
 
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 20);
@@ -75,37 +79,39 @@ public class Main extends Application {
             long startDelayTime = System.nanoTime();
 
             public void handle(long currentNanoTime) {
-                try {
-                    if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
-                        if (i < num) {
-                            Enemy enemy = new NormalEnemy();
-                            enemies.add(enemy);
-                            root.getChildren().add(enemy.getImageView());
-                            enemies.forEach(e -> {
-                                try {
-                                    e.renderAnimation();
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                            });
-                            ++i;
+                if (GameStage.stage == 1) {
+                    try {
+                        if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
+                            if (i < num) {
+                                Enemy enemy = new NormalEnemy();
+                                enemies.add(enemy);
+                                root.getChildren().add(enemy.getImageView());
+                                enemies.forEach(e -> {
+                                    try {
+                                        e.renderAnimation();
+                                    } catch (Exception ex) {
+                                        ex.printStackTrace();
+                                    }
+                                });
+                                ++i;
+                            }
+                            startTime = currentNanoTime;
                         }
-                        startTime = currentNanoTime;
-                    }
-                    boolean found = false;
-                    for (Enemy enemy : enemies) {
-                        if (found) break;
-                        if (!found && normalTower.canReach(enemy)) {
-                            normalTower.rotateTo(enemy);
-                            if (currentNanoTime - startDelayTime >= Config.SHOOTING_DELAY_TIME) {
-                                normalTower.attack(enemy, root);
-                                startDelayTime = currentNanoTime;
-                                found = true;
+                        boolean found = false;
+                        for (Enemy enemy : enemies) {
+                            if (found) break;
+                            if (!found && normalTower.canReach(enemy)) {
+                                normalTower.rotateTo(enemy);
+                                if (currentNanoTime - startDelayTime >= Config.SHOOTING_DELAY_TIME) {
+                                    normalTower.attack(enemy, root);
+                                    startDelayTime = currentNanoTime;
+                                    found = true;
+                                }
                             }
                         }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
                     }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
                 }
             }
         }.start();

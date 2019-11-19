@@ -15,7 +15,7 @@ public final class Config {
 
     public static final int SCREEN_HEIGHT = TILE_SIZE * TILE_VERTICAL;
 
-    public static final int ORIGINAL_STAGE = 1;
+    public static final int ORIGINAL_STAGE = 0;
 
     public static final Image BULLET_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile272.png");
 

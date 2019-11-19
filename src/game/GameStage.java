@@ -1,18 +1,17 @@
 package game;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 public class GameStage {
-    private static int stage;
+    public static int stage = Config.ORIGINAL_STAGE;
     private int money;
-    private static int roadLength;
+    private static int roadLength=37 * Config.TILE_SIZE;;
 
     public static int getRoadLength() {
         return roadLength;
     }
 
-    private GameField gameField;
+    private static GameField gameField = new GameField();
 
     public GameStage() {
         this.stage = 0;
@@ -31,20 +30,6 @@ public class GameStage {
         gameField = new GameField();
     }
 
-    public static int getStage() {
-        return stage;
-    }
-
-    public void setStage(int stage) {
-        this.stage = stage;
-        if (stage == 1) {
-            money = 100;
-        }
-        if (stage == 2) {
-            money = 200;
-        }
-    }
-
     public int getStartMoney() {
         return money;
     }
@@ -53,7 +38,7 @@ public class GameStage {
         this.money = startMoney;
     }
 
-    public void renderGameField(GraphicsContext gc) throws Exception {
-        gameField.renderMap(gc, this.stage);
+    public static void renderGameField(GraphicsContext gc) {
+        gameField.renderMap(gc);
     }
 }

@@ -13,17 +13,26 @@ public final class GameField {
     public GameField() {
     }
 
-    public void renderMap(GraphicsContext gc, int stage) throws Exception {
-        try {
-            gc.drawImage(new Image("file:src/game/resources/map/map" + stage + ".png"), 0, 0);
-        } catch (Exception e) {
-            System.out.println("Error Loading Map");
+    public void renderMap(GraphicsContext gc) {
+        if (GameStage.stage == 0){
+            try {
+                gc.drawImage(new Image("file:src/game/resources/map/map" + GameStage.stage + ".png"), 0, 0);
+            } catch (Exception e) {
+                System.out.println("Error Loading Map");
+            }
+        }
+        if (GameStage.stage == 1) {
+            try {
+                gc.drawImage(new Image("file:src/game/resources/map/map" + GameStage.stage + ".png"), 0, 0);
+            } catch (Exception e) {
+                System.out.println("Error Loading Map");
+            }
         }
     }
 
-    public static Path createPath(int stage) {
+    public static Path createPath() {
         Path path = new Path();
-        if (stage == 1) {
+        if (GameStage.stage == 1) {
             MoveTo spawn = new MoveTo(2.5 * Config.TILE_SIZE, 15 * Config.TILE_SIZE);
             LineTo line1 = new LineTo(2.5 * Config.TILE_SIZE, 8.5 * Config.TILE_SIZE);
             LineTo line2 = new LineTo(6.5 * Config.TILE_SIZE, 8.5 * Config.TILE_SIZE);

@@ -5,13 +5,13 @@ import javafx.scene.canvas.GraphicsContext;
 public class GameStage {
     public static int stage = Config.ORIGINAL_STAGE;
     private int money;
-    private static int roadLength=37 * Config.TILE_SIZE;;
+    private static int roadLength = 37 * Config.TILE_SIZE;
+    private static GameField gameField = new GameField();
 
     public static int getRoadLength() {
         return roadLength;
     }
 
-    private static GameField gameField = new GameField();
 
     public GameStage() {
         this.stage = 0;
@@ -27,7 +27,6 @@ public class GameStage {
         if (stage == 2) {
             money = 200;
         }
-        gameField = new GameField();
     }
 
     public int getStartMoney() {

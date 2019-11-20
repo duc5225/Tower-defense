@@ -1,25 +1,28 @@
 package game;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 
 public class GameStage {
     public static int stage = Config.ORIGINAL_STAGE;
-    private int money;
+    private int money = 0;
     private static int roadLength = 37 * Config.TILE_SIZE;
-    private static GameField gameField = new GameField();
 
-    public static int getRoadLength() {
-        return roadLength;
-    }
+    private GameField gameField;
+    private Group root;
+    private GraphicsContext graphicsContext;
 
-
-    public GameStage() {
-        this.stage = 0;
-        this.money = 0;
+    public GameStage(Group root, GraphicsContext graphicsContext) {
+        gameField = new GameField(root, graphicsContext);
+        this.root = root;
+        this.graphicsContext = graphicsContext;
     }
 
     public GameStage(int stage) {
-        this.stage = stage;
+        GameStage.stage = stage;
         if (stage == 1) {
             money = 100;
             roadLength = 37 * Config.TILE_SIZE;
@@ -29,6 +32,11 @@ public class GameStage {
         }
     }
 
+    public static int getRoadLength() {
+        return roadLength;
+    }
+
+
     public int getStartMoney() {
         return money;
     }
@@ -37,7 +45,33 @@ public class GameStage {
         this.money = startMoney;
     }
 
-    public static void renderGameField(GraphicsContext gc) {
-        gameField.renderMap(gc);
+    public void renderGameField() {
+        gameField.renderMap();
+    }
+
+    public void start() {
+        renderGameField();
+        switch (stage) {
+            case Config.ORIGINAL_STAGE:
+                createButtons();
+                break;
+            case 1:
+                gameField.play();
+                break;
+            default:
+                System.out.println("Nothing called ");
+        }
+    }
+
+    private void createButtons() {
+        Button button = new Button("Play");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                GameStage.stage = 1;
+                start();
+            }
+        });
+        root.getChildren().add(button);
     }
 }

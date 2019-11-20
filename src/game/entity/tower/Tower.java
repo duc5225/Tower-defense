@@ -100,9 +100,7 @@ public abstract class Tower extends GameEntity {
     }
 
     private void setCenter(int x, int y) {
-        this.x = (int) ((x
-
-                - 0.5) * Config.TILE_SIZE);
+        this.x = (int) ((x - 0.5) * Config.TILE_SIZE);
         this.y = (int) ((y - 0.5) * Config.TILE_SIZE);
     }
 
@@ -120,37 +118,27 @@ public abstract class Tower extends GameEntity {
         if (enemy.getX() <= x) {
             if (enemy.getY() >= y) {
                 // Quadrant III
-                transition.setToAngle(-90 - Math.toDegrees(Math.atan((double) ((enemy.getY() - y) / (x - enemy.getX())))));
+                transition.setToAngle(-90 - Math.toDegrees(Math.atan((enemy.getY() - y) / (x - enemy.getX()))));
             } else {
                 // Quadrant II
-                transition.setToAngle(-Math.toDegrees(Math.atan((double) ((x - enemy.getX()) / (y - enemy.getY())))));
+                transition.setToAngle(-Math.toDegrees(Math.atan((x - enemy.getX()) / (y - enemy.getY()))));
 
             }
         } else {
             if (enemy.getY() >= y) {
                 //Quadrant IV
-                transition.setToAngle(90 + Math.toDegrees(Math.atan((double) ((enemy.getY() - y) / (enemy.getX() - x)))));
+                transition.setToAngle(90 + Math.toDegrees(Math.atan((enemy.getY() - y) / (enemy.getX() - x))));
             } else {
                 //Quadrant I
-                transition.setToAngle(Math.toDegrees(Math.atan((double) ((enemy.getX() - x) / (y - enemy.getY())))));
+                transition.setToAngle(Math.toDegrees(Math.atan((enemy.getX() - x) / (y - enemy.getY()))));
 
             }
         }
         transition.play();
     }
 
-    public void attack(Enemy enemy, Group root) {
-//        rotateTo(enemy);
-        Bullet bullet = new Bullet();
-        Path path = new Path(new MoveTo(x, y), new LineTo(enemy.getX(), enemy.getY()));
-        PathTransition shootTransition = new PathTransition(Duration.millis(150), path, bullet.getImageView());
-        shootTransition.setCycleCount(1);
-        shootTransition.setInterpolator(Interpolator.LINEAR);
-        shootTransition.setOnFinished(event -> {
-            bullet.getImageView().setVisible(false);
-            root.getChildren().remove(bullet.getImageView());
-        });
-        root.getChildren().add(bullet.getImageView());
-        shootTransition.play();
+    public void dealDamageTo(Enemy enemy) {
+        enemy.setHealth(enemy.getHealth() - (damage - enemy.getarmor()));
+        if (enemy.getHealth() <= 0) enemy.setDead(true);
     }
 }

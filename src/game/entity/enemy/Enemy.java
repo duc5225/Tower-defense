@@ -15,6 +15,7 @@ public abstract class Enemy extends GameEntity {
     private int health;
     private int armor;
     private int reward;
+    private boolean dead;
     protected PathTransition transition;
 
     public Enemy(int speed, int health, int armor, int reward) {
@@ -22,6 +23,7 @@ public abstract class Enemy extends GameEntity {
         this.health = health;
         this.armor = armor;
         this.reward = reward;
+        this.dead = false;
     }
 
     public int getSpeed() {
@@ -54,6 +56,14 @@ public abstract class Enemy extends GameEntity {
 
     public void setReward(int reward) {
         this.reward = reward;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 
     public double getX() {

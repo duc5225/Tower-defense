@@ -12,7 +12,7 @@ import javafx.util.Duration;
 
 public class NormalTower extends Tower {
     public NormalTower(){
-        super(10, 2, 2, 5, 200);
+        super(10, 102, 2, 5, 200);
         try {
             this.image = Config.NORMAL_TOWER_IMG;
             this.imageView = new ImageView(image);

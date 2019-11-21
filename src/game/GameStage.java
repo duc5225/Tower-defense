@@ -69,6 +69,7 @@ public class GameStage {
             @Override
             public void handle(ActionEvent event) {
                 GameStage.stage = 1;
+                root.getChildren().remove(button);
                 start();
             }
         });

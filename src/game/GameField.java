@@ -8,9 +8,11 @@ import game.entity.tower.Tower;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
@@ -80,9 +82,35 @@ public final class GameField {
         circle.setStroke(Color.BLACK);
         circle.setFill(Color.TRANSPARENT);
 
-        //add to root (including circle for testing)
-        root.getChildren().addAll(normalTower.getImageView(), circle);
+        ImageView draggableTower = new ImageView(Config.NORMAL_TOWER_IMG);
+        draggableTower.setY(100);
+        draggableTower.setX(100);
+        draggableTower.setCursor(Cursor.CLOSED_HAND);
+        draggableTower.setOnMouseClicked(event -> {
 
+        });
+        draggableTower.setOnMouseDragged(event -> {
+            ((ImageView)(event.getSource())).setTranslateX(event.getSceneX()-132);
+            ((ImageView)(event.getSource())).setTranslateY(event.getSceneY()-132);
+
+        });
+        draggableTower.setOnMouseReleased(event -> {
+            if (event.getSceneX() >= 3*Config.TILE_SIZE && event.getSceneX() <=4*Config.TILE_SIZE && event.getSceneY()>=6*Config.TILE_SIZE && event.getSceneY()<=7*Config.TILE_SIZE){
+                root.getChildren().remove(draggableTower);
+                NormalTower normalTower2 = new NormalTower();
+
+                Circle circle2 = new Circle(event.getSceneX(), event.getSceneY(), normalTower2.getRange());
+                circle2.setStroke(Color.BLACK);
+                circle2.setFill(Color.TRANSPARENT);
+
+                normalTower2.setPosition(4, 7);
+                towers.add(normalTower2);
+                root.getChildren().addAll(normalTower2.getImageView(),circle2);
+            }
+        });
+
+        //add to root (including circle for testing)
+        root.getChildren().addAll(normalTower.getImageView(), circle, draggableTower);
 
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 20);
         gc.setFont(theFont);

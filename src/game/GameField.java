@@ -17,7 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
-
 import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -74,7 +73,7 @@ public final class GameField {
 
     public void play() {
         NormalTower normalTower = new NormalTower();
-        normalTower.setPosition(10, 6);
+        normalTower.setPosition(11, 5);
         towers.add(normalTower);
 
         // THIS IS A TEST, SHOULD BE REMOVED LATER IF NECESSARY
@@ -82,30 +81,42 @@ public final class GameField {
         circle.setStroke(Color.BLACK);
         circle.setFill(Color.TRANSPARENT);
 
+        ImageView storeImage = new ImageView(Config.NORMAL_TOWER_IMG);
+        storeImage.setY(100);
+        storeImage.setX(100);
+        storeImage.setCursor(Cursor.CLOSED_HAND);
+        root.getChildren().add(storeImage);
+
         ImageView draggableTower = new ImageView(Config.NORMAL_TOWER_IMG);
         draggableTower.setY(100);
         draggableTower.setX(100);
         draggableTower.setCursor(Cursor.CLOSED_HAND);
-        draggableTower.setOnMouseClicked(event -> {
 
+        storeImage.setOnMouseClicked(event -> {
         });
         draggableTower.setOnMouseDragged(event -> {
-            ((ImageView)(event.getSource())).setTranslateX(event.getSceneX()-132);
-            ((ImageView)(event.getSource())).setTranslateY(event.getSceneY()-132);
-
+            ((ImageView) (event.getSource())).setTranslateX(event.getSceneX() - 132);
+            ((ImageView) (event.getSource())).setTranslateY(event.getSceneY() - 132);
+            if (event.getSceneX() >= 3 * Config.TILE_SIZE && event.getSceneX() <= 4 * Config.TILE_SIZE && event.getSceneY() >= 6 * Config.TILE_SIZE && event.getSceneY() <= 7 * Config.TILE_SIZE) {
+                draggableTower.setCursor(Cursor.CROSSHAIR);
+            }
+            else draggableTower.setCursor(Cursor.CLOSED_HAND);
         });
         draggableTower.setOnMouseReleased(event -> {
-            if (event.getSceneX() >= 3*Config.TILE_SIZE && event.getSceneX() <=4*Config.TILE_SIZE && event.getSceneY()>=6*Config.TILE_SIZE && event.getSceneY()<=7*Config.TILE_SIZE){
-                root.getChildren().remove(draggableTower);
-                NormalTower normalTower2 = new NormalTower();
+            draggableTower.setTranslateX(storeImage.getX() - 100);
+            draggableTower.setTranslateY(storeImage.getY() - 100);
 
-                Circle circle2 = new Circle(event.getSceneX(), event.getSceneY(), normalTower2.getRange());
-                circle2.setStroke(Color.BLACK);
-                circle2.setFill(Color.TRANSPARENT);
+            if (event.getSceneX() >= 3 * Config.TILE_SIZE && event.getSceneX() <= 4 * Config.TILE_SIZE && event.getSceneY() >= 6 * Config.TILE_SIZE && event.getSceneY() <= 7 * Config.TILE_SIZE) {
+                NormalTower normalTower2 = new NormalTower();
 
                 normalTower2.setPosition(4, 7);
                 towers.add(normalTower2);
-                root.getChildren().addAll(normalTower2.getImageView(),circle2);
+
+                Circle circle2 = new Circle(normalTower2.getX(), normalTower2.getY(), normalTower2.getRange());
+                circle2.setStroke(Color.BLACK);
+                circle2.setFill(Color.TRANSPARENT);
+
+                root.getChildren().addAll(normalTower2.getImageView(), circle2);
             }
         });
 
@@ -134,6 +145,7 @@ public final class GameField {
                             if (i < num) {
                                 Enemy enemy = new NormalEnemy();
                                 enemies.add(enemy);
+                                enemy.init();
                                 root.getChildren().add(enemy.getImageView());
                                 enemies.forEach(e -> {
                                     try {
@@ -173,6 +185,7 @@ public final class GameField {
 
     private void renderAttackAnimation(Tower tower, Enemy enemy) {
         Bullet bullet = new Bullet();
+        bullet.init();
         Path path = new Path(new MoveTo(tower.getX(), tower.getY()), new LineTo(enemy.getX(), enemy.getY()));
         PathTransition shootTransition = new PathTransition(Duration.millis(120), path, bullet.getImageView());
         shootTransition.setCycleCount(1);

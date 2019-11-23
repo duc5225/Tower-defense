@@ -22,4 +22,9 @@ public abstract class GameEntity {
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
     }
+
+    public void init(){
+        this.getImageView().setTranslateX(-100);
+        this.getImageView().setTranslateY(-100);
+    }
 }

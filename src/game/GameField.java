@@ -1,5 +1,6 @@
 package game;
 
+import game.entity.Hill;
 import game.entity.bullet.Bullet;
 import game.entity.enemy.Enemy;
 import game.entity.enemy.NormalEnemy;
@@ -72,56 +73,60 @@ public final class GameField {
     }
 
     public void play() {
-        NormalTower normalTower = new NormalTower();
-        normalTower.setPosition(11, 5);
-        towers.add(normalTower);
-
-        // THIS IS A TEST, SHOULD BE REMOVED LATER IF NECESSARY
-        Circle circle = new Circle(normalTower.getX(), normalTower.getY(), normalTower.getRange());
-        circle.setStroke(Color.BLACK);
-        circle.setFill(Color.TRANSPARENT);
-
         ImageView storeImage = new ImageView(Config.NORMAL_TOWER_IMG);
         storeImage.setY(100);
         storeImage.setX(100);
-        storeImage.setCursor(Cursor.CLOSED_HAND);
         root.getChildren().add(storeImage);
 
         ImageView draggableTower = new ImageView(Config.NORMAL_TOWER_IMG);
         draggableTower.setY(100);
         draggableTower.setX(100);
         draggableTower.setCursor(Cursor.CLOSED_HAND);
+        root.getChildren().add(draggableTower);
+
+        Hill hill1 = new Hill(4, 7);
+        GameStage.hills.add(hill1);
+        Hill hill2 = new Hill(10, 6);
+        GameStage.hills.add(hill2);
 
         storeImage.setOnMouseClicked(event -> {
         });
         draggableTower.setOnMouseDragged(event -> {
             ((ImageView) (event.getSource())).setTranslateX(event.getSceneX() - 132);
             ((ImageView) (event.getSource())).setTranslateY(event.getSceneY() - 132);
-            if (event.getSceneX() >= 3 * Config.TILE_SIZE && event.getSceneX() <= 4 * Config.TILE_SIZE && event.getSceneY() >= 6 * Config.TILE_SIZE && event.getSceneY() <= 7 * Config.TILE_SIZE) {
+            System.out.println(String.format("x: %s, y:%s", event.getSceneX() / Config.TILE_SIZE, event.getSceneY() / Config.TILE_SIZE));
+            if (hill1.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY()) || hill2.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY())) {
                 draggableTower.setCursor(Cursor.CROSSHAIR);
-            }
-            else draggableTower.setCursor(Cursor.CLOSED_HAND);
+            } else draggableTower.setCursor(Cursor.CLOSED_HAND);
         });
         draggableTower.setOnMouseReleased(event -> {
             draggableTower.setTranslateX(storeImage.getX() - 100);
             draggableTower.setTranslateY(storeImage.getY() - 100);
+            draggableTower.setCursor(Cursor.CLOSED_HAND);
+            if (hill1.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY()) || hill2.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY())) {
+                if (hill1.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY())) {
+                    NormalTower normalTower1 = new NormalTower();
+                    normalTower1.setPosition(4, 7);
+                    towers.add(normalTower1);
 
-            if (event.getSceneX() >= 3 * Config.TILE_SIZE && event.getSceneX() <= 4 * Config.TILE_SIZE && event.getSceneY() >= 6 * Config.TILE_SIZE && event.getSceneY() <= 7 * Config.TILE_SIZE) {
-                NormalTower normalTower2 = new NormalTower();
+                    Circle circle2 = new Circle(normalTower1.getX(), normalTower1.getY(), normalTower1.getRange());
+                    circle2.setStroke(Color.BLACK);
+                    circle2.setFill(Color.TRANSPARENT);
 
-                normalTower2.setPosition(4, 7);
-                towers.add(normalTower2);
+                    root.getChildren().addAll(normalTower1.getImageView(), circle2);
+                }
+                if (hill2.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY())) {
+                    NormalTower normalTower2 = new NormalTower();
+                    normalTower2.setPosition(10, 6);
+                    towers.add(normalTower2);
 
-                Circle circle2 = new Circle(normalTower2.getX(), normalTower2.getY(), normalTower2.getRange());
-                circle2.setStroke(Color.BLACK);
-                circle2.setFill(Color.TRANSPARENT);
-
-                root.getChildren().addAll(normalTower2.getImageView(), circle2);
+                    Circle circle3 = new Circle(normalTower2.getX(), normalTower2.getY(), normalTower2.getRange());
+                    circle3.setStroke(Color.BLACK);
+                    circle3.setFill(Color.TRANSPARENT);
+                    root.getChildren().addAll(normalTower2.getImageView(), circle3);
+                }
             }
         });
-
-        //add to root (including circle for testing)
-        root.getChildren().addAll(normalTower.getImageView(), circle, draggableTower);
 
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 20);
         gc.setFont(theFont);
@@ -134,7 +139,7 @@ public final class GameField {
             int i = 0;
             // update every one second
             long startTime = System.nanoTime();
-            //            update every time a tower shoot a bullet
+            // update every time a tower shoot a bullet
             long startDelayTime = System.nanoTime();
 
             public void handle(long currentNanoTime) {

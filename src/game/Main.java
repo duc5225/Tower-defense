@@ -7,14 +7,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.ImageView;
-
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        //Create window, scene, set the program name
         Group root = new Group();
         Scene theScene = new Scene(root, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
         primaryStage.setTitle("Tower defense");
@@ -22,11 +21,10 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.sizeToScene();
 
-
-        //create cavas
+        //Create canvas
         Canvas canvas = new Canvas(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
-        //create graphic context from canvas
+        //Create graphic context from canvas
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         root.getChildren().addAll(canvas);

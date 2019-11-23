@@ -1,10 +1,14 @@
 package game;
 
+import game.entity.Hill;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameStage {
     public static int stage = Config.ORIGINAL_STAGE;
@@ -14,6 +18,8 @@ public class GameStage {
     private GameField gameField;
     private Group root;
     private GraphicsContext graphicsContext;
+
+    public static List<Hill> hills = new ArrayList<>();
 
     public GameStage(Group root, GraphicsContext graphicsContext) {
         gameField = new GameField(root, graphicsContext);
@@ -35,7 +41,6 @@ public class GameStage {
     public static int getRoadLength() {
         return roadLength;
     }
-
 
     public int getStartMoney() {
         return money;

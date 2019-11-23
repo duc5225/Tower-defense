@@ -19,8 +19,6 @@ public class GameStage {
     private Group root;
     private GraphicsContext graphicsContext;
 
-    public static List<Hill> hills = new ArrayList<>();
-
     public GameStage(Group root, GraphicsContext graphicsContext) {
         gameField = new GameField(root, graphicsContext);
         this.root = root;
@@ -70,13 +68,10 @@ public class GameStage {
 
     private void createButtons() {
         Button button = new Button("Play");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                GameStage.stage = 1;
-                root.getChildren().remove(button);
-                start();
-            }
+        button.setOnAction(event -> {
+            GameStage.stage = 1;
+            root.getChildren().remove(button);
+            start();
         });
         root.getChildren().add(button);
     }

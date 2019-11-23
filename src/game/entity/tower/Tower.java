@@ -27,6 +27,7 @@ public abstract class Tower extends GameEntity {
     private int attackSpeed = 0;
     private int range;
 
+    // update every time a tower shoot a bullet
     private long startDelayTime;
 
     private int x;

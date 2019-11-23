@@ -1,20 +1,24 @@
 package game.entity;
 
 import game.Config;
+import javafx.scene.image.ImageView;
 
 public class Hill extends GameEntity {
-    private double x;
-    private double y;
+    // x,y coordinate relative to 20x15 tile screen
+    private int x;
+    private int y;
 
-    public Hill() {
-    }
+    private boolean used;
 
     public Hill(int x, int y) {
-        this.x = x-1;
-        this.y = y-1;
+        this.x = x;
+        this.y = y;
+        this.used = false;
+        this.image = Config.HILL_IMG;
+        this.imageView = new ImageView(image);
     }
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
@@ -22,7 +26,7 @@ public class Hill extends GameEntity {
         this.x = x;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
 
@@ -30,20 +34,31 @@ public class Hill extends GameEntity {
         this.y = y;
     }
 
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public boolean isUsed() {
+        return used;
     }
 
-    public boolean canBePlacePixelSizeInput(double towerX, double towerY) {
+    public void setUsed(boolean used) {
+        this.used = used;
+    }
+
+    // x coordinate for printing purpose
+    public long getSceneX() {
+        return (long) (x - 1) * Config.TILE_SIZE;
+    }
+
+    // y coordinate for printing purpose
+    public long getSceneY() {
+        return (long) (y - 1) * Config.TILE_SIZE;
+    }
+
+    public boolean isUsable(double towerX, double towerY) {
         double x = towerX / Config.TILE_SIZE;
         double y = towerY / Config.TILE_SIZE;
-        if (this.x <= x && this.x >= (x - 1) && this.y <= y && this.y >= (y - 1)) return true;
-        return false;
+        return this.x - 1 <= x && this.x - 1 >= (x - 1) && this.y - 1 <= y && this.y - 1 >= (y - 1) && !used;
     }
 
     public boolean canBePlaceTileSizeInput(int towerX, int towerY) {
-        if (this.x <= towerX && this.x >= (towerX - 1) && this.y <= towerY && this.y >= (towerY - 1)) return true;
-        return false;
+        return this.x <= towerX && this.x >= (towerX - 1) && this.y <= towerY && this.y >= (towerY - 1);
     }
 }

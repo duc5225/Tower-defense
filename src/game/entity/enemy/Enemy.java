@@ -74,7 +74,7 @@ public abstract class Enemy extends GameEntity {
         return imageView.getTranslateY() + (double) Config.TILE_SIZE / 2;
     }
 
-    public void renderAnimation() throws Exception {
+    public void renderAnimation() {
         try {
 //            PathTransition pathTransition = new PathTransition(Duration.seconds(currentGameStage.getRoadLength()/this.getSpeed()), GameField.createPath(currentGameStage.getStage()), this.imageView);
 //            pathTransition.play();

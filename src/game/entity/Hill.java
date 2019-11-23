@@ -39,11 +39,11 @@ public class Hill extends GameEntity {
         double x = towerX / Config.TILE_SIZE;
         double y = towerY / Config.TILE_SIZE;
         if (this.x <= x && this.x >= (x - 1) && this.y <= y && this.y >= (y - 1)) return true;
-        else return false;
+        return false;
     }
 
     public boolean canBePlaceTileSizeInput(int towerX, int towerY) {
         if (this.x <= towerX && this.x >= (towerX - 1) && this.y <= towerY && this.y >= (towerY - 1)) return true;
-        else return false;
+        return false;
     }
 }

@@ -27,6 +27,8 @@ public abstract class Tower extends GameEntity {
     private int attackSpeed = 0;
     private int range;
 
+    private long startDelayTime;
+
     private int x;
     private int y;
 
@@ -41,6 +43,7 @@ public abstract class Tower extends GameEntity {
         this.armorPenetration = armorPenetration;
         this.attackSpeed = attackSpeed;
         this.range = range;
+        this.startDelayTime = 0;
     }
 
     public int getPrice() {
@@ -81,6 +84,14 @@ public abstract class Tower extends GameEntity {
 
     public void setRange(int range) {
         this.range = range;
+    }
+
+    public long getStartDelayTime() {
+        return startDelayTime;
+    }
+
+    public void setStartDelayTime(long startDelayTime) {
+        this.startDelayTime = startDelayTime;
     }
 
     public int getX() {

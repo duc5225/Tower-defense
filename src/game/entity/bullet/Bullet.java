@@ -12,5 +12,6 @@ public final class Bullet extends GameEntity {
     public Bullet() {
         this.image = Config.BULLET_IMG;
         this.imageView = new ImageView(this.image);
+        initImgViewPos();
     }
 }

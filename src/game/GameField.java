@@ -73,11 +73,11 @@ public final class GameField {
     }
 
     public void play() {
+//        ???
         ImageView storeImage = new ImageView(Config.NORMAL_TOWER_IMG);
         storeImage.setY(100);
         storeImage.setX(100);
         root.getChildren().add(storeImage);
-
         ImageView draggableTower = new ImageView(Config.NORMAL_TOWER_IMG);
         draggableTower.setY(100);
         draggableTower.setX(100);
@@ -88,9 +88,10 @@ public final class GameField {
         GameStage.hills.add(hill1);
         Hill hill2 = new Hill(10, 6);
         GameStage.hills.add(hill2);
+//      ???
+//        storeImage.setOnMouseClicked(event -> {
+//        });
 
-        storeImage.setOnMouseClicked(event -> {
-        });
         draggableTower.setOnMouseDragged(event -> {
             ((ImageView) (event.getSource())).setTranslateX(event.getSceneX() - 132);
             ((ImageView) (event.getSource())).setTranslateY(event.getSceneY() - 132);
@@ -103,39 +104,38 @@ public final class GameField {
             draggableTower.setTranslateX(storeImage.getX() - 100);
             draggableTower.setTranslateY(storeImage.getY() - 100);
             draggableTower.setCursor(Cursor.CLOSED_HAND);
-            if (hill1.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY()) || hill2.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY())) {
-                if (hill1.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY())) {
-                    NormalTower normalTower1 = new NormalTower();
-                    normalTower1.setPosition(4, 7);
-                    towers.add(normalTower1);
+            if (hill1.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY())) {
+                NormalTower normalTower1 = new NormalTower();
+                normalTower1.setPosition(4, 7);
+                towers.add(normalTower1);
 
-                    Circle circle2 = new Circle(normalTower1.getX(), normalTower1.getY(), normalTower1.getRange());
-                    circle2.setStroke(Color.BLACK);
-                    circle2.setFill(Color.TRANSPARENT);
+                Circle circle2 = new Circle(normalTower1.getX(), normalTower1.getY(), normalTower1.getRange());
+                circle2.setStroke(Color.BLACK);
+                circle2.setFill(Color.TRANSPARENT);
 
-                    root.getChildren().addAll(normalTower1.getImageView(), circle2);
-                }
-                if (hill2.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY())) {
-                    NormalTower normalTower2 = new NormalTower();
-                    normalTower2.setPosition(10, 6);
-                    towers.add(normalTower2);
+                root.getChildren().addAll(normalTower1.getImageView(), circle2);
+            }
+            if (hill2.canBePlacePixelSizeInput(event.getSceneX(), event.getSceneY())) {
+                NormalTower normalTower2 = new NormalTower();
+                normalTower2.setPosition(10, 6);
+                towers.add(normalTower2);
 
-                    Circle circle3 = new Circle(normalTower2.getX(), normalTower2.getY(), normalTower2.getRange());
-                    circle3.setStroke(Color.BLACK);
-                    circle3.setFill(Color.TRANSPARENT);
-                    root.getChildren().addAll(normalTower2.getImageView(), circle3);
-                }
+                Circle circle3 = new Circle(normalTower2.getX(), normalTower2.getY(), normalTower2.getRange());
+                circle3.setStroke(Color.BLACK);
+                circle3.setFill(Color.TRANSPARENT);
+                root.getChildren().addAll(normalTower2.getImageView(), circle3);
             }
         });
-
+//      ???
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 20);
         gc.setFont(theFont);
         gc.setStroke(Color.AQUA);
         gc.setLineWidth(1);
 
-        int num = 10;
 
         new AnimationTimer() {
+            int NUMBER_OF_ENEMIES = 10;
+
             int i = 0;
             // update every one second
             long startTime = System.nanoTime();
@@ -147,10 +147,9 @@ public final class GameField {
                     try {
                         // spawn new enemy after a fixed time until max number of enemies reached
                         if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
-                            if (i < num) {
+                            if (i < NUMBER_OF_ENEMIES) {
                                 Enemy enemy = new NormalEnemy();
                                 enemies.add(enemy);
-                                enemy.init();
                                 root.getChildren().add(enemy.getImageView());
                                 enemies.forEach(e -> {
                                     try {
@@ -163,23 +162,21 @@ public final class GameField {
                             }
                             startTime = currentNanoTime;
                         }
-                        boolean found = false;
                         for (Tower tower : towers) {
                             for (Enemy enemy : enemies) {
-//                            if (found) break;
                                 // if enemy is in the radius of the tower
-                                if (/*!found &&*/ tower.canReach(enemy)) {
+                                if (tower.canReach(enemy)) {
                                     tower.rotateTo(enemy);
-                                    if (currentNanoTime - startDelayTime >= Config.SHOOTING_DELAY_TIME) {
+                                    if (currentNanoTime - tower.getStartDelayTime() >= Config.SHOOTING_DELAY_TIME) {
                                         tower.dealDamageTo(enemy);
                                         renderAttackAnimation(tower, enemy);
-                                        startDelayTime = currentNanoTime;
-//                                    found = true;
+                                        tower.setStartDelayTime(currentNanoTime);
                                     }
+                                    // found the enemy, break and let another tower find enemy
                                     break;
                                 }
-                            }
-                        }
+                            } // end enemy iterate
+                        } //  end tower iterate
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
@@ -190,7 +187,6 @@ public final class GameField {
 
     private void renderAttackAnimation(Tower tower, Enemy enemy) {
         Bullet bullet = new Bullet();
-        bullet.init();
         Path path = new Path(new MoveTo(tower.getX(), tower.getY()), new LineTo(enemy.getX(), enemy.getY()));
         PathTransition shootTransition = new PathTransition(Duration.millis(120), path, bullet.getImageView());
         shootTransition.setCycleCount(1);

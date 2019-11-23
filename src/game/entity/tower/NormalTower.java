@@ -1,18 +1,14 @@
 package game.entity.tower;
 
 import game.Config;
-import game.GameField;
-import game.GameStage;
 import javafx.animation.Interpolator;
-import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class NormalTower extends Tower {
     public NormalTower(){
-        super(10, 102, 2, 5, 200);
+        super(Config.NORMAL_TOWER_PRICE, Config.NORMAL_TOWER_DAMAGE, 2, 5, Config.NORMAL_TOWER_RANGE);
         try {
             this.image = Config.NORMAL_TOWER_IMG;
             this.imageView = new ImageView(image);

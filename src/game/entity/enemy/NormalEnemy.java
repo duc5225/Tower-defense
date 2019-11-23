@@ -11,12 +11,13 @@ import javafx.util.Duration;
 
 public final class NormalEnemy extends Enemy {
     public NormalEnemy() {
-        super(80, 300, 2, 5);
+        super(Config.NORMAL_ENEMY_SPEED, Config.NORMAL_ENEMY_HEALTH, Config.NORMAL_ENEMY_ARMOR, Config.NORMAL_ENEMY_REWARD);
         try {
             this.image = Config.NORMAL_ENEMY_IMG;
             this.imageView = new ImageView(image);
             this.transition = new PathTransition(Duration.seconds((double) GameStage.getRoadLength() / this.getSpeed()), GameField.createPath(), this.imageView);
             this.transition.setInterpolator(Interpolator.LINEAR);
+            initImgViewPos();
         } catch (Exception e) {
             System.out.println("Error Loading Normal Enemy Image:" + e.getMessage());
         }

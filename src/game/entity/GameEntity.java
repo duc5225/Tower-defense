@@ -7,6 +7,11 @@ public abstract class GameEntity {
     protected Image image;
     protected ImageView imageView;
 
+    //
+    protected void initImgViewPos() {
+        this.imageView.setTranslateX(-100);
+        this.imageView.setTranslateY(-100);
+    }
     public Image getImage() {
         return image;
     }
@@ -23,8 +28,5 @@ public abstract class GameEntity {
         this.imageView = imageView;
     }
 
-    public void init(){
-        this.getImageView().setTranslateX(-100);
-        this.getImageView().setTranslateY(-100);
-    }
+
 }

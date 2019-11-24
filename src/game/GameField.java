@@ -65,6 +65,7 @@ public final class GameField {
             LineTo line4 = new LineTo(11.5 * Config.TILE_SIZE, 3.5 * Config.TILE_SIZE);
             LineTo line5 = new LineTo(11.5 * Config.TILE_SIZE, 11.5 * Config.TILE_SIZE);
             LineTo line6 = new LineTo(20.0 * Config.TILE_SIZE, 11.5 * Config.TILE_SIZE);
+
             path.getElements().addAll(spawn, line1, line2, line3, line4, line5, line6);
         }
         return path;

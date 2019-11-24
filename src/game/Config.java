@@ -23,8 +23,8 @@ public final class Config {
     // normal tower
     public static final Image NORMAL_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile249.png");
     public static final int NORMAL_TOWER_PRICE = 10;
-    public static final int NORMAL_TOWER_DAMAGE = 150;
-    public static final int NORMAL_TOWER_RANGE = 300;
+    public static final int NORMAL_TOWER_DAMAGE = 200;
+    public static final int NORMAL_TOWER_RANGE = 200;
 
     // ENEMY
 

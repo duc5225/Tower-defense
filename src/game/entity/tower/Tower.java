@@ -2,22 +2,9 @@ package game.entity.tower;
 
 import game.Config;
 import game.entity.GameEntity;
-import game.entity.GameTile;
-import game.entity.bullet.Bullet;
 import game.entity.enemy.Enemy;
-import javafx.animation.Interpolator;
-import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
-import javafx.animation.Transition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.util.Duration;
 
 
 public abstract class Tower extends GameEntity {
@@ -126,26 +113,34 @@ public abstract class Tower extends GameEntity {
         return Math.sqrt(Math.pow(enemy.getX() - this.x, 2) + Math.pow(enemy.getY() - this.y, 2)) <= range;
     }
 
+    private double prevAngle = 0;
+
     public void rotateTo(Enemy enemy) {
+        double nextAngle;
         if (enemy.getX() <= x) {
-            if (enemy.getY() >= y) {
+            if (enemy.getY() >= y)
                 // Quadrant III
-                transition.setToAngle(-90 - Math.toDegrees(Math.atan((enemy.getY() - y) / (x - enemy.getX()))));
-            } else {
+                nextAngle = -90 - Math.toDegrees(Math.atan((enemy.getY() - y) / (x - enemy.getX())));
+            else
                 // Quadrant II
-                transition.setToAngle(-Math.toDegrees(Math.atan((x - enemy.getX()) / (y - enemy.getY()))));
-
-            }
+                nextAngle = -Math.toDegrees(Math.atan((x - enemy.getX()) / (y - enemy.getY())));
         } else {
-            if (enemy.getY() >= y) {
+            if (enemy.getY() >= y)
                 //Quadrant IV
-                transition.setToAngle(90 + Math.toDegrees(Math.atan((enemy.getY() - y) / (enemy.getX() - x))));
-            } else {
+                nextAngle = 90 + Math.toDegrees(Math.atan((enemy.getY() - y) / (enemy.getX() - x)));
+            else
                 //Quadrant I
-                transition.setToAngle(Math.toDegrees(Math.atan((enemy.getX() - x) / (y - enemy.getY()))));
+                nextAngle = Math.toDegrees(Math.atan((enemy.getX() - x) / (y - enemy.getY())));
 
-            }
         }
+        // pick the direction to rotate, avoid rotating more than 180 degree
+        if (nextAngle - prevAngle > 180) {
+            nextAngle -= 360;
+        } else if (nextAngle - prevAngle < -180) {
+            nextAngle += 360;
+        }
+        transition.setToAngle(nextAngle);
+        prevAngle = nextAngle;
         transition.play();
     }
 

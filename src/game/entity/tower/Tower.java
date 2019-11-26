@@ -11,7 +11,7 @@ public abstract class Tower extends GameEntity {
     private int price = 0;
     private int damage = 0;
     private int armorPenetration = 0;
-    private int attackSpeed = 0;
+    private double delayTime = 0;
     private int range;
 
     // update every time a tower shoot a bullet
@@ -25,11 +25,11 @@ public abstract class Tower extends GameEntity {
     public Tower() {
     }
 
-    public Tower(int price, int damage, int armorPenetration, int attackSpeed, int range) {
+    public Tower(int price, int damage, int armorPenetration, double delayTime, int range) {
         this.price = price;
         this.damage = damage;
         this.armorPenetration = armorPenetration;
-        this.attackSpeed = attackSpeed;
+        this.delayTime = delayTime;
         this.range = range;
         this.startDelayTime = 0;
     }
@@ -58,12 +58,12 @@ public abstract class Tower extends GameEntity {
         this.armorPenetration = armorPenetration;
     }
 
-    public int getAttackSpeed() {
-        return attackSpeed;
+    public double getDelayTime() {
+        return delayTime;
     }
 
-    public void setAttackSpeed(int attackSpeed) {
-        this.attackSpeed = attackSpeed;
+    public void setDelayTime(int delayTime) {
+        this.delayTime = delayTime;
     }
 
     public int getRange() {

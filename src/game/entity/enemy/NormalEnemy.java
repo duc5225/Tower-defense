@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 public final class NormalEnemy extends Enemy {
     public NormalEnemy() {
-        super(Config.NORMAL_ENEMY_SPEED, Config.NORMAL_ENEMY_HEALTH, Config.NORMAL_ENEMY_ARMOR, Config.NORMAL_ENEMY_REWARD);
+        super(80, 300, 2, Config.NORMAL_ENEMY_REWARD);
         try {
             this.image = Config.NORMAL_ENEMY_IMG;
             this.imageView = new ImageView(image);

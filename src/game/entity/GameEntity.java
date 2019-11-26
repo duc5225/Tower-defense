@@ -27,6 +27,4 @@ public abstract class GameEntity {
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
     }
-
-
 }

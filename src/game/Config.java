@@ -17,30 +17,32 @@ public final class Config {
 
     public static final int ORIGINAL_STAGE = 1;
 
+    public static int currentTower = 0;
+
     public static final Image BULLET_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile272.png");
     // TOWER
 
     // normal tower
     public static final Image NORMAL_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile249.png");
-    public static final int NORMAL_TOWER_PRICE = 10;
-    public static final int NORMAL_TOWER_DAMAGE = 200;
-    public static final int NORMAL_TOWER_RANGE = 200;
+
+    // sniper tower
+    public static final Image SNIPER_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile203.png");
+
+    // machine gun tower
+    public static final Image MACHINE_GUN_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile250.png");
 
     // ENEMY
 
     // normal enemy
     public static final Image NORMAL_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile245.png");
-    public static final int NORMAL_ENEMY_SPEED = 80;
-    public static final int NORMAL_ENEMY_HEALTH = 300;
-    public static final int NORMAL_ENEMY_ARMOR = 2;
-    public static final int NORMAL_ENEMY_REWARD = 5;
+    public static final int NORMAL_ENEMY_REWARD = 10;
 
     // HILL
     public static final Image HILL_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile181.png");
     public static final int HILLS_LENGTH = 5;
 
     // delay time of a tower when shooting in nanosecond
-    public static final long SHOOTING_DELAY_TIME = 1000000000;
+    public static final int SECOND = 1000000000;
     //delay time when spawning new enemy in nanosecond
     public static final long SPAWN_DELAY_TIME = 500000000;
 }

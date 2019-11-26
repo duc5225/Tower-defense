@@ -4,16 +4,20 @@ import game.entity.Hill;
 import game.entity.bullet.Bullet;
 import game.entity.enemy.Enemy;
 import game.entity.enemy.NormalEnemy;
+import game.entity.tower.MachineGunTower;
 import game.entity.tower.NormalTower;
+import game.entity.tower.SniperTower;
 import game.entity.tower.Tower;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
+import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
@@ -72,21 +76,20 @@ public final class GameField {
     }
 
     public void play() {
-//        ???
-        ImageView storeImage = new ImageView(Config.NORMAL_TOWER_IMG);
-        storeImage.setY(100);
-        storeImage.setX(100);
-        root.getChildren().add(storeImage);
+        ImageView storeImageNormalTower = new ImageView(Config.NORMAL_TOWER_IMG);
+        storeImageNormalTower.setY(100);
+        storeImageNormalTower.setX(400);
+        root.getChildren().add(storeImageNormalTower);
 
         ImageView draggableTower = new ImageView(Config.NORMAL_TOWER_IMG);
-        draggableTower.setY(100);
-        draggableTower.setX(100);
+        draggableTower.setY(storeImageNormalTower.getY());
+        draggableTower.setX(storeImageNormalTower.getX());
         draggableTower.setCursor(Cursor.CLOSED_HAND);
         root.getChildren().add(draggableTower);
 
-        draggableTower.setOnMouseDragged(event -> {
-            ((ImageView) (event.getSource())).setTranslateX(event.getSceneX() - 132);
-            ((ImageView) (event.getSource())).setTranslateY(event.getSceneY() - 132);
+        EventHandler<MouseEvent> mouseDragged = event -> {
+            ((ImageView) (event.getSource())).setTranslateX(event.getSceneX() - storeImageNormalTower.getX() - 32);
+            ((ImageView) (event.getSource())).setTranslateY(event.getSceneY() - storeImageNormalTower.getY() - 32);
 
             AtomicBoolean hovering = new AtomicBoolean(false);
             // if mouse hovering on a hill then change cursor type
@@ -96,14 +99,17 @@ public final class GameField {
                     hovering.set(true);
                 }
             });
-            if (!hovering.get()) draggableTower.setCursor(Cursor.CLOSED_HAND);
-        });
-        draggableTower.setOnMouseReleased(event -> {
-            draggableTower.setTranslateX(storeImage.getX() - 100);
-            draggableTower.setTranslateY(storeImage.getY() - 100);
+            if (!hovering.get()) {
+                draggableTower.setCursor(Cursor.CLOSED_HAND);
+            }
+        };
+
+        EventHandler<MouseEvent> mouseReleased = event -> {
+            draggableTower.setTranslateX(storeImageNormalTower.getX() - storeImageNormalTower.getX());
+            draggableTower.setTranslateY(storeImageNormalTower.getY() - storeImageNormalTower.getY());
             draggableTower.setCursor(Cursor.CLOSED_HAND);
             hills.forEach(hill -> {
-                if (hill.isUsable(event.getSceneX(), event.getSceneY())) {
+                if (hill.isUsable(event.getSceneX(), event.getSceneY()) && hill.isEnoughMoney(10)) {
                     Tower tower = new NormalTower();
                     tower.setPosition(hill.getX(), hill.getY());
                     towers.add(tower);
@@ -112,16 +118,46 @@ public final class GameField {
                     Circle circle = new Circle(tower.getX(), tower.getY(), tower.getRange());
                     circle.setStroke(Color.BLACK);
                     circle.setFill(Color.TRANSPARENT);
+
                     root.getChildren().addAll(tower.getImageView(), circle);
+                    draggableTower.toFront();
+                    tower.getImageView().toFront();
+                    towers.forEach(t -> t.getImageView().setOnMouseClicked(e -> {
+                        System.out.println("work");
+                    }));
+                    GameStage.money -= tower.getPrice();
                 }
             });
-        });
-//      ???
+        };
+        Tower tower = new SniperTower();
+        tower.setPosition(10, 11);
+        towers.add(tower);
+
+        Circle circle = new Circle(tower.getX(), tower.getY(), tower.getRange());
+        circle.setStroke(Color.BLACK);
+        circle.setFill(Color.TRANSPARENT);
+
+        root.getChildren().addAll(tower.getImageView(), circle);
+        tower.getImageView().toFront();
+
+        Tower tower2 = new MachineGunTower();
+        tower2.setPosition(6, 11);
+        towers.add(tower2);
+
+        Circle circle2 = new Circle(tower2.getX(), tower2.getY(), tower2.getRange());
+        circle2.setStroke(Color.BLACK);
+        circle2.setFill(Color.TRANSPARENT);
+
+        root.getChildren().addAll(tower2.getImageView(), circle2);
+        tower2.getImageView().toFront();
+
+        draggableTower.setOnMouseDragged(mouseDragged);
+        draggableTower.setOnMouseReleased(mouseReleased);
+
         Font theFont = Font.font("Helvetica", FontWeight.BOLD, 20);
         gc.setFont(theFont);
         gc.setStroke(Color.AQUA);
         gc.setLineWidth(1);
-
 
         new AnimationTimer() {
             int NUMBER_OF_ENEMIES = 100;
@@ -145,7 +181,7 @@ public final class GameField {
                             // if enemy is in the radius of the tower
                             if (tower.canReach(enemy)) {
                                 tower.rotateTo(enemy);
-                                if (currentNanoTime - tower.getStartDelayTime() >= Config.SHOOTING_DELAY_TIME) {
+                                if (currentNanoTime - tower.getStartDelayTime() >= tower.getDelayTime()) {
                                     tower.dealDamageTo(enemy);
                                     renderAttackAnimation(tower, enemy);
                                     tower.setStartDelayTime(currentNanoTime);
@@ -157,7 +193,10 @@ public final class GameField {
                     } //  end tower iterate
                 }
             }
-        }.start();
+        }.
+
+                start();
+
     }
 
     private void renderAttackAnimation(Tower tower, Enemy enemy) {
@@ -175,6 +214,7 @@ public final class GameField {
                 enemy.getImageView().setVisible(false);
                 enemies.remove(enemy);
                 root.getChildren().remove(enemy.getImageView());
+                GameStage.money += Config.NORMAL_ENEMY_REWARD;
             }
         });
 
@@ -192,6 +232,9 @@ public final class GameField {
 
     private void initHills() {
         hills.add(new Hill(10, 6));
+        hills.add(new Hill(9, 6));
+        hills.add(new Hill(10, 7));
+        hills.add(new Hill(9, 7));
         hills.add(new Hill(4, 7));
         hills.add(new Hill(5, 12));
         hills.add(new Hill(14, 14));

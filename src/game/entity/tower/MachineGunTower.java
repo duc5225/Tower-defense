@@ -6,11 +6,11 @@ import javafx.animation.RotateTransition;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class NormalTower extends Tower {
-    public NormalTower(){
-        super(10, 200, 2, Config.SECOND * 1, 250);
+public class MachineGunTower extends Tower {
+    public MachineGunTower(){
+        super(30, 75, 3, Config.SECOND * 0.2, 200);
         try {
-            this.image = Config.NORMAL_TOWER_IMG;
+            this.image = Config.MACHINE_GUN_TOWER_IMG;
             this.imageView = new ImageView(image);
             this.transition = new RotateTransition(Duration.millis(100), imageView);
             this.transition.setInterpolator(Interpolator.LINEAR);

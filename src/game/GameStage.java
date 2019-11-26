@@ -1,18 +1,12 @@
 package game;
 
-import game.entity.Hill;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GameStage {
     public static int stage = Config.ORIGINAL_STAGE;
-    private int money = 0;
+    public static int money = 0;
     private static int roadLength = 37 * Config.TILE_SIZE;
 
     private GameField gameField;
@@ -57,6 +51,7 @@ public class GameStage {
         switch (stage) {
             case 1:
                 gameField.play();
+                money = 100;
                 break;
             default:
                 System.out.println("Nothing called ");

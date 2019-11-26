@@ -1,6 +1,7 @@
 package game.entity;
 
 import game.Config;
+import game.GameStage;
 import javafx.scene.image.ImageView;
 
 public class Hill extends GameEntity {
@@ -52,10 +53,19 @@ public class Hill extends GameEntity {
         return (long) (y - 1) * Config.TILE_SIZE;
     }
 
+    public boolean isEnoughMoney(int money){
+        return GameStage.money >= money;
+    }
+
     public boolean isUsable(double towerX, double towerY) {
         double x = towerX / Config.TILE_SIZE;
         double y = towerY / Config.TILE_SIZE;
         return this.x - 1 <= x && this.x - 1 >= (x - 1) && this.y - 1 <= y && this.y - 1 >= (y - 1) && !used;
+    }
+    public boolean isClicked(double x, double y){
+        x /= Config.TILE_SIZE;
+        y /= Config.TILE_SIZE;
+        return this.x - 1 <= x && this.x - 1 >= (x - 1) && this.y - 1 <= y && this.y - 1 >= (y - 1);
     }
 
     public boolean canBePlaceTileSizeInput(int towerX, int towerY) {

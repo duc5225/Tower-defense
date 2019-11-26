@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0"
+            prefWidth="1480.0" style="-fx-background-image: url(&quot;game/background.png&quot;);"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.MainMenu">
+    <children>
+        <AnchorPane prefHeight="960.0" prefWidth="1280.0">
+            <children>
+                <VBox alignment="TOP_CENTER" layoutX="104.0" layoutY="450.0" prefHeight="285.0" prefWidth="213.0"
+                      spacing="30.0">
+                    <children>
+                        <Button fx:id="playBtn" mnemonicParsing="false" prefHeight="46.0" prefWidth="213.0" text="PLAY">
+                            <font>
+                                <Font name="Agency FB Bold" size="47.0"/>
+                            </font>
+                        </Button>
+                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="46.0"
+                                prefWidth="213.0" text="OPTIONS">
+                            <font>
+                                <Font name="Agency FB Bold" size="47.0"/>
+                            </font>
+                        </Button>
+                        <Button layoutX="10.0" layoutY="106.0" mnemonicParsing="false" prefHeight="97.0"
+                                prefWidth="220.0" text="EXIT">
+                            <font>
+                                <Font name="Agency FB Bold" size="47.0"/>
+                            </font>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="1080.0" prefHeight="960.0" prefWidth="200.0"/>
+    </children>
+</AnchorPane>

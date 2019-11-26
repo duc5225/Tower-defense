@@ -55,9 +55,6 @@ public class GameStage {
     public void start() {
         renderGameField();
         switch (stage) {
-            case Config.ORIGINAL_STAGE:
-                createButtons();
-                break;
             case 1:
                 gameField.play();
                 break;

@@ -1,7 +1,6 @@
 package game;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -19,13 +18,13 @@ import java.io.IOException;
 public class Main extends Application {
     private FXMLLoader fxmlLoader;
     private AnchorPane mainPane;
-    private Scene theScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         //Create window, scene, set the program name
-        mainPane = (AnchorPane) loadFxml("main.fxml");
+        fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
+        mainPane = fxmlLoader.load();
         initMainMenu();
 //        new MainMenu(mainPane);
 //        mainPane.getChildren().add(root);
@@ -35,7 +34,7 @@ public class Main extends Application {
 //        AnchorPane.setRightAnchor(button,0.0);
 //        mainPane.getChildren().add(button);
 
-        theScene = new Scene(mainPane);
+        Scene theScene = new Scene(mainPane);
         primaryStage.setTitle("Tower defense");
         primaryStage.setScene(theScene);
         primaryStage.setResizable(false);
@@ -48,17 +47,22 @@ public class Main extends Application {
         launch(args);
     }
 
-    public Parent loadFxml(String path) throws IOException {
-        fxmlLoader = new FXMLLoader(Main.class.getResource(path));
-        return fxmlLoader.load();
-    }
+//    public Parent loadFxml(String path) throws IOException {
+//        fxmlLoader = new FXMLLoader(Main.class.getResource(path));
+//        return fxmlLoader.load();
+//    }
 
     private void initMainMenu() {
         // get main menu controller
-        MainMenu mainMenu = fxmlLoader.getController();
-        Button playBtn = mainMenu.getPlayBtn();
+        MainMenuController mainMenuController = fxmlLoader.getController();
+        Button playBtn = mainMenuController.getPlayBtn();
         playBtn.setOnAction(event -> {
             startGame();
+            try {
+                createStore();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -75,5 +79,10 @@ public class Main extends Application {
         root.getChildren().addAll(canvas);
 
         new GameStage(root, gc).start();
+    }
+
+    private void createStore() throws IOException {
+        Store store = new Store(mainPane, fxmlLoader.getController());
+        store.render();
     }
 }

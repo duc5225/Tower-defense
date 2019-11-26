@@ -1,0 +1,7 @@
+* {
+-fx-background-color: 
+     linear-gradient(to bottom, #9cecfb, #90e5fa, #85dff9, #7ad8f9, #70d1f8, #58c5f7, #3fb9f6, #23adf4, #0098f0, #0082eb, #006be1, #0052d4);
+
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+}

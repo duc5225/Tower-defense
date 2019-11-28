@@ -5,6 +5,9 @@ import java.awt.*;
 import javafx.scene.image.Image;
 
 public final class Config {
+    public static double orgX;
+    public static double orgY;
+
     public static final int TILE_SIZE = 64;
 
     private static final int TILE_HORIZONTAL = 20;

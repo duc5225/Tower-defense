@@ -4,9 +4,7 @@ import game.entity.Hill;
 import game.entity.bullet.Bullet;
 import game.entity.enemy.Enemy;
 import game.entity.enemy.NormalEnemy;
-import game.entity.tower.MachineGunTower;
 import game.entity.tower.NormalTower;
-import game.entity.tower.SniperTower;
 import game.entity.tower.Tower;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
@@ -23,8 +21,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -76,51 +72,87 @@ public final class GameField {
     }
 
     public void play() {
+        // STORE
+        // Normal tower in the store
         ImageView storeImageNormalTower = new ImageView(Config.NORMAL_TOWER_IMG);
-        storeImageNormalTower.setY(100);
-        storeImageNormalTower.setX(400);
-        root.getChildren().add(storeImageNormalTower);
+        storeImageNormalTower.setX(1000);
+        storeImageNormalTower.setY(880);
+        // Sniper tower in the store
+        ImageView storeImageSniperTower = new ImageView(Config.SNIPER_TOWER_IMG);
+        storeImageSniperTower.setX(1100);
+        storeImageSniperTower.setY(880);
+        // Machine gun tower in the store
+        ImageView storeImageMachineGunTower = new ImageView(Config.MACHINE_GUN_TOWER_IMG);
+        storeImageMachineGunTower.setX(1200);
+        storeImageMachineGunTower.setY(880);
+        root.getChildren().addAll(storeImageNormalTower, storeImageSniperTower, storeImageMachineGunTower);
 
-        ImageView draggableTower = new ImageView(Config.NORMAL_TOWER_IMG);
-        draggableTower.setY(storeImageNormalTower.getY());
-        draggableTower.setX(storeImageNormalTower.getX());
-        draggableTower.setCursor(Cursor.CLOSED_HAND);
-        root.getChildren().add(draggableTower);
+        // DRAGGABLE
+        // Normal Tower image to drag
+        ImageView draggableNormalTower = new ImageView(Config.NORMAL_TOWER_IMG);
+        draggableNormalTower.setX(storeImageNormalTower.getX());
+        draggableNormalTower.setY(storeImageNormalTower.getY());
+        draggableNormalTower.setCursor(Cursor.CLOSED_HAND);
+        // Sniper Tower image to drag
+        ImageView draggableSniperTower = new ImageView(Config.SNIPER_TOWER_IMG);
+        draggableSniperTower.setX(storeImageSniperTower.getX());
+        draggableSniperTower.setY(storeImageSniperTower.getY());
+        draggableSniperTower.setCursor(Cursor.CLOSED_HAND);
+        // Machine gun tower to drag
+        ImageView draggableMachineGunTower = new ImageView(Config.MACHINE_GUN_TOWER_IMG);
+        draggableMachineGunTower.setX(storeImageMachineGunTower.getX());
+        draggableMachineGunTower.setY(storeImageMachineGunTower.getY());
+        draggableMachineGunTower.setCursor(Cursor.CLOSED_HAND);
+        root.getChildren().addAll(draggableNormalTower, draggableSniperTower, draggableMachineGunTower);
 
+        // Circle to show tower range when dragged
+        Circle circleDragged = new Circle(-1000, -1000, 250);
+        circleDragged.setStroke(Color.BLACK);
+        circleDragged.setFill(Color.TRANSPARENT);
+        // Add to root in order
+        root.getChildren().add(circleDragged);
+
+        // Mouse press event
+        EventHandler<MouseEvent> mousePressed = event -> {
+            Config.orgX = ((ImageView)(event.getSource())).getX();
+            Config.orgY = ((ImageView)(event.getSource())).getY();
+        };
+
+        // Mouse drag event
         EventHandler<MouseEvent> mouseDragged = event -> {
-            ((ImageView) (event.getSource())).setTranslateX(event.getSceneX() - storeImageNormalTower.getX() - 32);
-            ((ImageView) (event.getSource())).setTranslateY(event.getSceneY() - storeImageNormalTower.getY() - 32);
+            ((ImageView) (event.getSource())).setTranslateX(event.getSceneX() - Config.orgX - 32);
+            ((ImageView) (event.getSource())).setTranslateY(event.getSceneY() - Config.orgY - 32);
+            circleDragged.setCenterX(event.getSceneX());
+            circleDragged.setCenterY(event.getSceneY());
 
             AtomicBoolean hovering = new AtomicBoolean(false);
             // if mouse hovering on a hill then change cursor type
             hills.forEach(hill -> {
                 if (hill.isUsable(event.getSceneX(), event.getSceneY())) {
-                    draggableTower.setCursor(Cursor.CROSSHAIR);
+                    ((ImageView) (event.getSource())).setCursor(Cursor.CROSSHAIR);
                     hovering.set(true);
                 }
             });
             if (!hovering.get()) {
-                draggableTower.setCursor(Cursor.CLOSED_HAND);
+                ((ImageView) (event.getSource())).setCursor(Cursor.CLOSED_HAND);
             }
         };
 
+        // Mouse release event
         EventHandler<MouseEvent> mouseReleased = event -> {
-            draggableTower.setTranslateX(storeImageNormalTower.getX() - storeImageNormalTower.getX());
-            draggableTower.setTranslateY(storeImageNormalTower.getY() - storeImageNormalTower.getY());
-            draggableTower.setCursor(Cursor.CLOSED_HAND);
+            ((ImageView) (event.getSource())).setTranslateX(0);
+            ((ImageView) (event.getSource())).setTranslateY(0);
+            ((ImageView) (event.getSource())).setCursor(Cursor.CLOSED_HAND);
+            circleDragged.setCenterX(-1000);
             hills.forEach(hill -> {
-                if (hill.isUsable(event.getSceneX(), event.getSceneY()) && hill.isEnoughMoney(10)) {
+                if (hill.isUsable(event.getSceneX(), event.getSceneY())) {
                     Tower tower = new NormalTower();
                     tower.setPosition(hill.getX(), hill.getY());
                     towers.add(tower);
                     hill.setUsed(true);
 
-                    Circle circle = new Circle(tower.getX(), tower.getY(), tower.getRange());
-                    circle.setStroke(Color.BLACK);
-                    circle.setFill(Color.TRANSPARENT);
-
-                    root.getChildren().addAll(tower.getImageView(), circle);
-                    draggableTower.toFront();
+                    root.getChildren().addAll(tower.getImageView());
+                    ((ImageView) (event.getSource())).toFront();
                     tower.getImageView().toFront();
                     towers.forEach(t -> t.getImageView().setOnMouseClicked(e -> {
                         System.out.println("work");
@@ -129,35 +161,16 @@ public final class GameField {
                 }
             });
         };
-        Tower tower = new SniperTower();
-        tower.setPosition(10, 11);
-        towers.add(tower);
 
-        Circle circle = new Circle(tower.getX(), tower.getY(), tower.getRange());
-        circle.setStroke(Color.BLACK);
-        circle.setFill(Color.TRANSPARENT);
-
-        root.getChildren().addAll(tower.getImageView(), circle);
-        tower.getImageView().toFront();
-
-        Tower tower2 = new MachineGunTower();
-        tower2.setPosition(6, 11);
-        towers.add(tower2);
-
-        Circle circle2 = new Circle(tower2.getX(), tower2.getY(), tower2.getRange());
-        circle2.setStroke(Color.BLACK);
-        circle2.setFill(Color.TRANSPARENT);
-
-        root.getChildren().addAll(tower2.getImageView(), circle2);
-        tower2.getImageView().toFront();
-
-        draggableTower.setOnMouseDragged(mouseDragged);
-        draggableTower.setOnMouseReleased(mouseReleased);
-
-        Font theFont = Font.font("Helvetica", FontWeight.BOLD, 20);
-        gc.setFont(theFont);
-        gc.setStroke(Color.AQUA);
-        gc.setLineWidth(1);
+        draggableNormalTower.setOnMousePressed(mousePressed);
+        draggableNormalTower.setOnMouseDragged(mouseDragged);
+        draggableNormalTower.setOnMouseReleased(mouseReleased);
+        draggableSniperTower.setOnMousePressed(mousePressed);
+        draggableSniperTower.setOnMouseDragged(mouseDragged);
+        draggableSniperTower.setOnMouseReleased(mouseReleased);
+        draggableMachineGunTower.setOnMousePressed(mousePressed);
+        draggableMachineGunTower.setOnMouseDragged(mouseDragged);
+        draggableMachineGunTower.setOnMouseReleased(mouseReleased);
 
         new AnimationTimer() {
             int NUMBER_OF_ENEMIES = 100;
@@ -194,9 +207,7 @@ public final class GameField {
                 }
             }
         }.
-
                 start();
-
     }
 
     private void renderAttackAnimation(Tower tower, Enemy enemy) {

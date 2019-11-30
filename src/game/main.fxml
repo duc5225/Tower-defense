@@ -11,7 +11,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="960.0" prefWidth="1380.0" style="-fx-background-image: url(&quot;game/background.png&quot;);"
+            prefHeight="960.0" prefWidth="1408.0" style="-fx-background-image: url(&quot;game/background.png&quot;);"
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="game.MainMenuController">
     <children>
@@ -41,6 +41,6 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane id="store" fx:id="store" layoutX="1280.0" prefHeight="960.0" prefWidth="100.0"/>
+        <AnchorPane id="store" fx:id="store" layoutX="1280.0" layoutY="-6.0" prefHeight="960.0" prefWidth="128.0"/>
     </children>
 </AnchorPane>

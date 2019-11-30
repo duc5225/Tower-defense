@@ -1,7 +1,11 @@
 package game.entity;
 
 import game.Config;
+import game.GameStage;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
+
+import java.awt.*;
 
 public class Hill extends GameEntity {
     // x,y coordinate relative to 20x15 tile screen
@@ -52,6 +56,14 @@ public class Hill extends GameEntity {
         return (long) (y - 1) * Config.TILE_SIZE;
     }
 
+    public long getCenterX() {
+        return (long) ((x - 0.5) * Config.TILE_SIZE);
+    }
+
+    public long getCenterY() {
+        return (long) ((y - 0.5) * Config.TILE_SIZE);
+    }
+
     public boolean isUsable(double towerX, double towerY) {
         double x = towerX / Config.TILE_SIZE;
         double y = towerY / Config.TILE_SIZE;
@@ -60,5 +72,13 @@ public class Hill extends GameEntity {
 
     public boolean canBePlaceTileSizeInput(int towerX, int towerY) {
         return this.x <= towerX && this.x >= (towerX - 1) && this.y <= towerY && this.y >= (towerY - 1);
+    }
+
+    public void printRange(GraphicsContext gc, long range) {
+//        gc.strokeOval((double) getCenterX(),(double) getCenterY());
+    }
+
+    public boolean hasEnoughMoney(int money) {
+        return GameStage.money >= money;
     }
 }

@@ -6,16 +6,17 @@ import javafx.animation.RotateTransition;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class NormalTower extends Tower {
-    public NormalTower() {
-        super(Config.NORMAL_TOWER_PRICE, Config.NORMAL_TOWER_DAMAGE, 2, Config.NORMAL_TOWER_DELAY_TIME, Config.NORMAL_TOWER_RANGE);
+public class MachineGunTower extends Tower {
+
+    public MachineGunTower() {
+        super(Config.MACHINE_GUN_TOWER_PRICE, Config.MACHINE_GUN_TOWER_DAMAGE, 3, Config.MACHINE_GUN_TOWER_DELAY_TIME, Config.MACHINE_GUN_TOWER_RANGE);
         try {
-            this.image = Config.NORMAL_TOWER_IMG;
+            this.image = Config.MACHINE_GUN_TOWER_IMG;
             this.imageView = new ImageView(image);
             this.transition = new RotateTransition(Duration.millis(100), imageView);
             this.transition.setInterpolator(Interpolator.LINEAR);
         } catch (Exception e) {
-            System.out.println("Error Loading Normal Tower Image:" + e.getMessage());
+            System.out.println("Error Loading Machine Tower Image:" + e.getMessage());
         }
     }
 }

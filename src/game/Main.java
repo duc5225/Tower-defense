@@ -57,16 +57,15 @@ public class Main extends Application {
         MainMenuController mainMenuController = fxmlLoader.getController();
         Button playBtn = mainMenuController.getPlayBtn();
         playBtn.setOnAction(event -> {
-            startGame();
             try {
-                createStore();
+                startGame();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
     }
 
-    private void startGame() {
+    private void startGame() throws IOException {
         Group root = new Group();
         mainPane.getChildren().clear();
         mainPane.getChildren().add(root);
@@ -74,15 +73,17 @@ public class Main extends Application {
         Canvas canvas = new Canvas(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
         //Create graphic context from canvas
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+//        GraphicsContext gc = canvas.getGraphicsContext2D();
 
         root.getChildren().addAll(canvas);
 
-        new GameStage(root, gc).start();
+        Store store = new Store(mainPane, fxmlLoader.getController());
+        new GameStage(root, canvas, store).start();
     }
 
     private void createStore() throws IOException {
-        Store store = new Store(mainPane, fxmlLoader.getController());
-        store.render();
+//        Store store = new Store(mainPane, fxmlLoader.getController());
+//        store.render();
+//        store.handleMouseEvent();
     }
 }

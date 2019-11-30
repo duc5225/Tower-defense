@@ -1,28 +1,23 @@
 package game;
 
-import game.entity.Hill;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
+import javafx.scene.canvas.Canvas;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 public class GameStage {
     public static int stage = Config.ORIGINAL_STAGE;
-    private int money = 0;
+    public static int money = 1000;
     private static int roadLength = 37 * Config.TILE_SIZE;
 
     private GameField gameField;
     private Group root;
-    private GraphicsContext graphicsContext;
+    private Store store;
 
-    public GameStage(Group root, GraphicsContext graphicsContext) {
-        gameField = new GameField(root, graphicsContext);
+    public GameStage(Group root, Canvas canvas, Store store) {
+        gameField = new GameField(root, canvas, store);
         this.root = root;
-        this.graphicsContext = graphicsContext;
+        this.store = store;
     }
 
     public GameStage(int stage) {
@@ -48,12 +43,13 @@ public class GameStage {
         this.money = startMoney;
     }
 
-    public void renderGameField() {
+    private void renderGameField() {
         gameField.renderMap();
     }
 
-    public void start() {
+    public void start() throws IOException {
         renderGameField();
+        store.init();
         switch (stage) {
             case 1:
                 gameField.play();
@@ -63,13 +59,13 @@ public class GameStage {
         }
     }
 
-    private void createButtons() {
-        Button button = new Button("Play");
-        button.setOnAction(event -> {
-            GameStage.stage = 1;
-            root.getChildren().remove(button);
-            start();
-        });
-        root.getChildren().add(button);
-    }
+//    private void createButtons() {
+//        Button button = new Button("Play");
+//        button.setOnAction(event -> {
+//            GameStage.stage = 1;
+//            root.getChildren().remove(button);
+//            start();
+//        });
+//        root.getChildren().add(button);
+//    }
 }

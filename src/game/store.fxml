@@ -8,14 +8,44 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0"
-            prefWidth="100.0" stylesheets="@store.css" xmlns="http://javafx.com/javafx/8"
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="960.0" prefWidth="128.0" stylesheets="@store.css" xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.StoreController">
     <children>
-        <ImageView fitHeight="119.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="normalTowerCover" fitHeight="64.0" fitWidth="64.0" layoutY="64.0" pickOnBounds="true"
+                   preserveRatio="true">
             <image>
                 <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile249.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="normalTower" fitHeight="64.0" fitWidth="64.0" layoutY="64.0" onMouseEntered="#onMouseEntered"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile249.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="machineTowerCover" fitHeight="64.0" fitWidth="64.0" layoutY="192.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile250.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="machineGunTower" fitHeight="64.0" fitWidth="64.0" layoutY="192.0"
+                   onMouseEntered="#onMouseEntered" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile250.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="sniperTowerCover" fitHeight="64.0" fitWidth="64.0" layoutY="331.0"
+                   onMouseEntered="#onMouseEntered" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile203.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="sniperTower" fitHeight="64.0" fitWidth="64.0" layoutY="331.0" onMouseEntered="#onMouseEntered"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile203.png"/>
             </image>
         </ImageView>
     </children>

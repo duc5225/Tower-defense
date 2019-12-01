@@ -119,7 +119,6 @@ public class Store {
                         tower = new MachineGunTower();
                     } else /*if (sniperTower.equals(source))*/ {
                         tower = new SniperTower();
-
                     }
                     tower.setPosition(hill.getX(), hill.getY());
                     towers.add(tower);

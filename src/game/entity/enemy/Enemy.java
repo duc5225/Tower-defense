@@ -5,7 +5,9 @@ import game.GameField;
 import game.GameStage;
 import game.entity.GameEntity;
 import game.entity.tower.Tower;
+import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
+import javafx.animation.SequentialTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -16,7 +18,8 @@ public abstract class Enemy extends GameEntity {
     private int armor;
     private int reward;
     private boolean dead;
-    protected PathTransition transition;
+    //    protected PathTransition transition;
+    protected SequentialTransition transition;
 
     public Enemy(int speed, int health, int armor, int reward) {
         this.speed = speed;

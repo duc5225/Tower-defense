@@ -4,35 +4,26 @@ import game.entity.Hill;
 import game.entity.bullet.Bullet;
 import game.entity.enemy.Enemy;
 import game.entity.enemy.NormalEnemy;
-import game.entity.tower.NormalTower;
 import game.entity.tower.Tower;
-import javafx.animation.AnimationTimer;
-import javafx.animation.Interpolator;
-import javafx.animation.PathTransition;
-import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
-import javafx.scene.Cursor;
+import javafx.animation.*;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class GameField {
 
@@ -41,7 +32,8 @@ public final class GameField {
     private GraphicsContext gc;
     private Store store;
 
-    private Score score = new Score(0);
+    private Text money;
+
     private final List<Hill> hills = new ArrayList<>();
     private List<Enemy> enemies;
     private List<Tower> towers;
@@ -68,31 +60,70 @@ public final class GameField {
         }
     }
 
-    public static Path createPath() {
-        Path path = new Path();
+    public static Animation[] createTransition(ImageView imageView, int speed) {
         if (GameStage.stage == 1) {
-            MoveTo spawn = new MoveTo(2.5 * Config.TILE_SIZE, 15 * Config.TILE_SIZE);
+            RotateTransition rotate0 = new RotateTransition(Duration.ONE, imageView);
+            rotate0.setToAngle(-90);
+//            Path path = new Path();
+            MoveTo spawn1 = new MoveTo(2.5 * Config.TILE_SIZE, 15 * Config.TILE_SIZE);
             LineTo line1 = new LineTo(2.5 * Config.TILE_SIZE, 8.5 * Config.TILE_SIZE);
-            LineTo line2 = new LineTo(6.5 * Config.TILE_SIZE, 8.5 * Config.TILE_SIZE);
-            LineTo line3 = new LineTo(6.5 * Config.TILE_SIZE, 3.5 * Config.TILE_SIZE);
-            LineTo line4 = new LineTo(11.5 * Config.TILE_SIZE, 3.5 * Config.TILE_SIZE);
-            LineTo line5 = new LineTo(11.5 * Config.TILE_SIZE, 11.5 * Config.TILE_SIZE);
-            LineTo line6 = new LineTo(22.1 * Config.TILE_SIZE, 11.5 * Config.TILE_SIZE);
+            PathTransition path1 = new PathTransition(Duration.seconds(6.5 * Config.TILE_SIZE / speed), new Path(spawn1, line1), imageView);
+            RotateTransition rotate1 = new RotateTransition(Duration.ONE, imageView);
+            rotate1.setToAngle(0);
 
-            path.getElements().addAll(spawn, line1, line2, line3, line4, line5, line6);
+            MoveTo spawn2 = new MoveTo(line1.getX(), line1.getY());
+            LineTo line2 = new LineTo(6.5 * Config.TILE_SIZE, 8.5 * Config.TILE_SIZE);
+            PathTransition path2 = new PathTransition(Duration.seconds(4.0 * Config.TILE_SIZE / speed), new Path(spawn2, line2), imageView);
+            RotateTransition rotate2 = new RotateTransition(Duration.ONE, imageView);
+            rotate2.setToAngle(-90);
+
+            MoveTo spawn3 = new MoveTo(line2.getX(), line2.getY());
+            LineTo line3 = new LineTo(6.5 * Config.TILE_SIZE, 3.5 * Config.TILE_SIZE);
+            PathTransition path3 = new PathTransition(Duration.seconds(5.0 * Config.TILE_SIZE / speed), new Path(spawn3, line3), imageView);
+            RotateTransition rotate3 = new RotateTransition(Duration.ONE, imageView);
+            rotate3.setToAngle(0);
+
+            MoveTo spawn4 = new MoveTo(line3.getX(), line3.getY());
+            LineTo line4 = new LineTo(11.5 * Config.TILE_SIZE, 3.5 * Config.TILE_SIZE);
+            PathTransition path4 = new PathTransition(Duration.seconds(5.0 * Config.TILE_SIZE / speed), new Path(spawn4, line4), imageView);
+            RotateTransition rotate4 = new RotateTransition(Duration.ONE, imageView);
+            rotate4.setToAngle(90);
+
+            MoveTo spawn5 = new MoveTo(line4.getX(), line4.getY());
+            LineTo line5 = new LineTo(11.5 * Config.TILE_SIZE, 11.5 * Config.TILE_SIZE);
+            PathTransition path5 = new PathTransition(Duration.seconds(8.0 * Config.TILE_SIZE / speed), new Path(spawn5, line5), imageView);
+            RotateTransition rotate5 = new RotateTransition(Duration.ONE, imageView);
+            rotate5.setToAngle(0);
+
+            MoveTo spawn6 = new MoveTo(line5.getX(), line5.getY());
+            LineTo line6 = new LineTo(22.1 * Config.TILE_SIZE, 11.5 * Config.TILE_SIZE);
+            PathTransition path6 = new PathTransition(Duration.seconds(10.6 * Config.TILE_SIZE / speed), new Path(spawn6, line6), imageView);
+            RotateTransition rotate6 = new RotateTransition(Duration.ONE, imageView);
+
+//            path.getElements().addAll(spawn, line1, line2, line3, line4, line5, line6);
+            Transition[] sequential = new Transition[]{rotate0, path1, rotate1, path2, rotate2, path3, rotate3, path4, rotate4, path5, rotate5, path6, rotate6};
+            makeLinear(sequential);
+            return sequential;
         }
-        return path;
+        return null;
+    }
+
+    private static void makeLinear(Transition... transitions) {
+        for (Transition transition : transitions) {
+            transition.setInterpolator(Interpolator.LINEAR);
+        }
     }
 
     public void play() {
         store.handleMouseEvent(root, hills, towers);
 
-        Font theFont = Font.font("Helvetica", FontWeight.BOLD, 50);
-        gc.setFont(theFont);
-        gc.setFill(Color.BLACK);
-        gc.setLineWidth(1);
-        gc.strokeText("Score: " + score.value, score.X, score.Y);
+//        Font theFont = Font.font("Helvetica", FontWeight.BOLD, 50);
+//        gc.setFont(theFont);
+//        gc.setFill(Color.BLACK);
+//        gc.setLineWidth(1);
+//        gc.strokeText("Score: " + GameStage.score, 100, 100);
 
+        createText();
 
         new AnimationTimer() {
             int NUMBER_OF_ENEMIES = 10;
@@ -103,6 +134,7 @@ public final class GameField {
 
             public void handle(long currentNanoTime) {
                 if (GameStage.stage == 1) {
+                    updateMoneyText();
                     // spawn new enemy after a fixed time until max number of enemies reached
                     if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
                         if (i < NUMBER_OF_ENEMIES) {
@@ -142,16 +174,14 @@ public final class GameField {
         shootTransition.setOnFinished(event -> {
             bullet.getImageView().setVisible(false);
             root.getChildren().remove(bullet.getImageView());
+
             if (enemy.isDead() && enemies.contains(enemy)) {
-                System.out.println("die bitch");
                 enemy.getImageView().setVisible(false);
                 enemies.remove(enemy);
-                //update score
-                gc.fillRect(0, 0, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
-                renderMap();
-                score.value++;
-                gc.strokeText("Score: " + score.value, score.X, score.Y);
                 root.getChildren().remove(enemy.getImageView());
+
+                //update money
+                GameStage.money += enemy.getReward();
             }
         });
 
@@ -174,74 +204,17 @@ public final class GameField {
         hills.add(new Hill(5, 12));
         hills.add(new Hill(14, 14));
         hills.add(new Hill(17, 10));
-//        setupMouseDragging();
     }
 
-    private void setupMouseDragging() {
-        setupGestureTarget(canvas);
-//        hills.forEach(hill -> {
-//            setupGestureTarget(hill.getImageView());
-//            System.out.println("hill.getImageView() getX getY " + hill.getImageView().getX()+" "+hill.getImageView().getX());
-//        });
+    private void updateMoneyText() {
+        money.setText("Money: " + GameStage.money);
     }
 
-    private void setupGestureTarget(final Node target) {
-//        Circle circle;
-        target.setOnDragOver(event -> {
-            System.out.println(event.getSceneX() + " " + event.getSceneY());
-//            target.setOnMouseMoved(event1 -> {
-//                root.getChildren().remove(circle);
-//            });
-//            hills.forEach(hill -> {
-//                if (hill.isUsable(event.getSceneX(), event.getSceneY())) {
-//                    Circle circle = new Circle(hill.getCenterX(), hill.getCenterY(), Config.NORMAL_TOWER_RANGE);
-//                    circle.setStroke(Color.BLACK);
-//                    circle.setFill(Color.TRANSPARENT);
-//                    root.getChildren().add(circle);
-//                } else {
-////                    root.getChildren().remove(circle);
-//                }
-//            });
-//            System.out.println("drag over " + target);
-//            gc.setStroke(Color.BLACK);
-//            gc.strokeOval(event.getSceneX()-Config.NORMAL_TOWER_RANGE,event.getSceneY()-Config.NORMAL_TOWER_RANGE, Config.NORMAL_TOWER_RANGE * 2, Config.NORMAL_TOWER_RANGE * 2);
-//            renderMap();
-            Dragboard db = event.getDragboard();
-
-            if (db.hasImage()) {
-                event.acceptTransferModes(TransferMode.ANY);
-            }
-
-            event.consume();
-        });
-
-        target.setOnDragDropped(event -> {
-//            System.out.println("drag dropped " + target);
-
-            hills.forEach(hill -> {
-                if (hill.isUsable(event.getSceneX(), event.getSceneY())) {
-                    Tower tower = new NormalTower();
-                    tower.setPosition(hill.getX(), hill.getY());
-                    towers.add(tower);
-                    hill.setUsed(true);
-
-//                    Circle circle = new Circle(tower.getX(), tower.getY(), tower.getRange());
-//                    circle.setStroke(Color.BLACK);
-//                    circle.setFill(Color.TRANSPARENT);
-                    root.getChildren().addAll(/*circle,*/ tower.getImageView());
-                }
-            });
-
-            Dragboard db = event.getDragboard();
-
-            if (db.hasImage()) {
-
-                Point2D localPoint = target.sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
-                event.setDropCompleted(true);
-            } else {
-                event.setDropCompleted(false);
-            }
-            event.consume();
-        });
+    private void createText() {
+        money = new Text(10, 120, "Money: " + GameStage.money);
+        money.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+        money.setFill(Color.YELLOW);
+        money.setStroke(Color.BLACK);
+        root.getChildren().addAll(money);
     }
 }

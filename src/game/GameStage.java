@@ -7,7 +7,8 @@ import java.io.IOException;
 
 public class GameStage {
     public static int stage = Config.ORIGINAL_STAGE;
-    public static int money = 1000;
+    public static int money = 100;
+    public static int score = 0;
     private static int roadLength = 37 * Config.TILE_SIZE;
 
     private GameField gameField;
@@ -33,14 +34,6 @@ public class GameStage {
 
     public static int getRoadLength() {
         return roadLength;
-    }
-
-    public int getStartMoney() {
-        return money;
-    }
-
-    public void setStartMoney(int startMoney) {
-        this.money = startMoney;
     }
 
     private void renderGameField() {

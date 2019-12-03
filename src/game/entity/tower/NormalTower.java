@@ -1,6 +1,7 @@
 package game.entity.tower;
 
 import game.Config;
+import game.entity.bullet.Bullet;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.scene.image.ImageView;
@@ -17,5 +18,10 @@ public class NormalTower extends Tower {
         } catch (Exception e) {
             System.out.println("Error Loading Normal Tower Image:" + e.getMessage());
         }
+    }
+
+    @Override
+    public Bullet getBullet() {
+        return new Bullet(Config.NORMAL_BULLET_IMG, this.nextAngle);
     }
 }

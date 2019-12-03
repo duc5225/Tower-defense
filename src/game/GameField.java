@@ -16,10 +16,8 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -32,7 +30,7 @@ public final class GameField {
     private GraphicsContext gc;
     private Store store;
 
-    private Text money;
+    private Text money, health;
 
     private final List<Hill> hills = new ArrayList<>();
     private List<Enemy> enemies;
@@ -102,16 +100,13 @@ public final class GameField {
 
 //            path.getElements().addAll(spawn, line1, line2, line3, line4, line5, line6);
             Transition[] sequential = new Transition[]{rotate0, path1, rotate1, path2, rotate2, path3, rotate3, path4, rotate4, path5, rotate5, path6, rotate6};
-            makeLinear(sequential);
+//            makeLinear(sequential);
+            for (Transition transition : sequential) {
+                transition.setInterpolator(Interpolator.LINEAR);
+            }
             return sequential;
         }
         return null;
-    }
-
-    private static void makeLinear(Transition... transitions) {
-        for (Transition transition : transitions) {
-            transition.setInterpolator(Interpolator.LINEAR);
-        }
     }
 
     public void play() {
@@ -126,7 +121,7 @@ public final class GameField {
         createText();
 
         new AnimationTimer() {
-            int NUMBER_OF_ENEMIES = 10;
+            int NUMBER_OF_ENEMIES = 100;
 
             int i = 0;
             // update every one second
@@ -134,7 +129,7 @@ public final class GameField {
 
             public void handle(long currentNanoTime) {
                 if (GameStage.stage == 1) {
-                    updateMoneyText();
+                    updateText();
                     // spawn new enemy after a fixed time until max number of enemies reached
                     if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
                         if (i < NUMBER_OF_ENEMIES) {
@@ -164,12 +159,12 @@ public final class GameField {
     }
 
     private void renderAttackAnimation(Tower tower, Enemy enemy) {
-        Bullet bullet = new Bullet();
+        Bullet bullet = tower.getBullet();
         Path path = new Path(new MoveTo(tower.getX(), tower.getY()), new LineTo(enemy.getX(), enemy.getY()));
 
         PathTransition shootTransition = new PathTransition(Duration.millis(100), path, bullet.getImageView());
         shootTransition.setCycleCount(1);
-        shootTransition.setInterpolator(Interpolator.LINEAR);
+        shootTransition.setInterpolator(Interpolator.EASE_IN);
 
         shootTransition.setOnFinished(event -> {
             bullet.getImageView().setVisible(false);
@@ -192,22 +187,39 @@ public final class GameField {
 
     private void spawnEnemy() {
         Enemy enemy = new NormalEnemy();
+        enemy.getTransition().setOnFinished(event -> {
+            if (!enemy.isDead()) {
+                enemy.getImageView().setVisible(false);
+                enemies.remove(enemy);
+                root.getChildren().remove(enemy.getImageView());
+                enemy.setDead(true);
+                GameStage.health--;
+            }
+        });
         enemies.add(enemy);
         root.getChildren().add(enemy.getImageView());
         enemies.forEach(Enemy::renderAnimation);
     }
 
     private void initHills() {
-        hills.add(new Hill(10, 6));
-        hills.add(new Hill(9, 6));
+        hills.add(new Hill(1, 7));
+        hills.add(new Hill(3, 3));
         hills.add(new Hill(4, 7));
         hills.add(new Hill(5, 12));
+        hills.add(new Hill(8, 13));
+        hills.add(new Hill(9, 6));
+        hills.add(new Hill(9, 10));
+        hills.add(new Hill(10, 1));
+        hills.add(new Hill(10, 6));
+        hills.add(new Hill(14, 10));
         hills.add(new Hill(14, 14));
         hills.add(new Hill(17, 10));
+        hills.add(new Hill(18, 10));
     }
 
-    private void updateMoneyText() {
+    private void updateText() {
         money.setText("Money: " + GameStage.money);
+        health.setText("Health: " + GameStage.health);
     }
 
     private void createText() {
@@ -215,6 +227,11 @@ public final class GameField {
         money.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
         money.setFill(Color.YELLOW);
         money.setStroke(Color.BLACK);
-        root.getChildren().addAll(money);
+
+        health = new Text(10, 50, "Health: " + GameStage.health);
+        health.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+        health.setFill(Color.YELLOW);
+        health.setStroke(Color.BLACK);
+        root.getChildren().addAll(money, health);
     }
 }

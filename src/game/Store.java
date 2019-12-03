@@ -108,10 +108,8 @@ public class Store {
             root.getChildren().remove(tempCircle);
 //            normalTower.setCursor(Cursor.CLOSED_HAND);
             hills.forEach(hill -> {
-                if (hill.isUsable(event.getSceneX(), event.getSceneY()) && hill.hasEnoughMoney(10)) {
-                    System.out.println("placed");
+                if (hill.isUsable(event.getSceneX(), event.getSceneY())) {
                     Tower tower;
-                    Circle circle;
 //                    =======FIX HERE=======
                     if (normalTower.equals(source)) {
                         tower = new NormalTower();
@@ -120,20 +118,27 @@ public class Store {
                     } else /*if (sniperTower.equals(source))*/ {
                         tower = new SniperTower();
                     }
-                    tower.setPosition(hill.getX(), hill.getY());
-                    towers.add(tower);
-                    hill.setUsed(true);
 
-                    circle = new Circle(tower.getX(), tower.getY(), tower.getRange());
-                    circle.setStroke(Color.BLACK);
-                    circle.setFill(Color.TRANSPARENT);
+                    if (GameStage.money >= tower.getPrice()) {
+                        System.out.println("placed");
+                        tower.setPosition(hill.getX(), hill.getY());
+                        towers.add(tower);
+                        hill.setUsed(true);
 
-                    root.getChildren().addAll(tower.getImageView(), circle);
-                    tower.getImageView().toFront();
-                    towers.forEach(t -> t.getImageView().setOnMouseClicked(e -> {
-                        System.out.println("work");
-                    }));
-                    GameStage.money -= tower.getPrice();
+                        Circle circle = new Circle(tower.getX(), tower.getY(), tower.getRange());
+                        circle.setStroke(Color.BLACK);
+                        circle.setFill(Color.TRANSPARENT);
+
+                        root.getChildren().addAll(tower.getImageView(), circle);
+                        tower.getImageView().toFront();
+                        towers.forEach(t -> t.getImageView().setOnMouseClicked(e -> {
+                            System.out.println("work");
+                        }));
+                        GameStage.money -= tower.getPrice();
+                    } else {
+                        System.out.println("Not enough money");
+                    }
+
                 }
             });
         };

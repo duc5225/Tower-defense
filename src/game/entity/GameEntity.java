@@ -7,7 +7,7 @@ public abstract class GameEntity {
     protected Image image;
     protected ImageView imageView;
 
-    //
+    // instead of showing in the top left by default
     protected void initImgViewPos() {
         this.imageView.setTranslateX(-100);
         this.imageView.setTranslateY(-100);

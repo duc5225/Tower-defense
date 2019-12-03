@@ -2,6 +2,7 @@ package game.entity.tower;
 
 import game.Config;
 import game.entity.GameEntity;
+import game.entity.bullet.Bullet;
 import game.entity.enemy.Enemy;
 import javafx.animation.RotateTransition;
 import javafx.scene.image.ImageView;
@@ -16,6 +17,7 @@ public abstract class Tower extends GameEntity {
 
     // update every time a tower shoot a bullet
     private long startDelayTime;
+    private Bullet bullet;
 
     private int x;
     private int y;
@@ -82,6 +84,8 @@ public abstract class Tower extends GameEntity {
         this.startDelayTime = startDelayTime;
     }
 
+    public abstract Bullet getBullet();
+
     public int getX() {
         return x;
     }
@@ -114,9 +118,10 @@ public abstract class Tower extends GameEntity {
     }
 
     private double prevAngle = 0;
+    protected double nextAngle = 0;
 
     public void rotateTo(Enemy enemy) {
-        double nextAngle;
+        //set angle depending of its relative position to tower's position
         if (enemy.getX() <= x) {
             if (enemy.getY() >= y)
                 // Quadrant III

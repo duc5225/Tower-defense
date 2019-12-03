@@ -1,6 +1,7 @@
 package game.entity.tower;
 
 import game.Config;
+import game.entity.bullet.Bullet;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.scene.image.ImageView;
@@ -18,5 +19,10 @@ public class MachineGunTower extends Tower {
         } catch (Exception e) {
             System.out.println("Error Loading Machine Tower Image:" + e.getMessage());
         }
+    }
+
+    @Override
+    public Bullet getBullet() {
+        return new Bullet(Config.MACHINE_GUN_BULLET_IMG, this.nextAngle);
     }
 }

@@ -1,6 +1,7 @@
 package game.entity.tower;
 
 import game.Config;
+import game.entity.bullet.Bullet;
 import game.entity.enemy.Enemy;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -18,5 +19,10 @@ public class SniperTower extends Tower {
         } catch (Exception e) {
             System.out.println("Error Loading Sniper Tower Image:" + e.getMessage());
         }
+    }
+
+    @Override
+    public Bullet getBullet() {
+        return new Bullet(Config.SNIPER_BULLET_IMG, this.nextAngle);
     }
 }

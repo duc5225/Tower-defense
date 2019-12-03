@@ -8,7 +8,7 @@ import java.io.IOException;
 public class GameStage {
     public static int stage = Config.ORIGINAL_STAGE;
     public static int money = 100;
-    public static int score = 0;
+    public static int health = 10;
     private static int roadLength = 37 * Config.TILE_SIZE;
 
     private GameField gameField;

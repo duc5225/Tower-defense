@@ -39,13 +39,13 @@
         <ImageView fx:id="sniperTowerCover" fitHeight="64.0" fitWidth="64.0" layoutY="331.0"
                    onMouseEntered="#onMouseEntered" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile203.png"/>
+                <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile206.png"/>
             </image>
         </ImageView>
         <ImageView fx:id="sniperTower" fitHeight="64.0" fitWidth="64.0" layoutY="331.0" onMouseEntered="#onMouseEntered"
                    pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile203.png"/>
+                <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile206.png"/>
             </image>
         </ImageView>
     </children>

@@ -18,7 +18,6 @@ public abstract class Enemy extends GameEntity {
     private int armor;
     private int reward;
     private boolean dead;
-    //    protected PathTransition transition;
     protected SequentialTransition transition;
 
     public Enemy(int speed, int health, int armor, int reward) {
@@ -67,6 +66,10 @@ public abstract class Enemy extends GameEntity {
 
     public void setDead(boolean dead) {
         this.dead = dead;
+    }
+
+    public SequentialTransition getTransition() {
+        return transition;
     }
 
     public double getX() {

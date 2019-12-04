@@ -11,7 +11,7 @@ public final class Config {
 
     public static final int TILE_SIZE = 64;
 
-    private static final int TILE_HORIZONTAL = 20;
+    private static final int TILE_HORIZONTAL = 22;
 
     private static final int TILE_VERTICAL = 15;
 

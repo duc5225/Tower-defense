@@ -43,9 +43,10 @@ public final class Config {
     // sniper tower
     public static final Image SNIPER_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile206.png");
     public static final int SNIPER_TOWER_PRICE = 20;
-    public static final int SNIPER_TOWER_DAMAGE = 600;
+    public static final int SNIPER_TOWER_DAMAGE = 500;
     public static final int SNIPER_TOWER_DELAY_TIME = (int) (SECOND * 2.5);
     public static final int SNIPER_TOWER_RANGE = 400;
+
     // machine gun tower
     public static final Image MACHINE_GUN_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile250.png");
     public static final int MACHINE_GUN_TOWER_PRICE = 40;
@@ -59,11 +60,32 @@ public final class Config {
 
     // normal enemy
     public static final Image NORMAL_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile245.png");
-    //    public static final Image NORMAL_ENEMY_IMG = new Image("file:src/game/resources/assets/kenney_topdowntanksredux/PNG/Default size/tank_bigRed.png");
     public static final int NORMAL_ENEMY_SPEED = 100;
     public static final int NORMAL_ENEMY_HEALTH = 300;
-    public static final int NORMAL_ENEMY_ARMOR = 2;
+    public static final int NORMAL_ENEMY_ARMOR = 10;
     public static final int NORMAL_ENEMY_REWARD = 2;
+
+    // smaller enemy
+    public static final Image SMALLER_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile246.png");
+    public static final int SMALLER_ENEMY_SPEED = 180;
+    public static final int SMALLER_ENEMY_HEALTH = 150;
+    public static final int SMALLER_ENEMY_ARMOR = 5;
+    public static final int SMALLER_ENEMY_REWARD = 4;
+
+    // tanker enemy
+    public static final Image TANKER_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile269.png");
+    //    public static final Image TANKER_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile269.png");
+    public static final int TANKER_ENEMY_SPEED = 70;
+    public static final int TANKER_ENEMY_HEALTH = 500;
+    public static final int TANKER_ENEMY_ARMOR = 40;
+    public static final int TANKER_ENEMY_REWARD = 20;
+
+    // boss enemy
+    public static final Image BOSS_ENEMY_IMG = new Image("file:src/game/resources/assets/kenney_topdowntanksredux/PNG/Default size/tank_bigRed.png");
+    public static final int BOSS_ENEMY_SPEED = 60;
+    public static final int BOSS_ENEMY_HEALTH = 1000;
+    public static final int BOSS_ENEMY_ARMOR = 200;
+    public static final int BOSS_ENEMY_REWARD = 50;
 
     // ========================================================================================
     // HILL
@@ -74,5 +96,5 @@ public final class Config {
     // delay time of a tower when shooting in nanosecond
     public static final long SHOOTING_DELAY_TIME = SECOND;
     //delay time when spawning new enemy in nanosecond
-    public static final long SPAWN_DELAY_TIME = SECOND / 2;
+    public static final long SPAWN_DELAY_TIME = (long) (SECOND * 0.5);
 }

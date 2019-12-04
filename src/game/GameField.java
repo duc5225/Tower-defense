@@ -2,8 +2,7 @@ package game;
 
 import game.entity.Hill;
 import game.entity.bullet.Bullet;
-import game.entity.enemy.Enemy;
-import game.entity.enemy.NormalEnemy;
+import game.entity.enemy.*;
 import game.entity.tower.Tower;
 import javafx.animation.*;
 import javafx.scene.Group;
@@ -63,9 +62,9 @@ public final class GameField {
             RotateTransition rotate0 = new RotateTransition(Duration.ONE, imageView);
             rotate0.setToAngle(-90);
 //            Path path = new Path();
-            MoveTo spawn1 = new MoveTo(2.5 * Config.TILE_SIZE, 15 * Config.TILE_SIZE);
+            MoveTo spawn1 = new MoveTo(2.5 * Config.TILE_SIZE, 15.2 * Config.TILE_SIZE);
             LineTo line1 = new LineTo(2.5 * Config.TILE_SIZE, 8.5 * Config.TILE_SIZE);
-            PathTransition path1 = new PathTransition(Duration.seconds(6.5 * Config.TILE_SIZE / speed), new Path(spawn1, line1), imageView);
+            PathTransition path1 = new PathTransition(Duration.seconds(6.7 * Config.TILE_SIZE / speed), new Path(spawn1, line1), imageView);
             RotateTransition rotate1 = new RotateTransition(Duration.ONE, imageView);
             rotate1.setToAngle(0);
 
@@ -111,15 +110,7 @@ public final class GameField {
 
     public void play() {
         store.handleMouseEvent(root, hills, towers);
-
-//        Font theFont = Font.font("Helvetica", FontWeight.BOLD, 50);
-//        gc.setFont(theFont);
-//        gc.setFill(Color.BLACK);
-//        gc.setLineWidth(1);
-//        gc.strokeText("Score: " + GameStage.score, 100, 100);
-
         createText();
-
         new AnimationTimer() {
             int NUMBER_OF_ENEMIES = 100;
 
@@ -171,10 +162,7 @@ public final class GameField {
             root.getChildren().remove(bullet.getImageView());
 
             if (enemy.isDead() && enemies.contains(enemy)) {
-                enemy.getImageView().setVisible(false);
-                enemies.remove(enemy);
-                root.getChildren().remove(enemy.getImageView());
-
+                remove(enemy);
                 //update money
                 GameStage.money += enemy.getReward();
             }
@@ -185,14 +173,26 @@ public final class GameField {
         shootTransition.play();
     }
 
+    private void remove(Enemy enemy) {
+        enemy.getImageView().setVisible(false);
+        enemies.remove(enemy);
+        root.getChildren().remove(enemy.getImageView());
+        enemy.setDead(true);
+    }
+
+    private Enemy generateEnemy() {
+        double x = Math.random();
+        if (x < 0.5) return new NormalEnemy();
+        if (x < 0.8) return new SmallerEnemy();
+        if (x < 0.95) return new TankerEnemy();
+        return new BossEnemy();
+    }
+
     private void spawnEnemy() {
-        Enemy enemy = new NormalEnemy();
+        Enemy enemy = generateEnemy();
         enemy.getTransition().setOnFinished(event -> {
             if (!enemy.isDead()) {
-                enemy.getImageView().setVisible(false);
-                enemies.remove(enemy);
-                root.getChildren().remove(enemy.getImageView());
-                enemy.setDead(true);
+                remove(enemy);
                 GameStage.health--;
             }
         });

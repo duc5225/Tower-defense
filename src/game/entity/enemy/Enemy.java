@@ -44,11 +44,11 @@ public abstract class Enemy extends GameEntity {
         this.health = health;
     }
 
-    public int getarmor() {
+    public int getArmor() {
         return armor;
     }
 
-    public void setarmor(int armor) {
+    public void setArmor(int armor) {
         this.armor = armor;
     }
 

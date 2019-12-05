@@ -2,6 +2,7 @@ package game.entity.tower;
 
 import game.Config;
 import game.entity.GameEntity;
+import game.entity.Hill;
 import game.entity.bullet.Bullet;
 import game.entity.enemy.Enemy;
 import javafx.animation.RotateTransition;
@@ -21,6 +22,8 @@ public abstract class Tower extends GameEntity {
 
     private int x;
     private int y;
+
+    public Hill hill;
 
     protected RotateTransition transition;
 
@@ -150,7 +153,9 @@ public abstract class Tower extends GameEntity {
     }
 
     public void dealDamageTo(Enemy enemy) {
-        enemy.setHealth(enemy.getHealth() - (damage - enemy.getarmor()));
+        int damageDeal = damage - enemy.getArmor();
+        if (damageDeal < 0) damageDeal = 0;
+        enemy.setHealth(enemy.getHealth() - damageDeal);
         if (enemy.getHealth() <= 0) enemy.setDead(true);
     }
 }

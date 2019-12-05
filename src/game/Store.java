@@ -10,11 +10,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -118,6 +122,7 @@ public class Store {
                     } else /*if (sniperTower.equals(source))*/ {
                         tower = new SniperTower();
                     }
+                    tower.hill = hill;
 
                     if (GameStage.money >= tower.getPrice()) {
                         System.out.println("placed");
@@ -125,24 +130,90 @@ public class Store {
                         towers.add(tower);
                         hill.setUsed(true);
 
-                        Circle circle = new Circle(tower.getX(), tower.getY(), tower.getRange());
-                        circle.setStroke(Color.BLACK);
-                        circle.setFill(Color.TRANSPARENT);
-
-                        root.getChildren().addAll(tower.getImageView(), circle);
+                        root.getChildren().addAll(tower.getImageView());
                         tower.getImageView().toFront();
-                        towers.forEach(t -> t.getImageView().setOnMouseClicked(e -> {
-                            System.out.println("work");
+                        towers.forEach(t -> t.getImageView().setOnMousePressed(e -> {
+                            // Check if another tower is being chosen
+                            if (Config.isOtherTowerChosen == false) {
+                                // Set current state, a tower is being chosen
+                                Config.isOtherTowerChosen = true;
+
+                                // Create tower range circle
+                                Circle circle = new Circle(t.getX(), t.getY(), t.getRange());
+                                circle.setStroke(Color.AQUA);
+                                circle.setFill(Color.TRANSPARENT);
+
+                                // Create 3 button when click
+                                Button upgrade = new Button("", Config.UPGRADE_BUTTON_IMAGE_VIEW);
+                                upgrade.setStyle(Config.BUTTON_STYLE);
+                                upgrade.setTranslateX(t.getX() - 75);
+                                upgrade.setTranslateY(t.getY() - 75);
+                                Button sell = new Button("", Config.SELL_BUTTON_IMAGE_VIEW);
+                                sell.setStyle(Config.BUTTON_STYLE);
+                                sell.setTranslateX(t.getX() + 15);
+                                sell.setTranslateY(t.getY() - 75);
+                                Button cancel = new Button("", Config.CANCEL_BUTTON_IMAGE_VIEW);
+                                cancel.setStyle(Config.BUTTON_STYLE);
+                                cancel.setTranslateX(t.getX() - 28);
+                                cancel.setTranslateY(t.getY() + 30);
+
+                                // Text show how much money needed for upgrade
+                                Text upgradeMoney = new Text(40, 40, "-" + t.getPrice());
+                                upgradeMoney.setFont(Font.font("Helvetica", FontWeight.BOLD, 17));
+                                upgradeMoney.setFill(Color.YELLOW);
+                                upgradeMoney.setStroke(Color.BLACK);
+
+                                // Text show how much money you get when selling
+                                Text sellMoney = new Text(40, 40, "+" + t.getPrice() / 2);
+                                sellMoney.setFont(Font.font("Helvetica", FontWeight.BOLD, 17));
+                                sellMoney.setFill(Color.YELLOW);
+                                sellMoney.setStroke(Color.BLACK);
+
+                                // Set money text beside the button
+                                upgradeMoney.setTranslateX(upgrade.getTranslateX());
+                                upgradeMoney.setTranslateY(upgrade.getTranslateY());
+                                sellMoney.setTranslateX(sell.getTranslateX());
+                                sellMoney.setTranslateY(sell.getTranslateY());
+
+                                root.getChildren().addAll(circle, upgrade, sell, cancel, upgradeMoney, sellMoney);
+
+                                //When user click on upgrade button
+                                upgrade.setOnMouseClicked(eventUpgrade -> {
+                                    if (GameStage.money >= t.getPrice()) {
+                                        t.setDamage(t.getDamage() + 20);
+                                        t.setRange(t.getRange() + 20);
+                                        GameStage.money -= t.getPrice();
+                                        t.setPrice(t.getPrice() + 10);
+                                        upgradeMoney.setText("-" + t.getPrice());
+                                        sellMoney.setText("+" + t.getPrice()/2);
+                                        circle.setRadius(t.getRange());
+                                    }
+                                });
+
+                                //When user click on sell button
+                                sell.setOnMouseClicked(eventSell -> {
+                                    root.getChildren().removeAll(t.getImageView(), circle, upgrade, sell, cancel);
+                                    root.getChildren().removeAll(upgradeMoney, sellMoney);
+                                    towers.remove(t);
+                                    GameStage.money += t.getPrice() / 2;
+                                    Config.isOtherTowerChosen = false;
+                                    t.hill.setUsed(false);
+                                });
+
+                                // When user click on cancel button
+                                cancel.setOnMouseClicked(eventCancel -> {
+                                    root.getChildren().removeAll(circle, upgrade, sell, cancel, upgradeMoney, sellMoney);
+                                    Config.isOtherTowerChosen = false;
+                                });
+                                towers.forEach(tower1 -> tower1.getImageView().toFront());
+                                System.out.println("damn");
+                            }
                         }));
                         GameStage.money -= tower.getPrice();
-                    } else {
-                        System.out.println("Not enough money");
-                    }
-
+                    } else System.out.println("Not enough money");
                 }
             });
         };
-
         source.setOnMouseDragged(mouseDragged);
         source.setOnMouseReleased(mouseReleased);
     }

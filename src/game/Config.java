@@ -3,6 +3,7 @@ package game;
 import java.awt.*;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public final class Config {
 
@@ -20,6 +21,8 @@ public final class Config {
     public static final int SCREEN_HEIGHT = TILE_SIZE * TILE_VERTICAL;
 
     public static final int ORIGINAL_STAGE = 1;
+
+    public static boolean isOtherTowerChosen = false;
 
     // ========================================================================================
     // BULLET
@@ -43,16 +46,16 @@ public final class Config {
     // sniper tower
     public static final Image SNIPER_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile206.png");
     public static final int SNIPER_TOWER_PRICE = 20;
-    public static final int SNIPER_TOWER_DAMAGE = 500;
+    public static final int SNIPER_TOWER_DAMAGE = 800;
     public static final int SNIPER_TOWER_DELAY_TIME = (int) (SECOND * 2.5);
-    public static final int SNIPER_TOWER_RANGE = 400;
+    public static final int SNIPER_TOWER_RANGE = 450;
 
     // machine gun tower
     public static final Image MACHINE_GUN_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile250.png");
     public static final int MACHINE_GUN_TOWER_PRICE = 40;
     public static final int MACHINE_GUN_TOWER_DAMAGE = 75;
-    public static final int MACHINE_GUN_TOWER_DELAY_TIME = (int) (0.2 * SECOND);
-    public static final int MACHINE_GUN_TOWER_RANGE = 160;
+    public static final int MACHINE_GUN_TOWER_DELAY_TIME = (int) (SECOND * 0.2);
+    public static final int MACHINE_GUN_TOWER_RANGE = 200;
 
     // ========================================================================================
     // ENEMY
@@ -97,4 +100,24 @@ public final class Config {
     public static final long SHOOTING_DELAY_TIME = SECOND;
     //delay time when spawning new enemy in nanosecond
     public static final long SPAWN_DELAY_TIME = (long) (SECOND * 0.5);
+
+
+    // ========================================================================================
+    // BUTTON
+    // ========================================================================================
+    public static final ImageView UPGRADE_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/upgrade.png");
+    public static final ImageView SELL_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/sell.png");
+    public static final ImageView CANCEL_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/cancel.png");
+    public static final String BUTTON_STYLE = "-fx-background-radius: 5em; " +
+            "-fx-min-width: 55px; " +
+            "-fx-min-height: 55px; " +
+            "-fx-max-width: 55px; " +
+            "-fx-max-height: 55px;" +
+            "-fx-background-color: " +
+            "linear-gradient(#f0ff35, #a9ff00)," +
+            "radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);" +
+            " -fx-background-insets: 0, 1;" +
+            " -fx-effect: dropShadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );" +
+            " -fx-text-fill: #395306;";
+
 }

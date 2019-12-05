@@ -13,7 +13,7 @@ import javafx.util.Duration;
 
 public final class NormalEnemy extends Enemy {
     public NormalEnemy() {
-        super(80, 300, 2, Config.NORMAL_ENEMY_REWARD);
+        super(Config.NORMAL_ENEMY_SPEED, Config.NORMAL_ENEMY_HEALTH, 2, Config.NORMAL_ENEMY_REWARD);
         try {
             this.image = Config.NORMAL_ENEMY_IMG;
             this.imageView = new ImageView(image);
@@ -25,13 +25,5 @@ public final class NormalEnemy extends Enemy {
         } catch (Exception e) {
             System.out.println("Error Loading Normal Enemy Image:" + e.getMessage());
         }
-    }
-
-    public void rotateLeft() {
-        imageView.setRotate(imageView.getRotate() - 90);
-    }
-
-    public void rotateRight() {
-        imageView.setRotate(imageView.getRotate() + 90);
     }
 }

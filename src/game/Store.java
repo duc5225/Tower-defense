@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -79,8 +80,8 @@ public class Store {
 
     private void handleDragDropEvent(ImageView source, Group root, List<Hill> hills, List<Tower> towers) {
         Circle tempCircle = new Circle(-1000, -1000, radius.get(source));
-        tempCircle.setStroke(Color.BLACK);
-        tempCircle.setFill(Color.TRANSPARENT);
+        tempCircle.setStroke(Color.AQUA);
+        tempCircle.setFill(Color.rgb(0,0,0,0.07));
         root.getChildren().add(tempCircle);
 
         EventHandler<MouseEvent> mouseDragged = event -> {
@@ -97,6 +98,13 @@ public class Store {
                 if (hill.isUsable(event.getSceneX(), event.getSceneY())) {
                     source.setCursor(Cursor.CROSSHAIR);
                     hovering.set(true);
+                    if (normalTower.equals(source)) {
+                        if (GameStage.money < Config.NORMAL_TOWER_PRICE) source.setCursor(new ImageCursor(Config.NOT_ENOUGH_MONEY));
+                    } else if (machineGunTower.equals(source)) {
+                        if (GameStage.money < Config.MACHINE_GUN_TOWER_PRICE) source.setCursor(new ImageCursor(Config.NOT_ENOUGH_MONEY));
+                    } else if (sniperTower.equals(source)) {
+                        if (GameStage.money < Config.SNIPER_TOWER_PRICE) source.setCursor(new ImageCursor(Config.NOT_ENOUGH_MONEY));
+                    }
                 }
             });
             if (!hovering.get()) {
@@ -125,7 +133,6 @@ public class Store {
                     tower.hill = hill;
 
                     if (GameStage.money >= tower.getPrice()) {
-                        System.out.println("placed");
                         tower.setPosition(hill.getX(), hill.getY());
                         towers.add(tower);
                         hill.setUsed(true);
@@ -141,7 +148,7 @@ public class Store {
                                 // Create tower range circle
                                 Circle circle = new Circle(t.getX(), t.getY(), t.getRange());
                                 circle.setStroke(Color.AQUA);
-                                circle.setFill(Color.TRANSPARENT);
+                                circle.setFill(Color.rgb(0,0,0,0.07));
 
                                 // Create 3 button when click
                                 Button upgrade = new Button("", Config.UPGRADE_BUTTON_IMAGE_VIEW);
@@ -206,7 +213,6 @@ public class Store {
                                     Config.isOtherTowerChosen = false;
                                 });
                                 towers.forEach(tower1 -> tower1.getImageView().toFront());
-                                System.out.println("damn");
                             }
                         }));
                         GameStage.money -= tower.getPrice();

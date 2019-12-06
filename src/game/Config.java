@@ -119,5 +119,8 @@ public final class Config {
             " -fx-background-insets: 0, 1;" +
             " -fx-effect: dropShadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );" +
             " -fx-text-fill: #395306;";
-
+    // ========================================================================================
+    // Cursor
+    // ========================================================================================
+    public static Image NOT_ENOUGH_MONEY = new Image("file:src/game/resources/assets/button/sell.png");
 }

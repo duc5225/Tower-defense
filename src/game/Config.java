@@ -3,6 +3,7 @@ package game;
 import java.awt.*;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public final class Config {
 
@@ -84,7 +85,7 @@ public final class Config {
     public static final Image BOSS_ENEMY_IMG = new Image("file:src/game/resources/assets/kenney_topdowntanksredux/PNG/Default size/tank_bigRed.png");
     public static final int BOSS_ENEMY_SPEED = 60;
     public static final int BOSS_ENEMY_HEALTH = 1000;
-    public static final int BOSS_ENEMY_ARMOR = 200;
+    public static final int BOSS_ENEMY_ARMOR = 70;
     public static final int BOSS_ENEMY_REWARD = 50;
 
     // ========================================================================================
@@ -97,4 +98,10 @@ public final class Config {
     public static final long SHOOTING_DELAY_TIME = SECOND;
     //delay time when spawning new enemy in nanosecond
     public static final long SPAWN_DELAY_TIME = (long) (SECOND * 0.5);
+
+    public static final ImageView EXPLOSION1 = new ImageView("file:src/game/resources/assets/kenney_topdowntanksredux/PNG/Default size/explosion1.png");
+    public static final ImageView EXPLOSION2 = new ImageView("file:src/game/resources/assets/kenney_topdowntanksredux/PNG/Default size/explosion2.png");
+    public static final ImageView EXPLOSION3 = new ImageView("file:src/game/resources/assets/kenney_topdowntanksredux/PNG/Default size/explosion3.png");
+    public static final ImageView EXPLOSION4 = new ImageView("file:src/game/resources/assets/kenney_topdowntanksredux/PNG/Default size/explosion4.png");
+    public static final ImageView EXPLOSION5 = new ImageView("file:src/game/resources/assets/kenney_topdowntanksredux/PNG/Default size/explosion5.png");
 }

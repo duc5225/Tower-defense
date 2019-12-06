@@ -18,7 +18,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.control.Button;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,13 +96,12 @@ public final class GameField {
             rotate5.setToAngle(0);
 
             MoveTo spawn6 = new MoveTo(line5.getX(), line5.getY());
-            LineTo line6 = new LineTo(22.1 * Config.TILE_SIZE, 11.5 * Config.TILE_SIZE);
-            PathTransition path6 = new PathTransition(Duration.seconds(10.6 * Config.TILE_SIZE / speed), new Path(spawn6, line6), imageView);
+            LineTo line6 = new LineTo(20.5 * Config.TILE_SIZE, 11.5 * Config.TILE_SIZE);
+            PathTransition path6 = new PathTransition(Duration.seconds(9.0 * Config.TILE_SIZE / speed), new Path(spawn6, line6), imageView);
             RotateTransition rotate6 = new RotateTransition(Duration.ONE, imageView);
 
-//            path.getElements().addAll(spawn, line1, line2, line3, line4, line5, line6);
-            Transition[] sequential = new Transition[]{rotate0, path1, rotate1, path2, rotate2, path3, rotate3, path4, rotate4, path5, rotate5, path6, rotate6};
-//            makeLinear(sequential);
+            Transition[] sequential = new Transition[]{rotate0, path1, rotate1, path2, rotate2, path3, rotate3, path4, rotate4, path5, rotate5, path6, rotate6, new PauseTransition(Duration.millis(100))};
+
             for (Transition transition : sequential) {
                 transition.setInterpolator(Interpolator.LINEAR);
             }
@@ -111,7 +113,11 @@ public final class GameField {
     public void play() {
         store.handleMouseEvent(root, hills, towers);
         createText();
-        new AnimationTimer() {
+        AnimationTimer timer = new AnimationTimer() {
+            // destination coordinate
+            final double desX = 20.5 * Config.TILE_SIZE;
+            final double desY = 11.5 * Config.TILE_SIZE;
+
             int NUMBER_OF_ENEMIES = 100;
 
             int i = 0;
@@ -119,34 +125,71 @@ public final class GameField {
             long startTime = System.nanoTime();
 
             public void handle(long currentNanoTime) {
-                if (GameStage.stage == 1) {
-                    updateText();
-                    // spawn new enemy after a fixed time until max number of enemies reached
-                    if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
-                        if (i < NUMBER_OF_ENEMIES) {
-                            spawnEnemy();
-                            ++i;
+                updateText();
+                if (GameStage.health > 0) {
+                    if (GameStage.stage == 1) {
+                        // spawn new enemy after a fixed time until max number of enemies reached
+                        if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
+                            if (i < NUMBER_OF_ENEMIES) {
+                                spawnEnemy();
+                                ++i;
+                            }
+                            startTime = currentNanoTime;
                         }
-                        startTime = currentNanoTime;
-                    }
-                    for (Tower tower : towers) {
-                        for (Enemy enemy : enemies) {
-                            // if enemy is in the radius of the tower
-                            if (tower.canReach(enemy)) {
-                                tower.rotateTo(enemy);
+                        for (Tower tower : towers) {
+                            double minDistance = 99999;
+                            Enemy closest = null;
+                            for (Enemy enemy : enemies) {
+                                // if enemy is in the range of the tower
+                                if (tower.canReach(enemy)) {
+                                    if (minDistance > Math.sqrt(Math.pow(enemy.getX() - desX, 2) + Math.pow(enemy.getY() - desY, 2))) {
+                                        minDistance = Math.sqrt(Math.pow(enemy.getX() - desX, 2) + Math.pow(enemy.getY() - desY, 2));
+                                        closest = enemy;
+                                    }
+                                }
+                            } // end enemy iterate
+                            if (closest != null) {
+                                tower.rotateTo(closest);
                                 if (currentNanoTime - tower.getStartDelayTime() >= tower.getDelayTime()) {
-                                    tower.dealDamageTo(enemy);
-                                    renderAttackAnimation(tower, enemy);
+                                    tower.dealDamageTo(closest);
+                                    renderAttackAnimation(tower, closest);
                                     tower.setStartDelayTime(currentNanoTime);
                                 }
-                                // found the enemy, break and let another tower find enemy
-                                break;
                             }
-                        } // end enemy iterate
-                    } //  end tower iterate
+                        } //  end tower iterate
+                    }
+                } else {
+                    //lose
+                    System.out.println("u lost");
+                    stop();
+                    GameField.this.stop();
                 }
             }
-        }.start();
+        };
+        timer.start();
+    }
+
+    private void stop() {
+        enemies.forEach(enemy -> {
+            enemy.getTransition().stop();
+            enemy.getImageView().setVisible(false);
+            root.getChildren().remove(enemy);
+        });
+        towers.forEach(tower -> {
+            tower.getTransition().stop();
+            tower.getImageView().setVisible(false);
+            root.getChildren().remove(tower);
+        });
+        enemies.clear();
+        towers.clear();
+        hills.clear();
+
+        gc.clearRect(0, 0, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+        root.getChildren().clear();
+        money.setVisible(false);
+        health.setVisible(false);
+
+        store.disable();
     }
 
     private void renderAttackAnimation(Tower tower, Enemy enemy) {
@@ -182,9 +225,9 @@ public final class GameField {
 
     private Enemy generateEnemy() {
         double x = Math.random();
-        if (x < 0.5) return new NormalEnemy();
-        if (x < 0.8) return new SmallerEnemy();
-        if (x < 0.95) return new TankerEnemy();
+        if (x < 0.1) return new NormalEnemy();
+        if (x < 0.7) return new SmallerEnemy();
+        if (x < 0.8) return new TankerEnemy();
         return new BossEnemy();
     }
 
@@ -193,12 +236,32 @@ public final class GameField {
         enemy.getTransition().setOnFinished(event -> {
             if (!enemy.isDead()) {
                 remove(enemy);
+                explode();
                 GameStage.health--;
             }
         });
         enemies.add(enemy);
         root.getChildren().add(enemy.getImageView());
         enemies.forEach(Enemy::renderAnimation);
+    }
+
+    private void explode() {
+        Group explosion = new Group();
+        explosion.setTranslateX(20 * Config.TILE_SIZE);
+        explosion.setTranslateY(11 * Config.TILE_SIZE);
+        Timeline t = new Timeline();
+        t.setCycleCount(1);
+        t.getKeyFrames().add(new KeyFrame(Duration.millis(50), event -> explosion.getChildren().setAll(Config.EXPLOSION1)));
+        t.getKeyFrames().add(new KeyFrame(Duration.millis(100), event -> explosion.getChildren().setAll(Config.EXPLOSION2)));
+        t.getKeyFrames().add(new KeyFrame(Duration.millis(150), event -> explosion.getChildren().setAll(Config.EXPLOSION3)));
+        t.getKeyFrames().add(new KeyFrame(Duration.millis(200), event -> explosion.getChildren().setAll(Config.EXPLOSION4)));
+        t.getKeyFrames().add(new KeyFrame(Duration.millis(250), event -> explosion.getChildren().setAll(Config.EXPLOSION5)));
+        root.getChildren().add(explosion);
+        t.play();
+        t.setOnFinished(event -> {
+            explosion.setVisible(false);
+            explosion.getChildren().clear();
+        });
     }
 
     private void initHills() {

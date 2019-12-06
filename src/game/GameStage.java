@@ -7,9 +7,8 @@ import java.io.IOException;
 
 public class GameStage {
     public static int stage = Config.ORIGINAL_STAGE;
-    public static int money = 100;
-    public static int health = 10;
-    private static int roadLength = 37 * Config.TILE_SIZE;
+    public static int money;
+    public static int health;
 
     private GameField gameField;
     private Group root;
@@ -19,21 +18,18 @@ public class GameStage {
         gameField = new GameField(root, canvas, store);
         this.root = root;
         this.store = store;
+        GameStage.money = 100;
+        GameStage.health = 10;
     }
 
     public GameStage(int stage) {
         GameStage.stage = stage;
         if (stage == 1) {
             money = 100;
-            roadLength = 37 * Config.TILE_SIZE;
         }
         if (stage == 2) {
             money = 200;
         }
-    }
-
-    public static int getRoadLength() {
-        return roadLength;
     }
 
     private void renderGameField() {

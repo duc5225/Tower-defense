@@ -16,21 +16,20 @@ import java.io.IOException;
 public class Main extends Application {
     private FXMLLoader fxmlLoader;
     private AnchorPane mainPane;
+    private Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        this.primaryStage = primaryStage;
         //Create window, scene, set the program name
         fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
         mainPane = fxmlLoader.load();
         initMainMenu();
-//        new MainMenu(mainPane);
-//        mainPane.getChildren().add(root);
 
-//        Button button = new Button("CCC");
-//        button.setPrefSize(200,Config.SCREEN_HEIGHT);
-//        AnchorPane.setRightAnchor(button,0.0);
-//        mainPane.getChildren().add(button);
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            closeGame();
+        });
 
         Scene theScene = new Scene(mainPane);
         primaryStage.setTitle("Tower defense");
@@ -54,6 +53,7 @@ public class Main extends Application {
         // get main menu controller
         MainMenuController mainMenuController = fxmlLoader.getController();
         Button playBtn = mainMenuController.getPlayBtn();
+        Button exitBtn = mainMenuController.getExitBtn();
         playBtn.setOnAction(event -> {
             try {
                 startGame();
@@ -61,11 +61,12 @@ public class Main extends Application {
                 e.printStackTrace();
             }
         });
+        exitBtn.setOnAction(event -> closeGame());
     }
 
     private void startGame() throws IOException {
         Group root = new Group();
-        mainPane.getChildren().clear();
+//        mainPane.getChildren().clear();
         mainPane.getChildren().add(root);
         //Create canvas
         Canvas canvas = new Canvas(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
@@ -79,9 +80,7 @@ public class Main extends Application {
         new GameStage(root, canvas, store).start();
     }
 
-    private void createStore() throws IOException {
-//        Store store = new Store(mainPane, fxmlLoader.getController());
-//        store.render();
-//        store.handleMouseEvent();
+    private void closeGame() {
+        primaryStage.close();
     }
 }

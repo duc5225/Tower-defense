@@ -40,7 +40,9 @@ public class Store {
 
     public void init() throws IOException {
         AnchorPane store = mainMenuController.getStore();
-        mainPane.getChildren().add(store);
+        store.setVisible(true);
+        store.toFront();
+//        mainPane.getChildren().add(store);
         // render
         Parent root = fxmlLoader.load();
         store.getChildren().add(root);
@@ -53,6 +55,11 @@ public class Store {
         radius.put(normalTower, Config.NORMAL_TOWER_RANGE);
         radius.put(machineGunTower, Config.MACHINE_GUN_TOWER_RANGE);
         radius.put(sniperTower, Config.SNIPER_TOWER_RANGE);
+    }
+
+    public void disable() {
+        mainMenuController.getStore().setVisible(false);
+        mainMenuController.getStore().getChildren().clear();
     }
 
     public void handleMouseEvent(Group root, List<Hill> hills, List<Tower> towers) {

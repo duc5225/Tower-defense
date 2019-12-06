@@ -8,6 +8,8 @@ import game.entity.tower.Tower;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.SequentialTransition;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -18,6 +20,7 @@ public abstract class Enemy extends GameEntity {
     private int armor;
     private int reward;
     private boolean dead;
+
     protected SequentialTransition transition;
 
     public Enemy(int speed, int health, int armor, int reward) {
@@ -85,12 +88,13 @@ public abstract class Enemy extends GameEntity {
 //            PathTransition pathTransition = new PathTransition(Duration.seconds(currentGameStage.getRoadLength()/this.getSpeed()), GameField.createPath(currentGameStage.getStage()), this.imageView);
 //            pathTransition.play();
             this.transition.play();
+//            transition.stat
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-//    public boolean isInRange(Tower tower) {
+    //    public boolean isInRange(Tower tower) {
 //
 //    }
 

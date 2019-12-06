@@ -48,5 +48,8 @@
                 <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile206.png"/>
             </image>
         </ImageView>
+        <Label alignment="CENTER" layoutY="128.0" prefHeight="28.0" prefWidth="72.0" text="\$10"/>
+        <Label alignment="CENTER" layoutY="256.0" prefHeight="28.0" prefWidth="72.0" text="\$20"/>
+        <Label alignment="CENTER" layoutY="381.0" prefHeight="28.0" prefWidth="72.0" text="\$40"/>
     </children>
 </AnchorPane>

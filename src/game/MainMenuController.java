@@ -20,21 +20,21 @@ public class MainMenuController implements Initializable {
     private Button playBtn;
 
     @FXML
-    private AnchorPane store;
+    private Button exitBtn;
 
     @FXML
-    private AnchorPane menu;
+    private AnchorPane store;
 
     public AnchorPane getStore() {
         return store;
     }
 
-    public AnchorPane getMenu() {
-        return menu;
-    }
-
     public Button getPlayBtn() {
         return playBtn;
+    }
+
+    public Button getExitBtn() {
+        return exitBtn;
     }
 
     @Override

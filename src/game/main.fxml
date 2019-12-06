@@ -31,7 +31,7 @@
                                 <Font name="Agency FB Bold" size="47.0"/>
                             </font>
                         </Button>
-                        <Button layoutX="10.0" layoutY="106.0" mnemonicParsing="false" prefHeight="97.0"
+                        <Button fx:id="exitBtn" layoutX="10.0" layoutY="106.0" mnemonicParsing="false" prefHeight="97.0"
                                 prefWidth="220.0" text="EXIT">
                             <font>
                                 <Font name="Agency FB Bold" size="47.0"/>

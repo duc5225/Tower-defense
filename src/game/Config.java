@@ -87,7 +87,7 @@ public final class Config {
     public static final Image BOSS_ENEMY_IMG = new Image("file:src/game/resources/assets/kenney_topdowntanksredux/PNG/Default size/tank_bigRed.png");
     public static final int BOSS_ENEMY_SPEED = 60;
     public static final int BOSS_ENEMY_HEALTH = 1000;
-    public static final int BOSS_ENEMY_ARMOR = 70;
+    public static final int BOSS_ENEMY_ARMOR = 100;
     public static final int BOSS_ENEMY_REWARD = 50;
 
     // ========================================================================================

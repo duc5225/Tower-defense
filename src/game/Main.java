@@ -24,6 +24,7 @@ public class Main extends Application {
         //Create window, scene, set the program name
         fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
         mainPane = fxmlLoader.load();
+
         initMainMenu();
 
         primaryStage.setOnCloseRequest(event -> {
@@ -54,8 +55,14 @@ public class Main extends Application {
         MainMenuController mainMenuController = fxmlLoader.getController();
         Button playBtn = mainMenuController.getPlayBtn();
         Button exitBtn = mainMenuController.getExitBtn();
+        Config.rabi.play();
+        Config.rabi.repeat();
+
         playBtn.setOnAction(event -> {
             try {
+                Config.rabi.stop();
+                Config.yeahBoy.play();
+                Config.yeahBoy.repeat();
                 startGame();
             } catch (IOException e) {
                 e.printStackTrace();

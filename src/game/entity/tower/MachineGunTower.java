@@ -1,6 +1,7 @@
 package game.entity.tower;
 
 import game.Config;
+import game.Sound;
 import game.entity.bullet.Bullet;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -24,5 +25,10 @@ public class MachineGunTower extends Tower {
     @Override
     public Bullet getBullet() {
         return new Bullet(Config.MACHINE_GUN_BULLET_IMG, this.nextAngle);
+    }
+
+    @Override
+    public Sound getShootingSound() {
+        return Config.MACHINE_GUN_TOWER_SOUND;
     }
 }

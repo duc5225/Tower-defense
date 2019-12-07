@@ -1,6 +1,7 @@
 package game.entity.tower;
 
 import game.Config;
+import game.Sound;
 import game.entity.bullet.Bullet;
 import game.entity.enemy.Enemy;
 import javafx.animation.Interpolator;
@@ -24,5 +25,10 @@ public class SniperTower extends Tower {
     @Override
     public Bullet getBullet() {
         return new Bullet(Config.SNIPER_BULLET_IMG, this.nextAngle);
+    }
+
+    @Override
+    public Sound getShootingSound() {
+        return Config.SNIPER_TOWER_SOUND;
     }
 }

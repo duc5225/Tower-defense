@@ -18,10 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.control.Button;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +34,9 @@ public final class GameField {
     private final List<Hill> hills = new ArrayList<>();
     private List<Enemy> enemies;
     private List<Tower> towers;
+
+    private Sound shootSound = new Sound("src/game/sound/sfx/shoot.wav");
+    private Sound explodeSound = new Sound("src/game/sound/sfx/explode.mp3");
 
     public GameField(Group root, Canvas canvas, Store store) {
         this.root = root;
@@ -184,6 +184,10 @@ public final class GameField {
         towers.clear();
         hills.clear();
 
+        Config.yeahBoy.stop();
+        Config.rabi.play();
+        Config.rabi.repeat();
+
         gc.clearRect(0, 0, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
         root.getChildren().clear();
         money.setVisible(false);
@@ -195,6 +199,9 @@ public final class GameField {
     private void renderAttackAnimation(Tower tower, Enemy enemy) {
         Bullet bullet = tower.getBullet();
         Path path = new Path(new MoveTo(tower.getX(), tower.getY()), new LineTo(enemy.getX(), enemy.getY()));
+
+        // Play sound
+        tower.getShootingSound().play();
 
         PathTransition shootTransition = new PathTransition(Duration.millis(100), path, bullet.getImageView());
         shootTransition.setCycleCount(1);
@@ -257,6 +264,7 @@ public final class GameField {
         t.getKeyFrames().add(new KeyFrame(Duration.millis(200), event -> explosion.getChildren().setAll(Config.EXPLOSION4)));
         t.getKeyFrames().add(new KeyFrame(Duration.millis(250), event -> explosion.getChildren().setAll(Config.EXPLOSION5)));
         root.getChildren().add(explosion);
+        explodeSound.play();
         t.play();
         t.setOnFinished(event -> {
             explosion.setVisible(false);

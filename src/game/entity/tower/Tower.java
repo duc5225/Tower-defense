@@ -1,6 +1,7 @@
 package game.entity.tower;
 
 import game.Config;
+import game.Sound;
 import game.entity.GameEntity;
 import game.entity.Hill;
 import game.entity.bullet.Bullet;
@@ -88,6 +89,8 @@ public abstract class Tower extends GameEntity {
     }
 
     public abstract Bullet getBullet();
+
+    public abstract Sound getShootingSound();
 
     public int getX() {
         return x;

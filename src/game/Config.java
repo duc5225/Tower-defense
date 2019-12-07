@@ -114,6 +114,7 @@ public final class Config {
     public static final ImageView UPGRADE_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/upgrade.png");
     public static final ImageView SELL_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/sell.png");
     public static final ImageView CANCEL_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/cancel.png");
+    public static final ImageView PAUSE_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/pause.png");
     public static final String BUTTON_STYLE = "-fx-background-radius: 5em; " +
             "-fx-min-width: 55px; " +
             "-fx-min-height: 55px; " +
@@ -126,7 +127,19 @@ public final class Config {
             " -fx-effect: dropShadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );" +
             " -fx-text-fill: #395306;";
     // ========================================================================================
-    // Cursor
+    // CURSOR
     // ========================================================================================
     public static Image NOT_ENOUGH_MONEY = new Image("file:src/game/resources/assets/button/sell.png");
+
+    // ========================================================================================
+    // SOUND
+    // ========================================================================================
+    // Music
+    public static final Sound yeahBoy = new Sound("src/game/sound/music/yeah.mp3");
+    public static final Sound rabi = new Sound("src/game/sound/music/rabi.mp3");
+    // Sfx
+    public static final Sound NORMAL_TOWER_SOUND = new Sound("src/game/sound/sfx/normal.wav");
+    public static final Sound MACHINE_GUN_TOWER_SOUND = new Sound("src/game/sound/sfx/machinegun.wav");
+    public static final Sound SNIPER_TOWER_SOUND = new Sound("src/game/sound/sfx/sniper.wav");
+    public static final Sound explodeSound = new Sound("src/game/sound/sfx/explode.mp3");
 }

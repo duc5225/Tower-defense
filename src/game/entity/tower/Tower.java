@@ -17,9 +17,10 @@ public abstract class Tower extends GameEntity {
     private long delayTime;
     private int range;
 
+    public int level = 0;
+
     // update every time a tower shoot a bullet
     private long startDelayTime;
-    private Bullet bullet;
 
     private int x;
     private int y;
@@ -54,14 +55,6 @@ public abstract class Tower extends GameEntity {
 
     public void setDamage(int damage) {
         this.damage = damage;
-    }
-
-    public int getArmorPenetration() {
-        return armorPenetration;
-    }
-
-    public void setArmorPenetration(int armorPenetration) {
-        this.armorPenetration = armorPenetration;
     }
 
     public long getDelayTime() {

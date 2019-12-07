@@ -18,18 +18,8 @@ public class GameStage {
         gameField = new GameField(root, canvas, store);
         this.root = root;
         this.store = store;
-        GameStage.money = 100;
+        GameStage.money = 1000;
         GameStage.health = 10;
-    }
-
-    public GameStage(int stage) {
-        GameStage.stage = stage;
-        if (stage == 1) {
-            money = 100;
-        }
-        if (stage == 2) {
-            money = 200;
-        }
     }
 
     private void renderGameField() {
@@ -47,14 +37,4 @@ public class GameStage {
                 System.out.println("Nothing called ");
         }
     }
-
-//    private void createButtons() {
-//        Button button = new Button("Play");
-//        button.setOnAction(event -> {
-//            GameStage.stage = 1;
-//            root.getChildren().remove(button);
-//            start();
-//        });
-//        root.getChildren().add(button);
-//    }
 }

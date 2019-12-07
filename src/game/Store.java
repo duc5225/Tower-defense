@@ -88,7 +88,7 @@ public class Store {
     private void handleDragDropEvent(ImageView source, Group root, List<Hill> hills, List<Tower> towers) {
         Circle tempCircle = new Circle(-1000, -1000, radius.get(source));
         tempCircle.setStroke(Color.AQUA);
-        tempCircle.setFill(Color.rgb(0,0,0,0.07));
+        tempCircle.setFill(Color.rgb(0, 0, 0, 0.07));
         root.getChildren().add(tempCircle);
 
         EventHandler<MouseEvent> mouseDragged = event -> {
@@ -106,11 +106,14 @@ public class Store {
                     source.setCursor(Cursor.CROSSHAIR);
                     hovering.set(true);
                     if (normalTower.equals(source)) {
-                        if (GameStage.money < Config.NORMAL_TOWER_PRICE) source.setCursor(new ImageCursor(Config.NOT_ENOUGH_MONEY));
+                        if (GameStage.money < Config.NORMAL_TOWER_PRICE)
+                            source.setCursor(new ImageCursor(Config.NOT_ENOUGH_MONEY));
                     } else if (machineGunTower.equals(source)) {
-                        if (GameStage.money < Config.MACHINE_GUN_TOWER_PRICE) source.setCursor(new ImageCursor(Config.NOT_ENOUGH_MONEY));
+                        if (GameStage.money < Config.MACHINE_GUN_TOWER_PRICE)
+                            source.setCursor(new ImageCursor(Config.NOT_ENOUGH_MONEY));
                     } else if (sniperTower.equals(source)) {
-                        if (GameStage.money < Config.SNIPER_TOWER_PRICE) source.setCursor(new ImageCursor(Config.NOT_ENOUGH_MONEY));
+                        if (GameStage.money < Config.SNIPER_TOWER_PRICE)
+                            source.setCursor(new ImageCursor(Config.NOT_ENOUGH_MONEY));
                     }
                 }
             });
@@ -155,7 +158,7 @@ public class Store {
                                 // Create tower range circle
                                 Circle circle = new Circle(t.getX(), t.getY(), t.getRange());
                                 circle.setStroke(Color.AQUA);
-                                circle.setFill(Color.rgb(0,0,0,0.07));
+                                circle.setFill(Color.rgb(0, 0, 0, 0.07));
 
                                 // Create 3 button when click
                                 Button upgrade = new Button("", Config.UPGRADE_BUTTON_IMAGE_VIEW);
@@ -183,31 +186,59 @@ public class Store {
                                 sellMoney.setFill(Color.YELLOW);
                                 sellMoney.setStroke(Color.BLACK);
 
-                                // Set money text beside the button
+                                // Text show how much damage yours tower has
+                                Text towerDamage = new Text(35, 0, "Damage: " + t.getDamage());
+                                towerDamage.setFont(Font.font("Helvetica", FontWeight.BOLD, 14));
+                                towerDamage.setFill(Color.RED);
+                                towerDamage.setStroke(Color.BLACK);
+
+                                // Set money text beside the button, damage text on top
                                 upgradeMoney.setTranslateX(upgrade.getTranslateX());
                                 upgradeMoney.setTranslateY(upgrade.getTranslateY());
+                                towerDamage.setTranslateX(upgrade.getTranslateX());
+                                towerDamage.setTranslateY(upgrade.getTranslateY());
                                 sellMoney.setTranslateX(sell.getTranslateX());
                                 sellMoney.setTranslateY(sell.getTranslateY());
 
-                                root.getChildren().addAll(circle, upgrade, sell, cancel, upgradeMoney, sellMoney);
+                                root.getChildren().addAll(circle, upgrade, sell, cancel, upgradeMoney, sellMoney,towerDamage);
 
                                 //When user click on upgrade button
                                 upgrade.setOnMouseClicked(eventUpgrade -> {
                                     if (GameStage.money >= t.getPrice()) {
+                                        // Upgrade damage and range
                                         t.setDamage(t.getDamage() + 20);
                                         t.setRange(t.getRange() + 20);
+
+                                        // Increase money each time tower level up
                                         GameStage.money -= t.getPrice();
                                         t.setPrice(t.getPrice() + 10);
                                         upgradeMoney.setText("-" + t.getPrice());
-                                        sellMoney.setText("+" + t.getPrice()/2);
+
+                                        // Update information for user
+                                        sellMoney.setText("+" + t.getPrice() / 2);
+                                        towerDamage.setText("Damage: " + t.getDamage());
                                         circle.setRadius(t.getRange());
+
+                                        // Add star for each upgrade
+                                        ImageView star = new ImageView("file:src/game/resources/assets/star.png");
+                                        // Make each row only has 4 stars
+                                        int row = t.level / 4;
+                                        star.setX(t.getX() - 30 + t.level * 15 - row * 15 * 4);
+                                        star.setY(t.getY() + 15 + row * 15);
+                                        root.getChildren().add(star);
+
+                                        // Make sure star don't stay in front of cancel button or tower
+                                        cancel.toFront();
+                                        t.getImageView().toFront();
+
+                                        t.level++;
                                     }
                                 });
 
                                 //When user click on sell button
                                 sell.setOnMouseClicked(eventSell -> {
                                     root.getChildren().removeAll(t.getImageView(), circle, upgrade, sell, cancel);
-                                    root.getChildren().removeAll(upgradeMoney, sellMoney);
+                                    root.getChildren().removeAll(upgradeMoney, sellMoney, towerDamage);
                                     towers.remove(t);
                                     GameStage.money += t.getPrice() / 2;
                                     Config.isOtherTowerChosen = false;
@@ -216,7 +247,7 @@ public class Store {
 
                                 // When user click on cancel button
                                 cancel.setOnMouseClicked(eventCancel -> {
-                                    root.getChildren().removeAll(circle, upgrade, sell, cancel, upgradeMoney, sellMoney);
+                                    root.getChildren().removeAll(circle, upgrade, sell, cancel, upgradeMoney, sellMoney, towerDamage);
                                     Config.isOtherTowerChosen = false;
                                 });
                                 towers.forEach(tower1 -> tower1.getImageView().toFront());

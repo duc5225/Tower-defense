@@ -260,6 +260,7 @@ public final class GameField {
         enemy.getTransition().setOnFinished(event -> {
             if (!enemy.isDead()) {
                 remove(enemy);
+                root.getChildren().removeAll(enemy.getCurrentHealthBar(),enemy.getHealthBar());
                 explode();
                 GameStage.health--;
             }

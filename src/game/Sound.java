@@ -8,21 +8,30 @@ import java.nio.file.Paths;
 public class Sound {
     private Media media;
     private MediaPlayer player;
-    private String path;
 
     public Sound(String path) {
-        this.path = Paths.get(path).toUri().toString();
+        String link = Paths.get(path).toUri().toString();
+        media = new Media(link);
+        player = new MediaPlayer(media);
     }
 
     public void play() {
-        media = new Media(path);
-        player = new MediaPlayer(media);
-        player.setAutoPlay(true);
+        player.play();
     }
-    public void stop(){
+
+    public void stop() {
         player.stop();
     }
-    public void repeat(){
+
+    public void setVolume(int volume) {
+        final double MAX = 100;
+        double targetVolume = volume / MAX;
+        System.out.println(targetVolume);
+        player.setVolume(targetVolume);
+    }
+
+    public void repeat() {
         player.setCycleCount(Integer.MAX_VALUE);
     }
+
 } 

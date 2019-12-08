@@ -2,14 +2,9 @@ package game.entity.enemy;
 
 import game.Config;
 import game.GameField;
-import game.GameStage;
 import javafx.animation.Interpolator;
-import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
 import javafx.animation.SequentialTransition;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 
 public final class NormalEnemy extends Enemy {
     public NormalEnemy() {

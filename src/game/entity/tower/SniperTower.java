@@ -3,7 +3,6 @@ package game.entity.tower;
 import game.Config;
 import game.Sound;
 import game.entity.bullet.Bullet;
-import game.entity.enemy.Enemy;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.scene.image.ImageView;

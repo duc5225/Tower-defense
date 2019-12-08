@@ -151,7 +151,7 @@ public class Store {
                         tower.getImageView().toFront();
                         towers.forEach(t -> t.getImageView().setOnMousePressed(e -> {
                             // Check if another tower is being chosen
-                            if (Config.isOtherTowerChosen == false) {
+                            if (!Config.isOtherTowerChosen) {
                                 // Set current state, a tower is being chosen
                                 Config.isOtherTowerChosen = true;
 

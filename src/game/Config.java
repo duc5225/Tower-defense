@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 public final class Config {
 
     // one second in nanosecond
-    private static final long SECOND = 1000000000;
+    public static final long SECOND = 1000000000;
 
     public static final int TILE_SIZE = 64;
 
@@ -78,8 +78,8 @@ public final class Config {
     // tanker enemy
     public static final Image TANKER_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile269.png");
     //    public static final Image TANKER_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile269.png");
-    public static final int TANKER_ENEMY_SPEED = 70;
-    public static final int TANKER_ENEMY_HEALTH = 500;
+    public static final int TANKER_ENEMY_SPEED = 80;
+    public static final int TANKER_ENEMY_HEALTH = 650;
     public static final int TANKER_ENEMY_ARMOR = 40;
     public static final int TANKER_ENEMY_REWARD = 20;
 
@@ -111,32 +111,27 @@ public final class Config {
     // ========================================================================================
     // BUTTON
     // ========================================================================================
+
     public static final ImageView UPGRADE_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/upgrade.png");
     public static final ImageView SELL_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/sell.png");
     public static final ImageView CANCEL_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/cancel.png");
     public static final ImageView PAUSE_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/pause.png");
-    public static final String BUTTON_STYLE = "-fx-background-radius: 5em; " +
-            "-fx-min-width: 55px; " +
-            "-fx-min-height: 55px; " +
-            "-fx-max-width: 55px; " +
-            "-fx-max-height: 55px;" +
-            "-fx-background-color: " +
-            "linear-gradient(#f0ff35, #a9ff00)," +
-            "radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);" +
-            " -fx-background-insets: 0, 1;" +
-            " -fx-effect: dropShadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );" +
-            " -fx-text-fill: #395306;";
+    public static final String BUTTON_STYLE = "-fx-background-radius: 5em; " + "-fx-min-width: 55px; " + "-fx-min-height: 55px; " + "-fx-max-width: 55px; " + "-fx-max-height: 55px;" + "-fx-background-color: " + "linear-gradient(#f0ff35, #a9ff00)," + "radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);" + " -fx-background-insets: 0, 1;" + " -fx-effect: dropShadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );" + " -fx-text-fill: #395306;";
+
     // ========================================================================================
     // CURSOR
     // ========================================================================================
+
     public static Image NOT_ENOUGH_MONEY = new Image("file:src/game/resources/assets/button/sell.png");
 
     // ========================================================================================
     // SOUND
     // ========================================================================================
+
     // Music
     public static final Sound yeahBoy = new Sound("src/game/sound/music/yeah.mp3");
     public static final Sound rabi = new Sound("src/game/sound/music/rabi.mp3");
+
     // Sfx
     public static final Sound NORMAL_TOWER_SOUND = new Sound("src/game/sound/sfx/normal.wav");
     public static final Sound MACHINE_GUN_TOWER_SOUND = new Sound("src/game/sound/sfx/machinegun.wav");

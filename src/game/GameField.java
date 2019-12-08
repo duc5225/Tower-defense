@@ -118,46 +118,63 @@ public final class GameField {
             final double desX = 20.5 * Config.TILE_SIZE;
             final double desY = 11.5 * Config.TILE_SIZE;
 
-            int NUMBER_OF_ENEMIES = 100;
+            int wave = 1;
+
+            int enemy_num = 100;
 
             int i = 0;
             // update every one second
             long startTime = System.nanoTime();
 
+            double normal_pct = 0, smaller_pct = 0, tanker_pct = 0, boss_pct = 0;
+
             public void handle(long currentNanoTime) {
                 updateText();
                 if (GameStage.health > 0) {
-                    if (GameStage.stage == 1) {
-                        // spawn new enemy after a fixed time until max number of enemies reached
-                        if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
-                            if (i < NUMBER_OF_ENEMIES) {
-                                spawnEnemy();
-                                ++i;
-                            }
-                            startTime = currentNanoTime;
-                        }
-                        for (Tower tower : towers) {
-                            double minDistance = 99999;
-                            Enemy closest = null;
-                            for (Enemy enemy : enemies) {
-                                // if enemy is in the range of the tower
-                                if (tower.canReach(enemy)) {
-                                    if (minDistance > Math.sqrt(Math.pow(enemy.getX() - desX, 2) + Math.pow(enemy.getY() - desY, 2))) {
-                                        minDistance = Math.sqrt(Math.pow(enemy.getX() - desX, 2) + Math.pow(enemy.getY() - desY, 2));
-                                        closest = enemy;
-                                    }
-                                }
-                            } // end enemy iterate
-                            if (closest != null) {
-                                tower.rotateTo(closest);
-                                if (currentNanoTime - tower.getStartDelayTime() >= tower.getDelayTime()) {
-                                    tower.dealDamageTo(closest);
-                                    renderAttackAnimation(tower, closest);
-                                    tower.setStartDelayTime(currentNanoTime);
-                                }
-                            }
-                        } //  end tower iterate
+                    if (wave == 1) {
+                        normal_pct = 50;
+                        smaller_pct = 30;
+                        tanker_pct = 15;
+                        boss_pct = 5;
+                        enemy_num = 30;
+                    } else if (wave == 2) {
+                        normal_pct = 25;
+                        smaller_pct = 40;
+                        tanker_pct = 20;
+                        boss_pct = 15;
+                        enemy_num = 60;
                     }
+                    // spawn new enemy after a fixed time until max number of enemies reached
+                    if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME && i < enemy_num) {
+                        spawnEnemy(normal_pct, smaller_pct, tanker_pct, boss_pct);
+                        ++i;
+                        startTime = currentNanoTime;
+                    }
+                    if (i >= enemy_num && enemies.isEmpty()) {
+                        wave++;
+                        i = 0;
+                    }
+                    for (Tower tower : towers) {
+                        double minDistance = 99999;
+                        Enemy closest = null;
+                        for (Enemy enemy : enemies) {
+                            // if enemy is in the range of the tower
+                            if (tower.canReach(enemy)) {
+                                if (minDistance > Math.sqrt(Math.pow(enemy.getX() - desX, 2) + Math.pow(enemy.getY() - desY, 2))) {
+                                    minDistance = Math.sqrt(Math.pow(enemy.getX() - desX, 2) + Math.pow(enemy.getY() - desY, 2));
+                                    closest = enemy;
+                                }
+                            }
+                        } // end enemy iterate
+                        if (closest != null) {
+                            tower.rotateTo(closest);
+                            if (currentNanoTime - tower.getStartDelayTime() >= tower.getDelayTime()) {
+                                tower.dealDamageTo(closest);
+                                renderAttackAnimation(tower, closest);
+                                tower.setStartDelayTime(currentNanoTime);
+                            }
+                        }
+                    } //  end tower iterate
                 } else {
                     //lose
                     System.out.println("u lost");
@@ -230,16 +247,16 @@ public final class GameField {
         enemy.setDead(true);
     }
 
-    private Enemy generateEnemy() {
-        double x = Math.random();
-        if (x < 0.1) return new NormalEnemy();
-        if (x < 0.7) return new SmallerEnemy();
-        if (x < 0.8) return new TankerEnemy();
+    private Enemy generateEnemy(double normal, double small, double tanker, double boss) {
+        double x = Math.random() * 100;
+        if (x < normal) return new NormalEnemy();
+        if (x < normal + small) return new SmallerEnemy();
+        if (x < normal + small + tanker) return new TankerEnemy();
         return new BossEnemy();
     }
 
-    private void spawnEnemy() {
-        Enemy enemy = generateEnemy();
+    private void spawnEnemy(double normal, double smaller, double tanker, double boss) {
+        Enemy enemy = generateEnemy(normal, smaller, tanker, boss);
         enemy.getTransition().setOnFinished(event -> {
             if (!enemy.isDead()) {
                 remove(enemy);

@@ -149,8 +149,7 @@ public abstract class Tower extends GameEntity {
     }
 
     public void dealDamageTo(Enemy enemy) {
-        int damageDeal = damage - enemy.getArmor();
-        if (damageDeal <= 0) damageDeal = 1;
+        int damageDeal = damage - enemy.getArmor() <= 0 ? 1 : damage - enemy.getArmor();
         enemy.setHealth(enemy.getHealth() - damageDeal);
         if (enemy.getHealth() <= 0) enemy.setDead(true);
     }

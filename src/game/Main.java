@@ -61,8 +61,8 @@ public class Main extends Application {
         playBtn.setOnAction(event -> {
             try {
                 Config.rabi.stop();
-                Config.yeahBoy.play();
-                Config.yeahBoy.repeat();
+//                Config.yeahBoy.play();
+//                Config.yeahBoy.repeat();
                 startGame();
             } catch (IOException e) {
                 e.printStackTrace();

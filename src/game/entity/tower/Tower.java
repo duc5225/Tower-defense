@@ -9,6 +9,9 @@ import game.entity.enemy.Enemy;
 import javafx.animation.RotateTransition;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public abstract class Tower extends GameEntity {
     private int price;
@@ -18,6 +21,7 @@ public abstract class Tower extends GameEntity {
     private int range;
 
     public int level = 0;
+    public List<ImageView> stars = new ArrayList<>();
 
     // update every time a tower shoot a bullet
     private long startDelayTime;

@@ -35,9 +35,6 @@ public final class GameField {
     private List<Enemy> enemies;
     private List<Tower> towers;
 
-    private Sound shootSound = new Sound("src/game/sound/sfx/shoot.wav");
-    private Sound explodeSound = new Sound("src/game/sound/sfx/explode.mp3");
-
     public GameField(Group root, Canvas canvas, Store store) {
         this.root = root;
         this.store = store;
@@ -45,6 +42,7 @@ public final class GameField {
         this.gc = canvas.getGraphicsContext2D();
         enemies = new ArrayList<>();
         towers = new ArrayList<>();
+        Config.yeahBoy.setVolume(50);
         // init hills
         initHills();
     }
@@ -118,7 +116,7 @@ public final class GameField {
             final double desX = 20.5 * Config.TILE_SIZE;
             final double desY = 11.5 * Config.TILE_SIZE;
 
-            int NUMBER_OF_ENEMIES = 100;
+            int NUMBER_OF_ENEMIES = 100000;
 
             int i = 0;
             // update every one second
@@ -208,6 +206,7 @@ public final class GameField {
         shootTransition.setInterpolator(Interpolator.EASE_IN);
 
         shootTransition.setOnFinished(event -> {
+            tower.getShootingSound().stop();
             bullet.getImageView().setVisible(false);
             root.getChildren().remove(bullet.getImageView());
 
@@ -264,7 +263,8 @@ public final class GameField {
         t.getKeyFrames().add(new KeyFrame(Duration.millis(200), event -> explosion.getChildren().setAll(Config.EXPLOSION4)));
         t.getKeyFrames().add(new KeyFrame(Duration.millis(250), event -> explosion.getChildren().setAll(Config.EXPLOSION5)));
         root.getChildren().add(explosion);
-        explodeSound.play();
+        Config.explodeSound.stop();
+        Config.explodeSound.play();
         t.play();
         t.setOnFinished(event -> {
             explosion.setVisible(false);

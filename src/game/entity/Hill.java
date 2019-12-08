@@ -5,8 +5,6 @@ import game.GameStage;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 
-import java.awt.*;
-
 public class Hill extends GameEntity {
     // x,y coordinate relative to 20x15 tile screen
     private int x;

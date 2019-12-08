@@ -1,18 +1,8 @@
 package game.entity.enemy;
 
 import game.Config;
-import game.GameField;
-import game.GameStage;
 import game.entity.GameEntity;
-import game.entity.tower.Tower;
-import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
 import javafx.animation.SequentialTransition;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 
 public abstract class Enemy extends GameEntity {
     private int speed;  // pixels/second

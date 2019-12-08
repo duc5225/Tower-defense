@@ -22,6 +22,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -149,9 +150,11 @@ public class Store {
 
                         root.getChildren().addAll(tower.getImageView());
                         tower.getImageView().toFront();
+
                         towers.forEach(t -> t.getImageView().setOnMousePressed(e -> {
                             // Check if another tower is being chosen
-                            if (Config.isOtherTowerChosen == false) {
+                            //noinspection PointlessBooleanExpression
+                            if (!Config.isOtherTowerChosen) {
                                 // Set current state, a tower is being chosen
                                 Config.isOtherTowerChosen = true;
 
@@ -221,6 +224,7 @@ public class Store {
 
                                         // Add star for each upgrade
                                         ImageView star = new ImageView("file:src/game/resources/assets/star.png");
+                                        t.stars.add(star);
                                         // Make each row only has 4 stars
                                         int row = t.level / 4;
                                         star.setX(t.getX() - 30 + t.level * 15 - row * 15 * 4);
@@ -243,6 +247,7 @@ public class Store {
                                     GameStage.money += t.getPrice() / 2;
                                     Config.isOtherTowerChosen = false;
                                     t.hill.setUsed(false);
+                                    t.stars.forEach(star -> {root.getChildren().remove(star);});
                                 });
 
                                 // When user click on cancel button

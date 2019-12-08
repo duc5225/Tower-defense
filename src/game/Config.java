@@ -36,21 +36,21 @@ public final class Config {
 
     // normal tower
     public static final Image NORMAL_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile249.png");
-    public static final int NORMAL_TOWER_PRICE = 10;
+    public static final int NORMAL_TOWER_PRICE = 20;
     public static final int NORMAL_TOWER_DAMAGE = 200;
     public static final int NORMAL_TOWER_DELAY_TIME = (int) SECOND;
-    public static final int NORMAL_TOWER_RANGE = 250;
+    public static final int NORMAL_TOWER_RANGE = 275;
 
     // sniper tower
     public static final Image SNIPER_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile206.png");
-    public static final int SNIPER_TOWER_PRICE = 20;
+    public static final int SNIPER_TOWER_PRICE = 40;
     public static final int SNIPER_TOWER_DAMAGE = 800;
     public static final int SNIPER_TOWER_DELAY_TIME = (int) (SECOND * 2.5);
     public static final int SNIPER_TOWER_RANGE = 450;
 
     // machine gun tower
     public static final Image MACHINE_GUN_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile250.png");
-    public static final int MACHINE_GUN_TOWER_PRICE = 40;
+    public static final int MACHINE_GUN_TOWER_PRICE = 30;
     public static final int MACHINE_GUN_TOWER_DAMAGE = 75;
     public static final int MACHINE_GUN_TOWER_DELAY_TIME = (int) (SECOND * 0.2);
     public static final int MACHINE_GUN_TOWER_RANGE = 200;
@@ -64,14 +64,14 @@ public final class Config {
     public static final int NORMAL_ENEMY_SPEED = 100;
     public static final int NORMAL_ENEMY_HEALTH = 300;
     public static final int NORMAL_ENEMY_ARMOR = 10;
-    public static final int NORMAL_ENEMY_REWARD = 2;
+    public static final int NORMAL_ENEMY_REWARD = 5;
 
     // smaller enemy
     public static final Image SMALLER_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile246.png");
     public static final int SMALLER_ENEMY_SPEED = 180;
     public static final int SMALLER_ENEMY_HEALTH = 150;
     public static final int SMALLER_ENEMY_ARMOR = 5;
-    public static final int SMALLER_ENEMY_REWARD = 4;
+    public static final int SMALLER_ENEMY_REWARD = 3;
 
     // tanker enemy
     public static final Image TANKER_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile269.png");
@@ -79,14 +79,14 @@ public final class Config {
     public static final int TANKER_ENEMY_SPEED = 70;
     public static final int TANKER_ENEMY_HEALTH = 500;
     public static final int TANKER_ENEMY_ARMOR = 40;
-    public static final int TANKER_ENEMY_REWARD = 20;
+    public static final int TANKER_ENEMY_REWARD = 15;
 
     // boss enemy
     public static final Image BOSS_ENEMY_IMG = new Image("file:src/game/resources/assets/kenney_topdowntanksredux/PNG/Default size/tank_bigRed.png");
     public static final int BOSS_ENEMY_SPEED = 60;
     public static final int BOSS_ENEMY_HEALTH = 1000;
     public static final int BOSS_ENEMY_ARMOR = 100;
-    public static final int BOSS_ENEMY_REWARD = 50;
+    public static final int BOSS_ENEMY_REWARD = 35;
 
     // ========================================================================================
     // HILL

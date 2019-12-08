@@ -3,6 +3,8 @@ package game.entity.enemy;
 import game.Config;
 import game.entity.GameEntity;
 import javafx.animation.SequentialTransition;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public abstract class Enemy extends GameEntity {
     private int speed;  // pixels/second
@@ -10,19 +12,46 @@ public abstract class Enemy extends GameEntity {
     private int armor;
     private int reward;
     private boolean dead;
+    private int maxHealth;
 
     protected SequentialTransition transition;
+    private Rectangle healthBar = new Rectangle(0, 0, 75, 5);
+    private Rectangle currentHealthBar = new Rectangle(0, 0, healthBar.getWidth(), healthBar.getHeight());
 
     public Enemy(int speed, int health, int armor, int reward) {
         this.speed = speed;
         this.health = health;
+        this.maxHealth = health;
         this.armor = armor;
         this.reward = reward;
         this.dead = false;
+        healthBar.setStroke(Color.BLACK);
+        healthBar.setFill(Color.rgb(0, 0, 0, 0.5));
+        currentHealthBar.setFill(Color.GREEN);
     }
 
     public int getSpeed() {
         return speed;
+    }
+
+    public Rectangle getHealthBar() {
+        return healthBar;
+    }
+
+    public void setHealthBar(Rectangle healthBar) {
+        this.healthBar = healthBar;
+    }
+
+    public Rectangle getCurrentHealthBar() {
+        return currentHealthBar;
+    }
+
+    public void setCurrentHealthBar(Rectangle currentHealthBar) {
+        this.currentHealthBar = currentHealthBar;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     public void setSpeed(int speed) {

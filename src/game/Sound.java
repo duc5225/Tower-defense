@@ -26,7 +26,6 @@ public class Sound {
     public void setVolume(int volume) {
         final double MAX = 100;
         double targetVolume = volume / MAX;
-        System.out.println(targetVolume);
         player.setVolume(targetVolume);
     }
 

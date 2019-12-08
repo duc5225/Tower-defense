@@ -205,9 +205,10 @@ public class Store {
 
                                 root.getChildren().addAll(circle, upgrade, sell, cancel, upgradeMoney, sellMoney,towerDamage);
 
+                                if (t.level == 4) upgradeMoney.setText("Max");
                                 //When user click on upgrade button
                                 upgrade.setOnMouseClicked(eventUpgrade -> {
-                                    if (GameStage.money >= t.getPrice()) {
+                                    if (GameStage.money >= t.getPrice() && t.level <4) {
                                         // Upgrade damage and range
                                         t.setDamage(t.getDamage() + 20);
                                         t.setRange(t.getRange() + 20);
@@ -218,6 +219,7 @@ public class Store {
                                         upgradeMoney.setText("-" + t.getPrice());
 
                                         // Update information for user
+                                        if (t.level == 3) upgradeMoney.setText("Max");
                                         sellMoney.setText("+" + t.getPrice() / 2);
                                         towerDamage.setText("Damage: " + t.getDamage());
                                         circle.setRadius(t.getRange());
@@ -225,10 +227,8 @@ public class Store {
                                         // Add star for each upgrade
                                         ImageView star = new ImageView("file:src/game/resources/assets/star.png");
                                         t.stars.add(star);
-                                        // Make each row only has 4 stars
-                                        int row = t.level / 4;
-                                        star.setX(t.getX() - 30 + t.level * 15 - row * 15 * 4);
-                                        star.setY(t.getY() + 15 + row * 15);
+                                        star.setX(t.getX() - 30 + t.level * 15);
+                                        star.setY(t.getY() + 15);
                                         root.getChildren().add(star);
 
                                         // Make sure star don't stay in front of cancel button or tower

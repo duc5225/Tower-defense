@@ -42,7 +42,7 @@ public final class GameField {
         this.gc = canvas.getGraphicsContext2D();
         enemies = new ArrayList<>();
         towers = new ArrayList<>();
-        Config.yeahBoy.setVolume(50);
+        Config.yeahBoy.setVolume(0);
         // init hills
         initHills();
     }
@@ -155,6 +155,13 @@ public final class GameField {
                                 }
                             }
                         } //  end tower iterate
+                        for (Enemy enemy : enemies) {
+                            showHealthBar(enemy);
+                            if (enemy.getMaxHealth() - enemy.getHealth() != 0) {
+                                enemy.getHealthBar().setVisible(true);
+                                enemy.getCurrentHealthBar().setVisible(true);
+                            }
+                        }
                     }
                 } else {
                     //lose
@@ -211,6 +218,7 @@ public final class GameField {
             root.getChildren().remove(bullet.getImageView());
 
             if (enemy.isDead() && enemies.contains(enemy)) {
+                root.getChildren().removeAll(enemy.getHealthBar(), enemy.getCurrentHealthBar());
                 remove(enemy);
                 //update money
                 GameStage.money += enemy.getReward();
@@ -237,8 +245,18 @@ public final class GameField {
         return new BossEnemy();
     }
 
+    private void showHealthBar(Enemy enemy) {
+        enemy.getHealthBar().setTranslateX(enemy.getImageView().getTranslateX() - 5);
+        enemy.getHealthBar().setTranslateY(enemy.getImageView().getTranslateY() + 55);
+        enemy.getCurrentHealthBar().setTranslateX(enemy.getHealthBar().getTranslateX());
+        enemy.getCurrentHealthBar().setTranslateY(enemy.getHealthBar().getTranslateY());
+    }
+
     private void spawnEnemy() {
         Enemy enemy = generateEnemy();
+        root.getChildren().addAll(enemy.getHealthBar(), enemy.getCurrentHealthBar());
+        enemy.getHealthBar().setVisible(false);
+        enemy.getCurrentHealthBar().setVisible(false);
         enemy.getTransition().setOnFinished(event -> {
             if (!enemy.isDead()) {
                 remove(enemy);

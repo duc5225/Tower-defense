@@ -49,7 +49,6 @@ public class StoreController {
 
     @FXML
     private void onMouseEntered() {
-        System.out.println("entered");
         normalTower.setCursor(Cursor.CLOSED_HAND);
         machineGunTower.setCursor(Cursor.CLOSED_HAND);
         sniperTower.setCursor(Cursor.CLOSED_HAND);

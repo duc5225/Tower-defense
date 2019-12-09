@@ -128,6 +128,44 @@ public final class GameField {
             public void handle(long currentNanoTime) {
                 updateText();
                 if (GameStage.health > 0) {
+                    if (GameStage.stage == 1) {
+                        // spawn new enemy after a fixed time until max number of enemies reached
+                        if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
+                            if (i < NUMBER_OF_ENEMIES) {
+                                spawnEnemy();
+                                ++i;
+                            }
+                            startTime = currentNanoTime;
+                        }
+                        for (Tower tower : towers) {
+                            double minDistance = 99999;
+                            Enemy closest = null;
+                            for (Enemy enemy : enemies) {
+                                // if enemy is in the range of the tower
+                                if (tower.canReach(enemy)) {
+                                    if (minDistance > Math.sqrt(Math.pow(enemy.getX() - desX, 2) + Math.pow(enemy.getY() - desY, 2))) {
+                                        minDistance = Math.sqrt(Math.pow(enemy.getX() - desX, 2) + Math.pow(enemy.getY() - desY, 2));
+                                        closest = enemy;
+                                    }
+                                }
+                            } // end enemy iterate
+                            if (closest != null) {
+                                tower.rotateTo(closest);
+                                if (currentNanoTime - tower.getStartDelayTime() >= tower.getDelayTime()) {
+                                    tower.dealDamageTo(closest);
+                                    renderAttackAnimation(tower, closest);
+                                    tower.setStartDelayTime(currentNanoTime);
+                                }
+                            }
+                        } //  end tower iterate
+                        for (Enemy enemy : enemies) {
+                            showHealthBar(enemy);
+                            if (enemy.getMaxHealth() - enemy.getHealth() != 0) {
+                                enemy.getHealthBar().setVisible(true);
+                                enemy.getCurrentHealthBar().setVisible(true);
+                            }
+                        }
+                    }
                     if (wave == 1) {
                         normal_pct = 50;
                         smaller_pct = 30;
@@ -227,6 +265,7 @@ public final class GameField {
             root.getChildren().remove(bullet.getImageView());
 
             if (enemy.isDead() && enemies.contains(enemy)) {
+                root.getChildren().removeAll(enemy.getHealthBar(), enemy.getCurrentHealthBar());
                 remove(enemy);
                 //update money
                 GameStage.money += enemy.getReward();
@@ -253,11 +292,22 @@ public final class GameField {
         return new BossEnemy();
     }
 
+    private void showHealthBar(Enemy enemy) {
+        enemy.getHealthBar().setTranslateX(enemy.getImageView().getTranslateX() - 5);
+        enemy.getHealthBar().setTranslateY(enemy.getImageView().getTranslateY() + 55);
+        enemy.getCurrentHealthBar().setTranslateX(enemy.getHealthBar().getTranslateX());
+        enemy.getCurrentHealthBar().setTranslateY(enemy.getHealthBar().getTranslateY());
+    }
+
     private void spawnEnemy(double normal, double smaller, double tanker, double boss) {
         Enemy enemy = generateEnemy(normal, smaller, tanker, boss);
+        root.getChildren().addAll(enemy.getHealthBar(), enemy.getCurrentHealthBar());
+        enemy.getHealthBar().setVisible(false);
+        enemy.getCurrentHealthBar().setVisible(false);
         enemy.getTransition().setOnFinished(event -> {
             if (!enemy.isDead()) {
                 remove(enemy);
+                root.getChildren().removeAll(enemy.getCurrentHealthBar(),enemy.getHealthBar());
                 explode();
                 GameStage.health--;
             }

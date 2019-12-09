@@ -200,7 +200,7 @@ public class Store {
                                 sellMoney.setTranslateX(sell.getTranslateX());
                                 sellMoney.setTranslateY(sell.getTranslateY());
 
-                                root.getChildren().addAll(circle, upgrade, sell, cancel, upgradeMoney, sellMoney,towerDamage);
+                                root.getChildren().addAll(circle, upgrade, sell, cancel, upgradeMoney, sellMoney, towerDamage);
 
                                 //When user click on upgrade button
                                 upgrade.setOnMouseClicked(eventUpgrade -> {
@@ -221,6 +221,8 @@ public class Store {
 
                                         // Add star for each upgrade
                                         ImageView star = new ImageView("file:src/game/resources/assets/star.png");
+                                        t.stars.add(star);
+
                                         // Make each row only has 4 stars
                                         int row = t.level / 4;
                                         star.setX(t.getX() - 30 + t.level * 15 - row * 15 * 4);
@@ -243,6 +245,9 @@ public class Store {
                                     GameStage.money += t.getPrice() / 2;
                                     Config.isOtherTowerChosen = false;
                                     t.hill.setUsed(false);
+                                    t.stars.forEach(star -> {
+                                        root.getChildren().remove(star);
+                                    });
                                 });
 
                                 // When user click on cancel button

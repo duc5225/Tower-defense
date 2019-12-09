@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0"
+      prefWidth="600.0" style="-fx-background-radius: 20; -fx-background-color: rgba(0,10,100,0.3);"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label alignment="TOP_LEFT" layoutX="10.0" prefHeight="450.0" prefWidth="590.0"
+               text="Game Developers:&#10;&#9;Le Manh Cuong (github.com/lmcuongdev)&#10;&#9;Phan Viet Duc (github.com/duc5225)&#10;&#10;Assets:&#10;&#9;Kenney's tower defense assets&#10;&#9;Kenney's tank top-down assets&#10;&#10;Music:&#10;&#9;Yeah Boy + Shooting Star&#10;&#10;&#10;&#10;&#10;&#10;"
+               textFill="#f5fc3a">
+            <font>
+                <Font name="Dubai Bold" size="19.0"/>
+            </font>
+        </Label>
+    </children>
+</Pane>

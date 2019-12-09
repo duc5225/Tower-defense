@@ -128,11 +128,11 @@ public final class Config {
 
     // Music
     public static final Sound yeahBoy = new Sound("src/game/sound/music/yeah.mp3");
-    public static final Sound rabi = new Sound("src/game/sound/music/rabi.mp3");
+    public static final Sound BACKGROUND_MUSIC = new Sound("src/game/sound/music/rabi.mp3");
 
     // Sfx
     public static final Sound NORMAL_TOWER_SOUND = new Sound("src/game/sound/sfx/normal.wav");
     public static final Sound MACHINE_GUN_TOWER_SOUND = new Sound("src/game/sound/sfx/machinegun.wav");
     public static final Sound SNIPER_TOWER_SOUND = new Sound("src/game/sound/sfx/sniper.wav");
-    public static final Sound explodeSound = new Sound("src/game/sound/sfx/explode.mp3");
+    public static final Sound EXPLODE_SOUND = new Sound("src/game/sound/sfx/explode.mp3");
 }

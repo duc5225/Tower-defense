@@ -55,12 +55,12 @@ public class Main extends Application {
         MainMenuController mainMenuController = fxmlLoader.getController();
         Button playBtn = mainMenuController.getPlayBtn();
         Button exitBtn = mainMenuController.getExitBtn();
-        Config.rabi.play();
-        Config.rabi.repeat();
+        Config.BACKGROUND_MUSIC.play();
+        Config.BACKGROUND_MUSIC.repeat();
 
         playBtn.setOnAction(event -> {
             try {
-                Config.rabi.stop();
+                Config.BACKGROUND_MUSIC.stop();
 //                Config.yeahBoy.play();
 //                Config.yeahBoy.repeat();
                 startGame();

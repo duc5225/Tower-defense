@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.media.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
 <?import java.lang.*?>
@@ -10,37 +11,37 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="960.0" prefWidth="1408.0" style="-fx-background-image: url(&quot;game/background.png&quot;);"
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="game.MainMenuController">
+<AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1408.0" style="-fx-background-image: url(&quot;game/background.png&quot;);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.MainMenuController">
     <children>
         <AnchorPane id="menu" fx:id="menu" prefHeight="960.0" prefWidth="1280.0">
             <children>
-                <VBox alignment="TOP_CENTER" layoutX="104.0" layoutY="450.0" prefHeight="285.0" prefWidth="213.0"
-                      spacing="30.0">
+                <VBox layoutX="104.0" layoutY="450.0" prefHeight="450.0" prefWidth="339.0" spacing="30.0">
                     <children>
-                        <Button fx:id="playBtn" mnemonicParsing="false" prefHeight="46.0" prefWidth="213.0" text="PLAY">
+                        <Button fx:id="playBtn" mnemonicParsing="false" prefHeight="90.0" prefWidth="545.0" text="PLAY">
                             <font>
-                                <Font name="Agency FB Bold" size="47.0"/>
+                                <Font name="Agency FB Bold" size="47.0" />
                             </font>
                         </Button>
-                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="46.0"
-                                prefWidth="213.0" text="OPTIONS">
+                        <Button fx:id="optionBtn" mnemonicParsing="false" onAction="#handleOptions" prefHeight="90.0" prefWidth="562.0" text="OPTIONS">
                             <font>
-                                <Font name="Agency FB Bold" size="47.0"/>
+                                <Font name="Agency FB Bold" size="47.0" />
                             </font>
                         </Button>
-                        <Button fx:id="exitBtn" layoutX="10.0" layoutY="106.0" mnemonicParsing="false" prefHeight="97.0"
-                                prefWidth="220.0" text="EXIT">
+                  <Button fx:id="creditBtn" layoutX="10.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleCredit" prefHeight="90.0" prefWidth="562.0" text="CREDIT">
+                     <font>
+                        <Font name="Agency FB Bold" size="47.0" />
+                     </font>
+                  </Button>
+                        <Button fx:id="exitBtn" mnemonicParsing="false" prefHeight="90.0" prefWidth="538.0" text="EXIT">
                             <font>
-                                <Font name="Agency FB Bold" size="47.0"/>
+                                <Font name="Agency FB Bold" size="47.0" />
                             </font>
                         </Button>
                     </children>
                 </VBox>
+            <Pane fx:id="helper" layoutX="640.0" layoutY="450.0" prefHeight="450.0" prefWidth="600.0" />
             </children>
         </AnchorPane>
-        <AnchorPane id="store" fx:id="store" layoutX="1280.0" layoutY="-6.0" prefHeight="960.0" prefWidth="128.0"/>
+        <AnchorPane id="store" fx:id="store" layoutX="1280.0" layoutY="-6.0" prefHeight="960.0" prefWidth="128.0" />
     </children>
 </AnchorPane>

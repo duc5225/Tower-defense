@@ -15,6 +15,10 @@ public class Sound {
         player = new MediaPlayer(media);
     }
 
+    public MediaPlayer getPlayer() {
+        return player;
+    }
+
     public void play() {
         player.play();
     }

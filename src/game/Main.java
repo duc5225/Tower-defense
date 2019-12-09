@@ -1,5 +1,6 @@
 package game;
 
+import game.store.Store;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -39,18 +40,12 @@ public class Main extends Application {
         primaryStage.setScene(theScene);
         primaryStage.setResizable(false);
         primaryStage.sizeToScene();
-
         primaryStage.show();
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-
-//    public Parent loadFxml(String path) throws IOException {
-//        fxmlLoader = new FXMLLoader(Main.class.getResource(path));
-//        return fxmlLoader.load();
-//    }
 
     private void initMainMenu() {
         // get main menu controller
@@ -63,8 +58,6 @@ public class Main extends Application {
         playBtn.setOnAction(event -> {
             try {
                 Config.BACKGROUND_MUSIC.stop();
-//                Config.yeahBoy.play();
-//                Config.yeahBoy.repeat();
                 startGame();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -75,7 +68,6 @@ public class Main extends Application {
 
     private void startGame() throws IOException {
         Group root = new Group();
-//        mainPane.getChildren().clear();
         mainPane.getChildren().add(root);
         //Create canvas
         Canvas canvas = new Canvas(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);

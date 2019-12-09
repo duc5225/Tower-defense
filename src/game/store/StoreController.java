@@ -1,4 +1,4 @@
-package game;
+package game.store;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;

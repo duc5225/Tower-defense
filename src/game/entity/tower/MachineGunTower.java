@@ -11,7 +11,7 @@ import javafx.util.Duration;
 public class MachineGunTower extends Tower {
 
     public MachineGunTower() {
-        super(Config.MACHINE_GUN_TOWER_PRICE, Config.MACHINE_GUN_TOWER_DAMAGE, 3, Config.MACHINE_GUN_TOWER_DELAY_TIME, Config.MACHINE_GUN_TOWER_RANGE);
+        super(Config.MACHINE_GUN_TOWER_PRICE, Config.MACHINE_GUN_TOWER_DAMAGE, Config.MACHINE_GUN_TOWER_DELAY_TIME, Config.MACHINE_GUN_TOWER_RANGE);
         try {
             this.image = Config.MACHINE_GUN_TOWER_IMG;
             this.imageView = new ImageView(image);

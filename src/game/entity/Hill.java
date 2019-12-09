@@ -36,10 +36,6 @@ public class Hill extends GameEntity {
         this.y = y;
     }
 
-    public boolean isUsed() {
-        return used;
-    }
-
     public void setUsed(boolean used) {
         this.used = used;
     }
@@ -54,29 +50,9 @@ public class Hill extends GameEntity {
         return (long) (y - 1) * Config.TILE_SIZE;
     }
 
-    public long getCenterX() {
-        return (long) ((x - 0.5) * Config.TILE_SIZE);
-    }
-
-    public long getCenterY() {
-        return (long) ((y - 0.5) * Config.TILE_SIZE);
-    }
-
     public boolean isUsable(double towerX, double towerY) {
         double x = towerX / Config.TILE_SIZE;
         double y = towerY / Config.TILE_SIZE;
         return this.x - 1 <= x && this.x - 1 >= (x - 1) && this.y - 1 <= y && this.y - 1 >= (y - 1) && !used;
-    }
-
-    public boolean canBePlaceTileSizeInput(int towerX, int towerY) {
-        return this.x <= towerX && this.x >= (towerX - 1) && this.y <= towerY && this.y >= (towerY - 1);
-    }
-
-    public void printRange(GraphicsContext gc, long range) {
-//        gc.strokeOval((double) getCenterX(),(double) getCenterY());
-    }
-
-    public boolean hasEnoughMoney(int money) {
-        return GameStage.money >= money;
     }
 }

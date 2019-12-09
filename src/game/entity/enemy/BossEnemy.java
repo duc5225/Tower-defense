@@ -12,10 +12,8 @@ public class BossEnemy extends Enemy {
         try {
             this.image = Config.BOSS_ENEMY_IMG;
             this.imageView = new ImageView(image);
-//            this.transition = new PathTransition(Duration.seconds((double) GameStage.getRoadLength() / this.getSpeed()), GameField.createPath(), this.imageView);
-            this.transition = new SequentialTransition(imageView, GameField.createTransition(imageView, getSpeed()));
+            this.transition = new SequentialTransition(imageView, createTransition(imageView, getSpeed()));
             this.transition.setInterpolator(Interpolator.LINEAR);
-
             initImgViewPos();
         } catch (Exception e) {
             System.out.println("Error Loading Boss Enemy Image:" + e.getMessage());

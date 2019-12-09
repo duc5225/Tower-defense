@@ -18,9 +18,7 @@ public final class Config {
 
     public static final int SCREEN_HEIGHT = TILE_SIZE * TILE_VERTICAL;
 
-    public static final int ORIGINAL_STAGE = 1;
-
-    public static boolean isOtherTowerChosen = false;
+//    public static final int ORIGINAL_STAGE = 1;
 
     // ========================================================================================
     // BULLET
@@ -75,7 +73,6 @@ public final class Config {
 
     // tanker enemy
     public static final Image TANKER_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile269.png");
-    //    public static final Image TANKER_ENEMY_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile269.png");
     public static final int TANKER_ENEMY_SPEED = 80;
     public static final int TANKER_ENEMY_HEALTH = 650;
     public static final int TANKER_ENEMY_ARMOR = 40;
@@ -112,12 +109,13 @@ public final class Config {
     public static final ImageView CANCEL_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/cancel.png");
     public static final ImageView PAUSE_BUTTON_IMAGE_VIEW = new ImageView("file:src/game/resources/assets/button/pause.png");
     public static final String BUTTON_STYLE = "-fx-background-radius: 5em; " + "-fx-min-width: 55px; " + "-fx-min-height: 55px; " + "-fx-max-width: 55px; " + "-fx-max-height: 55px;" + "-fx-background-color: " + "linear-gradient(#f0ff35, #a9ff00)," + "radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);" + " -fx-background-insets: 0, 1;" + " -fx-effect: dropShadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );" + " -fx-text-fill: #395306;";
+    public static final String BUTTON_HOVER_STYLE = "-fx-background-radius: 5em; " + "-fx-min-width: 55px; " + "-fx-min-height: 55px; " + "-fx-max-width: 55px; " + "-fx-max-height: 55px;" + "-fx-background-color: " + "linear-gradient(#f0ff35, #81C200)," + "radial-gradient(center 50% -40%, radius 200%, #A0CF2E 45%, #80c800 50%);" + " -fx-background-insets: 0, 1;" + " -fx-effect: dropShadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );" + " -fx-text-fill: #395306;";
 
     // ========================================================================================
     // CURSOR
     // ========================================================================================
 
-    public static Image NOT_ENOUGH_MONEY = new Image("file:src/game/resources/assets/button/sell.png");
+    public static final Image NOT_ENOUGH_MONEY = new Image("file:src/game/resources/assets/button/sell.png");
 
     // ========================================================================================
     // SOUND

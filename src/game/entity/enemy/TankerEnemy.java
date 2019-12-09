@@ -12,8 +12,7 @@ public class TankerEnemy extends Enemy {
         try {
             this.image = Config.TANKER_ENEMY_IMG;
             this.imageView = new ImageView(image);
-//            this.transition = new PathTransition(Duration.seconds((double) GameStage.getRoadLength() / this.getSpeed()), GameField.createPath(), this.imageView);
-            this.transition = new SequentialTransition(imageView, GameField.createTransition(imageView, getSpeed()));
+            this.transition = new SequentialTransition(imageView, createTransition(imageView, getSpeed()));
             this.transition.setInterpolator(Interpolator.LINEAR);
 
             initImgViewPos();

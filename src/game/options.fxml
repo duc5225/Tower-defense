@@ -10,20 +10,14 @@
       prefWidth="600.0" style="-fx-background-radius: 20; -fx-background-color: rgba(0,10,100,0.3);"
       xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.OptionsController">
     <children>
-        <Slider fx:id="music" layoutX="300.0" layoutY="78.0" prefHeight="17.0" prefWidth="167.0" value="50.0"/>
-        <Slider fx:id="sfx" layoutX="300.0" layoutY="131.0" prefHeight="17.0" prefWidth="167.0" value="50.0"/>
-        <Slider layoutX="300.0" layoutY="183.0" prefHeight="17.0" prefWidth="167.0"/>
-        <Label layoutX="140.0" layoutY="70.0" prefHeight="27.0" prefWidth="77.0" text="MUSIC" textFill="#f2ff00">
+        <Slider fx:id="music" layoutX="300.0" layoutY="151.0" prefHeight="17.0" prefWidth="167.0" value="50.0"/>
+        <Slider fx:id="sfx" layoutX="300.0" layoutY="251.0" prefHeight="17.0" prefWidth="167.0" value="50.0"/>
+        <Label layoutX="124.0" layoutY="146.0" prefHeight="27.0" prefWidth="77.0" text="MUSIC" textFill="#f2ff00">
             <font>
                 <Font name="System Bold" size="19.0"/>
             </font>
         </Label>
-        <Label layoutX="140.0" layoutY="123.0" prefHeight="27.0" prefWidth="77.0" text="SFX" textFill="#f2ff00">
-            <font>
-                <Font name="System Bold" size="19.0"/>
-            </font>
-        </Label>
-        <Label layoutX="140.0" layoutY="175.0" prefHeight="27.0" prefWidth="77.0" text="..." textFill="#f2ff00">
+        <Label layoutX="124.0" layoutY="246.0" prefHeight="27.0" prefWidth="77.0" text="SFX" textFill="#f2ff00">
             <font>
                 <Font name="System Bold" size="19.0"/>
             </font>

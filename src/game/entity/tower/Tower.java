@@ -16,11 +16,10 @@ import java.util.List;
 public abstract class Tower extends GameEntity {
     private int price;
     private int damage;
-    private int armorPenetration;
     private long delayTime;
     private int range;
 
-    public int level = 0;
+    private int level = 0;
     public List<ImageView> stars = new ArrayList<>();
 
     // update every time a tower shoot a bullet
@@ -36,10 +35,9 @@ public abstract class Tower extends GameEntity {
     public Tower() {
     }
 
-    public Tower(int price, int damage, int armorPenetration, long delayTime, int range) {
+    public Tower(int price, int damage, long delayTime, int range) {
         this.price = price;
         this.damage = damage;
-        this.armorPenetration = armorPenetration;
         this.delayTime = delayTime;
         this.range = range;
         this.startDelayTime = 0;
@@ -97,6 +95,22 @@ public abstract class Tower extends GameEntity {
 
     public int getY() {
         return y;
+    }
+
+    public Hill getHill() {
+        return hill;
+    }
+
+    public void setHill(Hill hill) {
+        this.hill = hill;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public RotateTransition getTransition() {

@@ -11,45 +11,37 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="960.0" prefWidth="1408.0" style="-fx-background-image: url(&quot;game/background.png&quot;);"
-            stylesheets="@main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="game.MainMenuController">
+<AnchorPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1408.0" styleClass="main" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.MainMenuController">
     <children>
         <AnchorPane id="menu" fx:id="menu" prefHeight="960.0" prefWidth="1280.0">
             <children>
                 <VBox layoutX="104.0" layoutY="450.0" prefHeight="450.0" prefWidth="339.0" spacing="30.0">
                     <children>
-                        <Button fx:id="playBtn" mnemonicParsing="false" prefHeight="90.0" prefWidth="545.0"
-                                styleClass="btn" text="PLAY" textFill="WHITE">
+                        <Button fx:id="playBtn" mnemonicParsing="false" prefHeight="90.0" prefWidth="545.0" styleClass="btn" text="PLAY" textFill="WHITE">
                             <font>
-                                <Font name="Agency FB Bold" size="47.0"/>
+                                <Font name="Agency FB Bold" size="47.0" />
                             </font>
                         </Button>
-                        <Button fx:id="optionBtn" mnemonicParsing="false" onAction="#handleOptions" prefHeight="90.0"
-                                prefWidth="562.0" styleClass="btn" text="OPTIONS" textFill="WHITE">
+                        <Button fx:id="optionBtn" mnemonicParsing="false" onAction="#handleOptions" prefHeight="90.0" prefWidth="562.0" styleClass="btn" text="OPTIONS" textFill="WHITE">
                             <font>
-                                <Font name="Agency FB Bold" size="47.0"/>
+                                <Font name="Agency FB Bold" size="47.0" />
                             </font>
                         </Button>
-                        <Button fx:id="creditBtn" layoutX="10.0" layoutY="130.0" mnemonicParsing="false"
-                                onAction="#handleCredit" prefHeight="90.0" prefWidth="562.0" styleClass="btn"
-                                text="CREDIT" textFill="WHITE">
+                        <Button fx:id="creditBtn" layoutX="10.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleCredit" prefHeight="90.0" prefWidth="562.0" styleClass="btn" text="CREDIT" textFill="WHITE">
                             <font>
-                                <Font name="Agency FB Bold" size="47.0"/>
+                                <Font name="Agency FB Bold" size="47.0" />
                             </font>
                         </Button>
-                        <Button fx:id="exitBtn" mnemonicParsing="false" prefHeight="90.0" prefWidth="538.0"
-                                styleClass="btn" text="EXIT" textFill="WHITE">
+                        <Button fx:id="exitBtn" mnemonicParsing="false" prefHeight="90.0" prefWidth="538.0" styleClass="btn" text="EXIT" textFill="WHITE">
                             <font>
-                                <Font name="Agency FB Bold" size="47.0"/>
+                                <Font name="Agency FB Bold" size="47.0" />
                             </font>
                         </Button>
                     </children>
                 </VBox>
-                <Pane fx:id="helper" layoutX="640.0" layoutY="450.0" prefHeight="450.0" prefWidth="600.0"/>
+                <Pane fx:id="helper" layoutX="640.0" layoutY="450.0" prefHeight="450.0" prefWidth="600.0" />
             </children>
         </AnchorPane>
-        <AnchorPane id="store" fx:id="store" layoutX="1280.0" layoutY="-6.0" prefHeight="960.0" prefWidth="128.0"/>
+        <AnchorPane id="store" fx:id="store" layoutX="1280.0" layoutY="-6.0" prefHeight="480.0" prefWidth="128.0" />
     </children>
 </AnchorPane>

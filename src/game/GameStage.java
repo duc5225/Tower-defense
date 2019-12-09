@@ -18,7 +18,7 @@ public class GameStage {
         gameField = new GameField(root, canvas, store);
         this.root = root;
         this.store = store;
-        GameStage.money = 1000;
+        GameStage.money = 100;
         GameStage.health = 10;
     }
 

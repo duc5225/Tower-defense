@@ -251,7 +251,10 @@ public final class GameField {
         // Play sound
         tower.getShootingSound().play();
 
-        PathTransition shootTransition = new PathTransition(Duration.millis(100), path, bullet.getImageView());
+        int duration = 100;
+        if (tower.getBullet().getImage() == Config.SNIPER_BULLET_IMG) duration = 200;
+
+        PathTransition shootTransition = new PathTransition(Duration.millis(duration), path, bullet.getImageView());
         shootTransition.setCycleCount(1);
         shootTransition.setInterpolator(Interpolator.EASE_IN);
 

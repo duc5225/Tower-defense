@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -33,6 +34,7 @@ public class Main extends Application {
         });
 
         Scene theScene = new Scene(mainPane);
+        primaryStage.getIcons().add(new Image("file:src/game/resources/assets/icon/tower.png"));
         primaryStage.setTitle("Tower defense");
         primaryStage.setScene(theScene);
         primaryStage.setResizable(false);

@@ -31,4 +31,11 @@ public class MachineGunTower extends Tower {
     public Sound getShootingSound() {
         return Config.MACHINE_GUN_TOWER_SOUND;
     }
+
+    @Override
+    public void upgrade() {
+        this.setDamage(this.getDamage() + 20);
+        this.setRange(this.getRange() + 20);
+        this.setPrice(this.getPrice() + 30);
+    }
 }

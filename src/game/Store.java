@@ -209,9 +209,8 @@ public class Store {
                                 //When user click on upgrade button
                                 upgrade.setOnMouseClicked(eventUpgrade -> {
                                     if (GameStage.money >= t.getPrice() && t.level <4) {
-                                        // Upgrade damage and range
-                                        t.setDamage(t.getDamage() + 20);
-                                        t.setRange(t.getRange() + 20);
+                                        // Upgrade tower
+                                        t.upgrade();
 
                                         // Increase money each time tower level up
                                         GameStage.money -= t.getPrice();

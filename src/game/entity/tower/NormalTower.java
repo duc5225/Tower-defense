@@ -30,4 +30,12 @@ public class NormalTower extends Tower {
     public Sound getShootingSound() {
         return Config.NORMAL_TOWER_SOUND;
     }
+
+    @Override
+    public void upgrade() {
+        this.setDamage(this.getDamage() + 10);
+        this.setRange(this.getRange() + 10);
+        this.setDelayTime(this.getDelayTime() * 9 / 10);
+        this.setPrice(this.getPrice() + 10);
+    }
 }

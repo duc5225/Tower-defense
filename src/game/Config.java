@@ -37,14 +37,14 @@ public final class Config {
     // normal tower
     public static final Image NORMAL_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile249.png");
     public static final int NORMAL_TOWER_PRICE = 20;
-    public static final int NORMAL_TOWER_DAMAGE = 200;
+    public static final int NORMAL_TOWER_DAMAGE = 150;
     public static final int NORMAL_TOWER_DELAY_TIME = (int) SECOND;
     public static final int NORMAL_TOWER_RANGE = 275;
 
     // sniper tower
     public static final Image SNIPER_TOWER_IMG = new Image("file:src/game/resources/assets/PNG/Default size/towerDefense_tile206.png");
     public static final int SNIPER_TOWER_PRICE = 70;
-    public static final int SNIPER_TOWER_DAMAGE = 800;
+    public static final int SNIPER_TOWER_DAMAGE = 700;
     public static final int SNIPER_TOWER_DELAY_TIME = (int) (SECOND * 2.5);
     public static final int SNIPER_TOWER_RANGE = 450;
 
@@ -130,6 +130,6 @@ public final class Config {
     // Sfx
     public static final Sound NORMAL_TOWER_SOUND = new Sound("src/game/sound/sfx/normal.wav");
     public static final Sound MACHINE_GUN_TOWER_SOUND = new Sound("src/game/sound/sfx/machinegun.wav");
-    public static final Sound SNIPER_TOWER_SOUND = new Sound("src/game/sound/sfx/sniper.wav");
+    public static final Sound SNIPER_TOWER_SOUND = new Sound("src/game/sound/sfx/sniper.mp3");
     public static final Sound EXPLODE_SOUND = new Sound("src/game/sound/sfx/explode.mp3");
 }

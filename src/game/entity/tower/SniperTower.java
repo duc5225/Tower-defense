@@ -30,4 +30,10 @@ public class SniperTower extends Tower {
     public Sound getShootingSound() {
         return Config.SNIPER_TOWER_SOUND;
     }
+
+    @Override
+    public void upgrade() {
+        this.setDelayTime(this.getDelayTime() * 4 / 5);
+        this.setPrice(this.getPrice() + 40);
+    }
 }

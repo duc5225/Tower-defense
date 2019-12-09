@@ -89,6 +89,8 @@ public abstract class Tower extends GameEntity {
 
     public abstract Sound getShootingSound();
 
+    public abstract void upgrade();
+
     public int getX() {
         return x;
     }

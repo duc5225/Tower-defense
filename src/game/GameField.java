@@ -131,8 +131,8 @@ public final class GameField {
                     if (GameStage.stage == 1) {
                         // spawn new enemy after a fixed time until max number of enemies reached
                         if (currentNanoTime - startTime >= Config.SPAWN_DELAY_TIME) {
-                            if (i < NUMBER_OF_ENEMIES) {
-                                spawnEnemy();
+                            if (i < enemy_num) {
+                                spawnEnemy(normal_pct, smaller_pct, tanker_pct, boss_pct);
                                 ++i;
                             }
                             startTime = currentNanoTime;
@@ -159,11 +159,7 @@ public final class GameField {
                             }
                         } //  end tower iterate
                         for (Enemy enemy : enemies) {
-                            showHealthBar(enemy);
-                            if (enemy.getMaxHealth() - enemy.getHealth() != 0) {
-                                enemy.getHealthBar().setVisible(true);
-                                enemy.getCurrentHealthBar().setVisible(true);
-                            }
+                            enemy.showHealthBar();
                         }
                     }
                     if (wave == 1) {
@@ -265,7 +261,6 @@ public final class GameField {
             root.getChildren().remove(bullet.getImageView());
 
             if (enemy.isDead() && enemies.contains(enemy)) {
-                root.getChildren().removeAll(enemy.getHealthBar(), enemy.getCurrentHealthBar());
                 remove(enemy);
                 //update money
                 GameStage.money += enemy.getReward();
@@ -278,6 +273,7 @@ public final class GameField {
     }
 
     private void remove(Enemy enemy) {
+        root.getChildren().removeAll(enemy.getHealthBar(), enemy.getCurrentHealthBar());
         enemy.getImageView().setVisible(false);
         enemies.remove(enemy);
         root.getChildren().remove(enemy.getImageView());
@@ -292,22 +288,12 @@ public final class GameField {
         return new BossEnemy();
     }
 
-    private void showHealthBar(Enemy enemy) {
-        enemy.getHealthBar().setTranslateX(enemy.getImageView().getTranslateX() - 5);
-        enemy.getHealthBar().setTranslateY(enemy.getImageView().getTranslateY() + 55);
-        enemy.getCurrentHealthBar().setTranslateX(enemy.getHealthBar().getTranslateX());
-        enemy.getCurrentHealthBar().setTranslateY(enemy.getHealthBar().getTranslateY());
-    }
-
     private void spawnEnemy(double normal, double smaller, double tanker, double boss) {
         Enemy enemy = generateEnemy(normal, smaller, tanker, boss);
         root.getChildren().addAll(enemy.getHealthBar(), enemy.getCurrentHealthBar());
-        enemy.getHealthBar().setVisible(false);
-        enemy.getCurrentHealthBar().setVisible(false);
         enemy.getTransition().setOnFinished(event -> {
             if (!enemy.isDead()) {
                 remove(enemy);
-                root.getChildren().removeAll(enemy.getCurrentHealthBar(),enemy.getHealthBar());
                 explode();
                 GameStage.health--;
             }

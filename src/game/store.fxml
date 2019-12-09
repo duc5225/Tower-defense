@@ -19,7 +19,7 @@
             </image>
         </ImageView>
         <ImageView fx:id="normalTower" fitHeight="64.0" fitWidth="64.0" layoutY="64.0" onMouseEntered="#onMouseEntered"
-                   pickOnBounds="true" preserveRatio="true">
+                   pickOnBounds="true" preserveRatio="true" style="-fx-background-color: red;">
             <image>
                 <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile249.png"/>
             </image>
@@ -48,8 +48,11 @@
                 <Image url="@resources/assets/PNG/Default%20size/towerDefense_tile206.png"/>
             </image>
         </ImageView>
-        <Label alignment="CENTER" layoutY="128.0" prefHeight="28.0" prefWidth="72.0" text="\$10"/>
-        <Label alignment="CENTER" layoutY="256.0" prefHeight="28.0" prefWidth="72.0" text="\$20"/>
-        <Label alignment="CENTER" layoutY="381.0" prefHeight="28.0" prefWidth="72.0" text="\$40"/>
+        <Label alignment="CENTER" layoutY="128.0" prefHeight="28.0" prefWidth="64.0" styleClass="price_tag" text="\$20"
+               textFill="WHITE"/>
+        <Label alignment="CENTER" layoutY="256.0" prefHeight="28.0" prefWidth="64.0" styleClass="price_tag" text="\$50"
+               textFill="WHITE"/>
+        <Label alignment="CENTER" layoutY="389.0" prefHeight="28.0" prefWidth="64.0" styleClass="price_tag" text="\$70"
+               textFill="WHITE"/>
     </children>
 </AnchorPane>

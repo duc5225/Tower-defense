@@ -78,9 +78,6 @@ public class Main extends Application {
         //Create canvas
         Canvas canvas = new Canvas(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
-        //Create graphic context from canvas
-//        GraphicsContext gc = canvas.getGraphicsContext2D();
-
         root.getChildren().addAll(canvas);
 
         Store store = new Store(mainPane, fxmlLoader.getController());

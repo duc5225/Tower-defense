@@ -3,6 +3,7 @@ package game.entity.enemy;
 import game.Config;
 import game.entity.GameEntity;
 import javafx.animation.SequentialTransition;
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -25,9 +26,7 @@ public abstract class Enemy extends GameEntity {
         this.armor = armor;
         this.reward = reward;
         this.dead = false;
-        healthBar.setStroke(Color.BLACK);
-        healthBar.setFill(Color.rgb(0, 0, 0, 0.5));
-        currentHealthBar.setFill(Color.GREEN);
+        createHealthBar();
     }
 
     public int getSpeed() {
@@ -38,16 +37,8 @@ public abstract class Enemy extends GameEntity {
         return healthBar;
     }
 
-    public void setHealthBar(Rectangle healthBar) {
-        this.healthBar = healthBar;
-    }
-
     public Rectangle getCurrentHealthBar() {
         return currentHealthBar;
-    }
-
-    public void setCurrentHealthBar(Rectangle currentHealthBar) {
-        this.currentHealthBar = currentHealthBar;
     }
 
     public int getMaxHealth() {
@@ -104,17 +95,28 @@ public abstract class Enemy extends GameEntity {
 
     public void renderAnimation() {
         try {
-//            PathTransition pathTransition = new PathTransition(Duration.seconds(currentGameStage.getRoadLength()/this.getSpeed()), GameField.createPath(currentGameStage.getStage()), this.imageView);
-//            pathTransition.play();
             this.transition.play();
-//            transition.stat
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    //    public boolean isInRange(Tower tower) {
-//
-//    }
+    private void createHealthBar() {
+        healthBar.setStroke(Color.BLACK);
+        healthBar.setFill(Color.rgb(0, 0, 0, 0.5));
+        currentHealthBar.setFill(Color.GREEN);
+        healthBar.setVisible(false);
+        currentHealthBar.visibleProperty().bind(healthBar.visibleProperty());
+    }
+
+    public void showHealthBar() {
+        healthBar.translateXProperty().bind(imageView.translateXProperty().subtract(5));
+        healthBar.translateYProperty().bind(imageView.translateYProperty().add(55));
+        currentHealthBar.translateXProperty().bind(imageView.translateXProperty().subtract(5));
+        currentHealthBar.translateYProperty().bind(imageView.translateYProperty().add(55));
+        if (health < maxHealth) {
+            healthBar.setVisible(true);
+        }
+    }
 
 }

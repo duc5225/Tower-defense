@@ -4,3 +4,10 @@
     -fx-background-insets: 0,1,2;
     -fx-background-radius: 3,2,1;
 }
+
+.price_tag {
+  -fx-background-color: rgb(121, 98, 184);
+  -fx-background-radius:5;
+  -fx-font-size:16px;
+  -fx-font-weight:800;
+}
